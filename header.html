@@ -27,3 +27,10 @@
         <li><a href="#">Kontak</a></li>
     </ul>
 </div>
+<script>const hamburger = document.querySelector('.hamburger');
+const mobileNav = document.querySelector('.mobile-nav');
+
+hamburger.addEventListener('click', () => {
+    mobileNav.style.display = mobileNav.style.display === 'block' ? 'none' : 'block';
+    hamburger.classList.toggle('open'); /* Untuk animasi jika diinginkan */
+});</script>
