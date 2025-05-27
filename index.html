@@ -1,50 +1,890 @@
 <!DOCTYPE html>
-<html lang="id">
-<head itemscope itemtype="https://schema.org/WebSite">
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kumpulan Cerita Dewasa Terbaru</title>
-<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-<link href='https://fonts.gstatic.com' crossorigin rel='preconnect' />
-<link rel='stylesheet' id='genesis-sample-css' href='/style.css' media='all' />
-<script src="https://temangabut.xyz/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
-<script src="https://temangabut.xyz/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
-<link rel="icon" href="https://temangabut.xyz/wp-content/themes/genesis-sample/images/favicon.ico" />
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <title>Nama Blog Anda</title>
+
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css' crossorigin='anonymous' referrerpolicy='no-referrer' />
+
+  <style>
+    /*
+    ============================================================================
+    CSS dari file style.css Anda, khusus untuk Header, Navigasi, dan Toggle
+    ============================================================================
+    */
+
+    /* Site Header
+    ---------------------------------------------------------------------------- */
+
+    .site-header {
+        background-color: #fff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        padding: 0 30px;
+    }
+
+    /* Title Area
+    --------------------------------------------- */
+
+    .title-area {
+        float: left;
+        padding-bottom: 25px;
+        padding-top: 25px;
+    }
+
+    .wp-custom-logo .title-area {
+        max-width: 350px;
+        padding-bottom: 5px;
+        padding-top: 5px;
+        width: 100%;
+    }
+
+    .wp-custom-logo .custom-logo-link {
+        display: block;
+    }
+
+    .wp-custom-logo .title-area img {
+        width: auto;
+    }
+
+    .site-title {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 1;
+        margin-bottom: 0;
+    }
+
+    .site-title a,
+    .site-title a:focus,
+    .site-title a:hover {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .site-description,
+    .wp-custom-logo .site-title {
+        border: 0;
+        clip: rect(0, 0, 0, 0);
+        height: 1px;
+        overflow: hidden;
+        position: absolute !important;
+        width: 1px;
+        word-wrap: normal !important;
+    }
+
+
+    /* Site Navigation
+    ---------------------------------------------------------------------------- */
+
+    .genesis-nav-menu {
+        clear: both;
+        line-height: 1;
+        width: 100%;
+    }
+
+    .genesis-nav-menu .menu-item {
+        display: block;
+        float: none;
+        position: relative;
+    }
+
+    .genesis-nav-menu a {
+        color: #333;
+        display: block;
+        font-size: 15px;
+        font-weight: 400;
+        outline-offset: -1px;
+        padding-bottom: 12px;
+        padding-top: 12px;
+        text-decoration: none;
+    }
+
+    .genesis-nav-menu a:focus,
+    .genesis-nav-menu a:hover,
+    .genesis-nav-menu .current-menu-item > a,
+    .genesis-nav-menu .sub-menu .current-menu-item > a:focus,
+    .genesis-nav-menu .sub-menu .current-menu-item > a:hover {
+        color: #0073e5;
+        text-decoration: none;
+    }
+
+    .genesis-nav-menu .sub-menu,
+    .genesis-nav-menu .sub-menu a {
+        width: 100%;
+    }
+
+    .genesis-nav-menu .sub-menu {
+        clear: both;
+        display: none; /* Penting untuk mobile, akan diubah JS */
+        left: -9999px; /* Disembunyikan off-screen */
+        margin: 0;
+        opacity: 1;
+        padding-left: 15px;
+        position: static; /* Akan diubah JS */
+        z-index: 99;
+    }
+
+    .genesis-nav-menu .sub-menu a {
+        background-color: #fff;
+        font-size: 14px;
+        position: relative;
+        word-wrap: break-word;
+    }
+
+    .genesis-nav-menu .menu-item:focus,
+    .genesis-nav-menu .menu-item:hover {
+        position: relative;
+    }
+
+    /* Ini hanya untuk desktop (saat hover), di mobile akan dihandle JS */
+    .genesis-nav-menu .menu-item:hover > .sub-menu {
+        display: block;
+        left: auto;
+        opacity: 1;
+    }
+
+    /* Responsive Menu
+    --------------------------------------------- */
+
+    .menu .menu-item:focus {
+        position: static;
+    }
+
+    .menu .menu-item > a:focus + ul.sub-menu,
+    .menu .menu-item.sfHover > ul.sub-menu {
+        left: auto;
+        opacity: 1;
+    }
+
+    .js .nav-primary {
+        display: none; /* Sembunyikan menu utama di mobile secara default */
+        position: relative;
+    }
+
+    .genesis-responsive-menu .genesis-nav-menu .menu-item:hover > .sub-menu {
+        display: none; /* Menimpa hover di mobile, dihandle JS */
+    }
+
+    .menu-toggle,
+    .sub-menu-toggle {
+        background-color: transparent;
+        border-width: 0;
+        color: #333;
+        display: block; /* Tampilkan di mobile */
+        margin: 0 auto;
+        overflow: hidden;
+        text-align: center;
+        visibility: visible;
+    }
+
+    .menu-toggle:focus,
+    .menu-toggle:hover,
+    .sub-menu-toggle:focus,
+    .sub-menu-toggle:hover {
+        background-color: transparent;
+        border-width: 0;
+        color: #0073e5;
+    }
+
+    .menu-toggle {
+        float: right;
+        line-height: 20px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        padding: 15px 0;
+        position: relative;
+        z-index: 1000;
+        /* Tambahkan padding dan margin untuk tampilan mobile */
+        margin-right: 20px; /* Contoh */
+        padding: 10px 15px; /* Contoh */
+    }
+
+    /* Ganti ikon Dashicons dengan Font Awesome jika Anda menggunakannya */
+    /* Untuk ikon hamburger */
+    .menu-toggle::before {
+        font-family: "Font Awesome 6 Free"; /* Pastikan ini sesuai dengan font FA Anda */
+        font-weight: 900; /* Font Awesome Solid */
+        content: "\f0c9"; /* Kode Unicode untuk ikon hamburger */
+        float: left;
+        margin-right: 5px;
+        position: relative;
+        text-rendering: auto;
+        top: 1px;
+    }
+    /* Untuk ikon X saat toggle aktif */
+    .menu-toggle.activated::before {
+        content: "\f00d"; /* Kode Unicode untuk ikon 'times' (X) */
+    }
+
+
+    /* Anda mungkin tidak perlu ini jika tidak menggunakan Dashicons spesifik */
+    /* .site-header .dashicons-before::before {
+        transition: none;
+    } */
+
+    /* .site-header .menu-toggle::before {
+        float: left;
+        margin-right: 5px;
+        position: relative;
+        text-rendering: auto;
+        top: 1px;
+    } */
+
+    .sub-menu-toggle {
+        float: right;
+        padding: 9px 10px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 100;
+    }
+
+    .sub-menu .sub-menu-toggle {
+        padding: 12px 10px;
+    }
+
+    /* Untuk ikon panah bawah submenu */
+    .sub-menu-toggle::before {
+        font-family: "Font Awesome 6 Free"; /* Pastikan ini sesuai dengan font FA Anda */
+        font-weight: 900; /* Font Awesome Solid */
+        content: "\f078"; /* Kode Unicode untuk ikon panah bawah */
+        display: inline-block;
+        text-rendering: auto;
+        transform: rotate(0);
+        transition: transform 0.25s ease-in-out;
+    }
+
+    .sub-menu-toggle.activated::before {
+        transform: rotate(180deg);
+    }
+
+    /* Header Menu
+    --------------------------------------------- */
+
+    .nav-primary {
+        clear: left;
+        padding-bottom: 15px;
+        padding-top: 15px;
+        width: 100%;
+    }
+
+    /* Media Queries
+        - Min-width: 960px
+            - Site Header
+            - Genesis Menu
+            - Responsive Menu
+            - Header Menu
+    */
+
+    @media only screen and (min-width: 960px) {
+
+        /* Site Header
+        --------------------------------------------- */
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+        }
+
+        .admin-bar .site-header {
+            top: 32px;
+        }
+
+        /* Genesis Menu
+        --------------------------------------------- */
+
+        .genesis-nav-menu .menu-item {
+            display: inline-block;
+        }
+
+        .genesis-nav-menu .menu-item:focus,
+        .genesis-nav-menu .menu-item:hover {
+            position: relative;
+        }
+
+        .genesis-nav-menu > .menu-bold > a {
+            font-weight: 700;
+        }
+
+        .genesis-nav-menu > .menu-highlight > a {
+            background-color: #333;
+            border-radius: 3px;
+            color: #fff;
+            font-weight: 600;
+            margin-left: 15px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .genesis-nav-menu > .menu-highlight > a:focus,
+        .genesis-nav-menu > .menu-highlight > a:hover {
+            background-color: #0073e5;
+        }
+
+        .genesis-nav-menu .sub-menu,
+        .genesis-nav-menu .sub-menu a {
+            width: 180px;
+        }
+
+        .genesis-nav-menu .sub-menu {
+            border-top: 1px solid #eee;
+            opacity: 0;
+            padding-left: 0;
+            position: absolute;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .genesis-nav-menu .sub-menu a {
+            border: 1px solid #eee;
+            border-top: 0;
+            padding-bottom: 15px;
+            padding-top: 15px;
+        }
+
+        .genesis-nav-menu .sub-menu .sub-menu {
+            margin: -46px 0 0 179px;
+        }
+
+        /* Responsive Menu
+        --------------------------------------------- */
+
+        .js .nav-primary {
+            display: block; /* Tampilkan menu di desktop */
+            padding-top: 15px;
+        }
+
+        .menu-toggle,
+        .sub-menu-toggle {
+            display: none; /* Sembunyikan toggle di desktop */
+            visibility: hidden;
+        }
+
+        /* Header Menu
+        --------------------------------------------- */
+
+        .nav-primary {
+            clear: none;
+            float: right;
+            width: auto;
+        }
+
+        .nav-primary .genesis-nav-menu a {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+    }
+  </style>
 </head>
-<body class="home blog wp-embed-responsive wp-theme-genesis wp-child-theme-genesis-sample header-full-width content-sidebar genesis-breadcrumbs-hidden genesis-footer-widgets-hidden no-js" itemscope itemtype="https://schema.org/WebPage">	
-	<script>	
-	//<![CDATA[	
-	(function(){		
-		var c = document.body.classList;		
-		c.remove( 'no-js' );		
-		c.add( 'js' );	
-	})();	
-	//]]>	
-	</script>	
-	<div class="site-container">
-		<ul class="genesis-skip-link">
-			<li><a href="#genesis-nav-primary" class="screen-reader-shortcut"> Skip to primary navigation</a></li>
-		</ul>
-		<header class="site-header" itemscope itemtype="https://schema.org/WPHeader">
-			<div class="wrap">
-				<div class="title-area">
-					<h1 class="site-title" itemprop="headline"><a href="https://temangabut.xyz/">TemanGabut.xyz</a></h1>
-				</div>
-				<nav class="nav-primary" aria-label="Main" itemscope itemtype="https://schema.org/SiteNavigationElement" id="genesis-nav-primary">
-					<div class="wrap">
-						<ul id="menu-navigasi" class="menu genesis-nav-menu menu-primary js-superfish">
-							<li id="menu-item-14" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-14"><a href="https://temangabut.xyz" aria-current="page" itemprop="url"><span itemprop="name">Beranda</span></a></li>
-						</ul>
-					</div>
-				</nav>
-			</div>
-		</header>
-	</div>
-	<script src="https://temangabut.xyz/wp-includes/js/hoverIntent.min.js?ver=1.10.2" id="hoverIntent-js"></script>
-	<script src="https://temangabut.xyz/wp-content/themes/genesis/lib/js/menu/superfish.min.js?ver=1.7.10" id="superfish-js"></script>
-	<script src="https://temangabut.xyz/wp-content/themes/genesis/lib/js/menu/superfish.args.min.js?ver=3.5.0" id="superfish-args-js"></script>
-	<script src="https://temangabut.xyz/wp-content/themes/genesis/lib/js/skip-links.min.js?ver=3.5.0" id="skip-links-js"></script>
-	<script id="genesis-sample-responsive-menu-js-extra">var genesis_responsive_menu = {"mainMenu":"Menu","menuIconClass":"dashicons-before dashicons-menu","subMenu":"Submenu","subMenuIconClass":"dashicons-before dashicons-arrow-down-alt2","menuClasses":{"others":[".nav-primary"]}};</script>
-	<script src="https://temangabut.xyz/wp-content/themes/genesis/lib/js/menu/responsive-menus.min.js?ver=1.1.3" id="genesis-sample-responsive-menu-js"></script>
+<body>
+
+  <header class='site-header' itemscope='itemscope' itemtype='https://schema.org/WPHeader'>
+    <div class='wrap'>
+      <div class='title-area'>
+        <p class='site-title' itemprop='headline'><a href='URL-TO-YOUR-BLOG'>Your Blog Title</a></p>
+        <p class='site-description' itemprop='description'>Your Blog Tagline</p>
+      </div><nav class='nav-primary genesis-responsive-menu' itemscope='itemscope' itemtype='https://schema.org/SiteNavigationElement'>
+        <ul id='menu-primary-navigation' class='genesis-nav-menu menu-primary js-superfish'>
+          <li id='menu-item-1' class='menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1'><a href='#' itemprop='url'><span itemprop='name'>Beranda</span></a></li>
+          <li id='menu-item-2' class='menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2'><a href='#' itemprop='url'><span itemprop='name'>Tentang Kami</span></a>
+            <ul class='sub-menu'>
+              <li id='menu-item-2-1' class='menu-item menu-item-type-custom menu-item-object-custom menu-item-2-1'><a href='#' itemprop='url'><span itemprop='name'>Visi & Misi</span></a></li>
+              <li id='menu-item-2-2' class='menu-item menu-item-type-custom menu-item-object-custom menu-item-2-2'><a href='#' itemprop='url'><span itemprop='name'>Tim Kami</span></a></li>
+            </ul>
+          </li>
+          <li id='menu-item-3' class='menu-item menu-item-type-custom menu-item-object-custom menu-item-3'><a href='#' itemprop='url'><span itemprop='name'>Layanan</span></a></li>
+          <li id='menu-item-4' class='menu-item menu-item-type-post_type menu-item-object-page menu-item-4'><a href='#' itemprop='url'><span itemprop='name'>Kontak</span></a></li>
+        </ul>
+      </nav></div></header><main>
+    <div class='wrap'>
+      <h1>Selamat Datang di Blog Saya</h1>
+      <p>Ini adalah contoh konten.</p>
+    </div>
+  </main>
+
+
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+
+  <script type='text/javascript'>
+    var genesis_responsive_menu = {
+      // mainMenu: Ini akan menjadi teks pada tombol toggle utama
+      "mainMenu": "<span class='screen-reader-text'>Menu</span>", // Teks yang akan ditampilkan, di sini kosong karena ada ikon
+      // subMenu: Ini akan menjadi teks pada tombol toggle submenu
+      "subMenu": "<span class='screen-reader-text'>Submenu</span>", // Teks yang akan ditampilkan, di sini kosong
+      "menuClasses": {
+        // "combine" akan menggabungkan menu-menu ini menjadi satu di mobile.
+        // Ganti ".nav-primary" jika selector menu utama Anda berbeda di Blogger.
+        "combine": [
+          ".nav-primary"
+        ],
+        "others": [] // Jika ada menu lain yang tidak ingin digabungkan
+      },
+      // Kelas ikon (mengganti Dashicons dengan Font Awesome jika Anda menggunakannya)
+      // Perhatikan bahwa script asli menambahkan 'dashicons-before', kita tidak memerlukannya jika sudah ada ikon di CSS
+      "menuIconClass": "", // Kita akan mengandalkan CSS untuk ikon FA
+      "subMenuIconClass": "" // Kita akan mengandalkan CSS untuk ikon FA
+    };
+  </script>
+
+  <script type='text/javascript'>
+    /**
+     * Add the accessible responsive menu.
+     *
+     * @version 1.1.3
+     *
+     * @author StudioPress
+     * @link https://github.com/copyblogger/responsive-menus/
+     * @license GPL-2.0+
+     * @package Genesis_AMP\Component\Menu
+     */
+
+    ( function ( document, $, undefined ) {
+
+        'use strict';
+
+        var genesisMenuParams       = typeof genesis_responsive_menu === 'undefined' ? '' : genesis_responsive_menu,
+            genesisMenusUnchecked = genesisMenuParams.menuClasses,
+            genesisMenus          = {},
+            menusToCombine        = [];
+
+        /**
+         * Validate the menus passed by the theme with what's being loaded on the page,
+         * and pass the new and accurate information to our new data.
+         *
+         * @param {genesisMenusUnchecked} Raw data from the localized script in the theme.
+         * @return {array} genesisMenus array gets populated with updated data.
+         * @return {array} menusToCombine array gets populated with relevant data.
+         */
+        $.each(
+            genesisMenusUnchecked, function( group ) {
+
+                // Mirror our group object to populate.
+                genesisMenus[group] = [];
+
+                // Loop through each instance of the specified menu on the page.
+                $.each(
+                    this, function( key, value ) {
+
+                        var menuString = value,
+                        $menu          = $( value );
+
+                        // If there is more than one instance, append the index and update array.
+                        if ( $menu.length > 1 ) {
+
+                            $.each(
+                                $menu, function( key, value ) {
+
+                                    var newString = menuString + '-' + key;
+
+                                    $( this ).addClass( newString.replace( '.','' ) );
+
+                                    genesisMenus[group].push( newString );
+
+                                    if ( 'combine' === group ) {
+                                        menusToCombine.push( newString );
+                                    }
+
+                                }
+                            );
+
+                        } else if ( $menu.length == 1 ) {
+
+                            genesisMenus[group].push( menuString );
+
+                            if ( 'combine' === group ) {
+                                menusToCombine.push( menuString );
+                            }
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+        // Make sure there is something to use for the 'others' array.
+        if ( typeof genesisMenus.others == 'undefined' ) {
+            genesisMenus.others = [];
+        }
+
+        // If there's only one menu on the page for combining, push it to the 'others' array and nullify our 'combine' variable.
+        if ( menusToCombine.length == 1 ) {
+            genesisMenus.others.push( menusToCombine[0] );
+            genesisMenus.combine = null;
+            menusToCombine         = null;
+        }
+
+        var genesisMenu          = {},
+            mainMenuButtonClass = 'menu-toggle',
+            subMenuButtonClass  = 'sub-menu-toggle',
+            responsiveMenuClass = 'genesis-responsive-menu';
+
+        // Initialize.
+        genesisMenu.init = function() {
+
+            // Exit early if there are no menus to do anything.
+            if ( $( _getAllMenusArray() ).length == 0 ) {
+                return;
+            }
+
+            // Ganti ini jika Anda menggunakan Dashicons asli atau ikon lain
+            // var menuIconClass    = typeof genesisMenuParams.menuIconClass !== 'undefined' ? genesisMenuParams.menuIconClass : 'dashicons-before dashicons-menu';
+            // var	subMenuIconClass = typeof genesisMenuParams.subMenuIconClass !== 'undefined' ? genesisMenuParams.subMenuIconClass : 'dashicons-before dashicons-arrow-down-alt2';
+
+            // Karena kita menggunakan Font Awesome via CSS, kita bisa biarkan ini kosong atau sesuaikan
+            var menuIconClass    = genesisMenuParams.menuIconClass;
+            var	subMenuIconClass = genesisMenuParams.subMenuIconClass;
+
+            var	toggleButtons    = {
+                menu : $( '<button />', {
+                        'class' : mainMenuButtonClass,
+                        'aria-expanded' : false,
+                        'aria-pressed' : false
+                    }
+                )
+                .append( genesisMenuParams.mainMenu ),
+                    submenu : $(
+                        '<button />', {
+                        'class' : subMenuButtonClass,
+                        'aria-expanded' : false,
+                        'aria-pressed' : false
+                    }
+                )
+                .append( $('<span />', {
+                        'class' : 'screen-reader-text',
+                        'text' : genesisMenuParams.subMenu
+                    } )
+                )
+            };
+
+            // Add the responsive menu class to the active menus.
+            _addResponsiveMenuClass();
+
+            // Add the main nav button to the primary menu, or exit the plugin.
+            _addMenuButtons( toggleButtons );
+
+            // Setup additional classes.
+            $( '.' + mainMenuButtonClass ).addClass( menuIconClass );
+            $( '.' + subMenuButtonClass ).addClass( subMenuIconClass );
+            $( '.' + mainMenuButtonClass ).on( 'click.genesisMenu-mainbutton', _mainmenuToggle ).each( _addClassID );
+            $( '.' + subMenuButtonClass ).on( 'click.genesisMenu-subbutton', _submenuToggle );
+            $( window ).on( 'resize.genesisMenu', _doResize ).triggerHandler( 'resize.genesisMenu' );
+        };
+
+        /**
+         * Add menu toggle button to appropriate menus.
+         *
+         * @param {toggleButtons} Object of menu buttons to use for toggles.
+         */
+        function _addMenuButtons( toggleButtons ) {
+
+            // Apply sub menu toggle to each sub-menu found in the menuList.
+            $( _getMenuSelectorString( genesisMenus ) ).find( '.sub-menu' ).before( toggleButtons.submenu );
+
+            if ( menusToCombine !== null ) {
+
+                var menusToToggle = genesisMenus.others.concat( menusToCombine[0] );
+
+                // Only add menu button the primary menu and navs NOT in the combine variable.
+                $( _getMenuSelectorString( menusToToggle ) ).before( toggleButtons.menu );
+
+            } else {
+
+                // Apply the main menu toggle to all menus in the list.
+                $( _getMenuSelectorString( genesisMenus.others ) ).before( toggleButtons.menu );
+
+            }
+
+        }
+
+        /**
+         * Add the responsive menu class.
+         */
+        function _addResponsiveMenuClass() {
+            $( _getMenuSelectorString( genesisMenus ) ).addClass( responsiveMenuClass );
+        }
+
+        /**
+         * Execute our responsive menu functions on window resizing.
+         */
+        function _doResize() {
+            var buttons = $( 'button[id^="genesis-mobile-"]' ).attr( 'id' );
+            if ( typeof buttons === 'undefined' ) {
+                return;
+            }
+            _maybeClose( buttons );
+            _superfishToggle( buttons );
+            _changeSkipLink( buttons );
+            _combineMenus( buttons );
+        }
+
+        /**
+         * Add the nav- class of the related navigation menu as
+         * an ID to associated button (helps target specific buttons outside of context).
+         */
+        function _addClassID() {
+            var $this = $( this ),
+                nav   = $this.next( 'nav' ),
+                id    = 'class';
+
+            $this.attr( 'id', 'genesis-mobile-' + $( nav ).attr( id ).match( /nav-\\w*\\b' ) );
+        }
+
+        /**
+         * Combine our menus if the mobile menu is visible.
+         *
+         * @params buttons
+         */
+        function _combineMenus( buttons ){
+
+            // Exit early if there are no menus to combine.
+            if ( menusToCombine == null ) {
+                return;
+            }
+
+            // Split up the menus to combine based on order of appearance in the array.
+            var primaryMenu    = menusToCombine[0],
+                combinedMenus = $( menusToCombine ).filter(
+                    function(index) { if ( index > 0 ) {
+                                return index; } }
+                );
+
+            // If the responsive menu is active, append items in 'combinedMenus' object to the 'primaryMenu' object.
+            if ( 'none' !== _getDisplayValue( buttons ) ) {
+
+                $.each(
+                    combinedMenus, function( key, value ) {
+                        $( value ).find( '.menu > li' ).addClass( 'moved-item-' + value.replace( '.','' ) ).appendTo( primaryMenu + ' ul.genesis-nav-menu' );
+                    }
+                );
+                $( _getMenuSelectorString( combinedMenus ) ).hide();
+
+            } else {
+
+                $( _getMenuSelectorString( combinedMenus ) ).show();
+                $.each(
+                    combinedMenus, function( key, value ) {
+                        $( '.moved-item-' + value.replace( '.','' ) ).appendTo( value + ' ul.genesis-nav-menu' ).removeClass( 'moved-item-' + value.replace( '.','' ) );
+                    }
+                );
+
+            }
+
+        }
+
+        /**
+         * Action to happen when the main menu button is clicked.
+         */
+        function _mainmenuToggle() {
+            var $this = $( this );
+            _toggleAria( $this, 'aria-pressed' );
+            _toggleAria( $this, 'aria-expanded' );
+            $this.toggleClass( 'activated' );
+            $this.next( 'nav' ).slideToggle( 'fast' );
+        }
+
+        /**
+         * Action for submenu toggles.
+         */
+        function _submenuToggle() {
+
+            var $this  = $( this ),
+                others = $this.closest( '.menu-item' ).siblings();
+            _toggleAria( $this, 'aria-pressed' );
+            _toggleAria( $this, 'aria-expanded' );
+            $this.toggleClass( 'activated' );
+            $this.next( '.sub-menu' ).slideToggle( 'fast' );
+
+            others.find( '.' + subMenuButtonClass ).removeClass( 'activated' ).attr( 'aria-pressed', 'false' );
+            others.find( '.sub-menu' ).slideUp( 'fast' );
+
+        }
+
+        /**
+         * Activate/deactivate superfish.
+         *
+         * @params buttons
+         */
+        function _superfishToggle( buttons ) {
+            var _superfish = $( '.' + responsiveMenuClass + ' .js-superfish' ),
+                $args      = 'destroy';
+            if ( typeof _superfish.superfish !== 'function' ) {
+                return;
+            }
+            if ( 'none' === _getDisplayValue( buttons ) ) {
+                $args = {
+                    'delay': 100,
+                    'animation': {'opacity': 'show', 'height': 'show'},
+                    'dropShadows': false,
+                    'speed': 'fast'
+                };
+            }
+            _superfish.superfish( $args );
+        }
+
+        /**
+         * Modify skip link to match mobile buttons.
+         *
+         * @param buttons
+         */
+        function _changeSkipLink( buttons ) {
+
+            // Start with an empty array.
+            var menuToggleList = _getAllMenusArray();
+
+            // Exit out if there are no menu items to update.
+            if ( ! $( menuToggleList ).length > 0 ) {
+                return;
+            }
+
+            $.each(
+                menuToggleList, function ( key, value ) {
+
+                    var newValue = value.replace( '.', '' ),
+                    startLink    = 'genesis-' + newValue,
+                    endLink      = 'genesis-mobile-' + newValue;
+
+                    if ( 'none' == _getDisplayValue( buttons ) ) {
+                        startLink = 'genesis-mobile-' + newValue;
+                        endLink   = 'genesis-' + newValue;
+                    }
+
+                    var $item = $( '.genesis-skip-link a[href="#' + startLink + '"]' );
+
+                    if ( menusToCombine !== null && value !== menusToCombine[0] ) {
+                        $item.toggleClass( 'skip-link-hidden' );
+                    }
+
+                    if ( $item.length > 0 ) {
+                        var link = $item.attr( 'href' );
+                        link     = link.replace( startLink, endLink );
+
+                        $item.attr( 'href', link );
+                    } else {
+                        return;
+                    }
+
+                }
+            );
+
+        }
+
+        /**
+         * Close all the menu toggles if buttons are hidden.
+         *
+         * @param buttons
+         */
+        function _maybeClose( buttons ) {
+            if ( 'none' !== _getDisplayValue( buttons ) ) {
+                return true;
+            }
+
+            $( '.' + mainMenuButtonClass + ', .' + responsiveMenuClass + ' .sub-menu-toggle' )
+                .removeClass( 'activated' )
+                .attr( 'aria-expanded', false )
+                .attr( 'aria-pressed', false );
+
+            $( '.' + responsiveMenuClass + ', .' + responsiveMenuClass + ' .sub-menu' )
+                .attr( 'style', '' );
+        }
+
+        /**
+         * Generic function to get the display value of an element.
+         *
+         * @param  {id} $id ID to check
+         * @return {string}    CSS value of display property
+         */
+        function _getDisplayValue( $id ) {
+            var element = document.getElementById( $id ),
+                style   = window.getComputedStyle( element );
+            return style.getPropertyValue( 'display' );
+        }
+
+        /**
+         * Toggle aria attributes.
+         *
+         * @param  {button} $this      passed through
+         * @param  {aria-xx} attribute aria attribute to toggle
+         * @return {bool}            from _ariaReturn
+         */
+        function _toggleAria( $this, attribute ) {
+            $this.attr(
+                attribute, function( index, value ) {
+                    return 'false' === value;
+                }
+            );
+        }
+
+        /**
+         * Helper function to return a comma separated string of menu selectors.
+         *
+         * @param {itemArray} Array of menu items to loop through.
+         * @param {ignoreSecondary} boolean of whether to ignore the 'secondary' menu item.
+         * @return {string} Comma-separated string.
+         */
+        function _getMenuSelectorString( itemArray ) {
+
+            var itemString = $.map(
+                itemArray, function( value, key ) {
+                    return value;
+                }
+            );
+
+            return itemString.join( ',' );
+
+        }
+
+        /**
+         * Helper function to return a group array of all the menus in
+         * both the 'others' and 'combine' arrays.
+         *
+         * @return {array} Array of all menu items as class selectors.
+         */
+        function _getAllMenusArray() {
+
+            // Start with an empty array.
+            var menuList = [];
+
+            // If there are menus in the 'menusToCombine' array, add them to 'menuList'.
+            if ( menusToCombine !== null ) {
+
+                $.each(
+                    menusToCombine, function( key, value ) {
+                        menuList.push( value.valueOf() );
+                    }
+                );
+
+            }
+
+            // Add menus in the 'others' array to 'menuList'.
+            $.each(
+                genesisMenus.others, function( key, value ) {
+                    menuList.push( value.valueOf() );
+                }
+            );
+
+            if ( menuList.length > 0 ) {
+                return menuList;
+            } else {
+                return null;
+            }
+
+        }
+
+        $( document ).ready(
+            function () {
+
+                if ( _getAllMenusArray() !== null ) {
+
+                    genesisMenu.init();
+
+                }
+
+            }
+        );
+
+    })( document, jQuery );
+  </script>
 </body>
 </html>
