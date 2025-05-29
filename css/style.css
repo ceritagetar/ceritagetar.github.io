@@ -370,7 +370,7 @@ h6 {
     float: none;
     margin: 0 auto;
     background: #fff;
-    margin-top: 0px;
+    margin-top: 40px;
 }
 
 .post {
@@ -383,8 +383,8 @@ h6 {
         font-size: 18px;
     }
 
-    .post h2 {
-        font-size: 24px;
+    .post h2, .post h1 {
+        font-size: 20px;
         padding-top: 30px;
     }
 
@@ -396,10 +396,10 @@ h6 {
         margin: 0;
         padding-left: 5%;
         padding-right: 5%;
-        padding-top: 0px;
+        padding-top: 40px;
     }
 
-    h2 {
+    h1, h2 {
         font-size: 24px;
     }
 
@@ -643,6 +643,7 @@ h6 {
         position: sticky;
         top: 0;
         z-index: 9999;
+        background: #fff;
     }
 
     .admin-bar .site-header {
