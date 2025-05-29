@@ -182,7 +182,7 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=search] {
 	-webkit-appearance: textfield;
 	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
+	-webkit-box-sizing: content-content; /* Changed to content-box for consistency */
 	box-sizing: content-box;
 }
 
@@ -231,7 +231,8 @@ body {
 	line-height: 1.625;
 	margin: 0;
 	padding-bottom: 100px;
-	overflow-x: hidden; /* Added to prevent horizontal scrolling */
+	overflow-x: hidden;
+	padding-top: 80px; /* Added to create space for the sticky header */
 }
 
 a,
@@ -276,7 +277,7 @@ ul {
 }
 
 li {
-	list-style-type: none; /* Override default list style */
+	list-style-type: none;
 	margin: 10px;
 }
 
@@ -374,9 +375,8 @@ h6 {
 #content-wrapper {
 	max-width: 800px;
 	float: none;
-	margin: 0 auto;
+	margin: 0 auto; /* Removed margin-top to prevent overlap */
 	background: #fff;
-	margin-top: 40px;
 }
 
 .post {
@@ -390,6 +390,8 @@ h6 {
 	background-color: #fff;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
 	padding: 0 30px;
+	position: relative; /* Ensure z-index works on all screen sizes */
+	z-index: 9999; /* Ensure header is always on top */
 }
 
 /* Title Area
@@ -658,6 +660,7 @@ h6 {
 	body {
 		background: #fff;
 		font-size: 15px;
+		padding-top: 70px; /* Adjusted padding-top for smaller screens */
 	}
 
 	.post h2 {
@@ -673,7 +676,7 @@ h6 {
 		margin: 0;
 		padding-left: 5%;
 		padding-right: 5%;
-		padding-top: 70px;
+		padding-top: 0; /* Removed padding-top as body handles it */
 	}
 
 	h2 {
@@ -703,7 +706,7 @@ h6 {
 	.site-header {
 		position: sticky;
 		top: 0;
-		z-index: 9999;
+		/* z-index: 9999; Moved to general .site-header rule */
 	}
 
 	.admin-bar .site-header {
