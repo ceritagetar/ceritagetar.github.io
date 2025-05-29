@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judul Wap Anda - Halaman Utama</title>
+    <style>
+/* Aturan Dasar untuk Seluruh Halaman */
+body {
+    font-family: Arial, sans-serif; /* Font standar */
+    background-color: #F0F0F0; /* Latar abu-abu muda */
+    color: #333; /* Teks abu-abu gelap */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Header */
+.site-header {
+    background-color: #007bff; /* Warna biru cerah, contoh */
+    color: white;
+    text-align: center;
+    padding: 15px 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sedikit bayangan */
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 24px; /* Ukuran font di ponsel */
+}
+
+/* Bagian Utama Konten */
+.main-content {
+    max-width: 900px; /* Batasi lebar konten di layar besar */
+    margin: 20px auto; /* Tengahkan konten */
+    padding: 0 15px; /* Padding samping untuk mencegah teks terlalu dekat tepi */
+}
+
+/* Menu Utama */
+.main-menu ul {
+    list-style: none; /* Hilangkan bullet point */
+    padding: 0;
+    margin: 0;
+}
+
+.main-menu li {
+    background-color: #fff; /* Latar belakang putih untuk setiap item */
+    margin-bottom: 10px; /* Jarak antar item */
+    border-radius: 5px; /* Sudut sedikit membulat */
+    overflow: hidden; /* Pastikan border-radius diterapkan ke child elements */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sedikit bayangan untuk "depth" */
+}
+
+.main-menu li a {
+    display: block; /* Membuat seluruh area li bisa diklik */
+    padding: 15px 20px; /* Area klik yang luas */
+    color: #007bff; /* Warna link biru */
+    text-decoration: none; /* Hilangkan garis bawah */
+    font-size: 18px; /* Ukuran font menu */
+    font-weight: bold;
+    transition: background-color 0.2s ease; /* Transisi halus saat hover/tap */
+}
+
+.main-menu li a:hover,
+.main-menu li a:active { /* Untuk sentuhan di ponsel juga */
+    background-color: #e9ecef; /* Latar belakang abu-abu saat hover/tap */
+    color: #0056b3; /* Warna biru lebih gelap saat hover/tap */
+}
+
+/* Footer */
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #666;
+    background-color: #f8f9fa;
+    margin-top: 30px;
+}
+
+/* Media Queries untuk Layar Lebih Besar (Tablet dan Desktop) */
+@media (min-width: 768px) {
+    .site-header h1 {
+        font-size: 32px; /* Ukuran font lebih besar di desktop */
+    }
+
+    /* Jika ingin multi-kolom di desktop (opsional) */
+    .main-menu ul {
+        display: flex; /* Aktifkan flexbox */
+        flex-wrap: wrap; /* Izinkan item untuk wrapping ke baris baru */
+        justify-content: space-between; /* Rata kiri-kanan antar item */
+    }
+
+    .main-menu li {
+        flex-basis: calc(50% - 10px); /* 2 kolom dengan jarak 10px */
+        /* Atau untuk 3 kolom: flex-basis: calc(33.333% - 15px); */
+        margin-right: 20px; /* Jarak horizontal antar kolom */
+    }
+
+    .main-menu li:nth-child(2n) { /* Hilangkan margin kanan di setiap kolom kedua */
+        margin-right: 0;
+    }
+}
+</style>
+    </head>
+<body>
+    <header class="site-header">
+        <h1>Judul Wap Anda</h1>
+    </header>
+
+    <main class="main-content">
+        <nav class="main-menu">
+            <ul>
+                <li><a href="/gambar">Gambar</a></li>
+                <li><a href="/video">Video</a></li>
+                <li><a href="/lagu">Lagu</a></li>
+                <li><a href="/cerita">Cerita</a></li>
+                <li><a href="/tema">Tema</a></li>
+            </ul>
+        </nav>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 Judul Wap Anda. Semua Hak Dilindungi.</p>
+    </footer>
+</body>
+</html>
