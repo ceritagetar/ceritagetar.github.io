@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Hamburger Gabungan</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Hamburger</title>
+
+    <link rel="stylesheet" href="https://temangabut.xyz/wp-includes/css/dashicons.min.css?ver=6.8.1" media="all" />
 
     <style>
         /* --- CSS dimulai di sini --- */
@@ -53,48 +55,29 @@
             background: none;
             border: none;
             cursor: pointer;
-            color: white; /* Warna ikon SVG akan mengikuti warna teks */
+            font-size: 2rem; /* Ukuran ikon */
+            color: white;
             display: none; /* Sembunyikan secara default di desktop */
             padding: 0;
-            /* Ukuran tombol agar SVG terlihat */
-            width: 48px;
+            position: relative; /* Penting untuk pseudo-element */
+            width: 48px; /* Ukuran tombol agar ikon terlihat */
             height: 48px;
-            display: flex; /* Untuk menengahkan ikon SVG */
+            display: flex; /* Untuk menengahkan ikon */
             justify-content: center;
             align-items: center;
-            position: relative; /* Penting untuk posisi absolut ikon */
         }
 
-        /* Styling SVG */
-        .hamburger-button .icon {
-            position: absolute; /* Posisi absolut untuk menumpuk ikon */
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 28px; /* Ukuran ikon SVG */
-            height: 28px;
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        /* Ikon Default (Hamburger - \f333) */
+        .hamburger-button::before {
+            font-family: "dashicons"; /* Menggunakan font Dashicons */
+            content: "\f333"; /* Karakter Unicode untuk ikon menu hamburger */
+            display: block;
+            line-height: 1; /* Pastikan ikon sejajar */
         }
 
-        /* Default: Tampilkan ikon hamburger, sembunyikan ikon 'X' */
-        .hamburger-button .icon-hamburger {
-            opacity: 1;
-        }
-
-        .hamburger-button .icon-close {
-            opacity: 0;
-            transform: translate(-50%, -50%) rotate(-90deg); /* Rotasi agar transisi lebih menarik */
-        }
-
-        /* Saat tombol aktif: Sembunyikan ikon hamburger, tampilkan ikon 'X' */
-        .hamburger-button.is-active .icon-hamburger {
-            opacity: 0;
-            transform: translate(-50%, -50%) rotate(90deg);
-        }
-
-        .hamburger-button.is-active .icon-close {
-            opacity: 1;
-            transform: translate(-50%, -50%) rotate(0deg);
+        /* Ikon Saat Menu Terbuka (X - \f335) */
+        .hamburger-button.is-active::before {
+            content: "\f335"; /* Karakter Unicode untuk ikon 'X' */
         }
 
 
@@ -144,16 +127,7 @@
     <header>
         <nav class="navbar">
             <button class="hamburger-button" aria-expanded="false" aria-label="Toggle Menu">
-                <svg class="icon icon-hamburger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-                <svg class="icon icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
+                </button>
             <ul class="nav-menu">
                 <li><a href="#">Beranda</a></li>
                 <li><a href="#">Tentang Kami</a></li>
@@ -164,8 +138,8 @@
     </header>
 
     <main>
-        <h1>Menu Hamburger Menggunakan SVG</h1>
-        <p>Contoh ini menunjukkan menu hamburger yang ikonnya dibuat dengan SVG in-line, tanpa memerlukan @font-face.</p>
+        <h1>Menu Hamburger Bersih</h1>
+        <p>Ini adalah contoh menu hamburger yang disederhanakan, fokus pada fungsionalitas toggle menu.</p>
     </main>
 
     <script>
