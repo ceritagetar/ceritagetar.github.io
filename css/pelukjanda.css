@@ -4,4 +4,4 @@
 
 #content-wrapper{max-width:800px;float:none;margin:0 auto;background:#fff;margin-top:40px;}
 .post{padding:40px 10%;}
-@media only screen and (max-width:480px){#content-wrapper{margin:0;padding-left:5%;padding-right:5%;padding-top:40px;}}
+@media only screen and (max-width:480px){.post{padding:0;}#content-wrapper{margin:0;padding-left:5%;padding-right:5%;padding-top:15px;}}
