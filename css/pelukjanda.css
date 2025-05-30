@@ -1,7 +1,0 @@
-/* ## Baseline Normalize --------------------------------------------- */ /* normalize.css v3.0.1 | MIT License | git.io/normalize */ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0;font-family: ProximaNova;}
-
-@font-face { font-family: 'ProximaNova'; src: url('https://pelukjanda.github.io/proximanova.woff2') format('woff2'); font-weight: normal; font-style: normal; } 
-
-#content-wrapper{max-width:800px;float:none;margin:0 auto;background:#fff;margin-top:40px;}
-.post{padding:40px 10%;}
-@media only screen and (max-width:480px){.post{padding:0;}#content-wrapper{margin:0;padding-left:5%;padding-right:5%;padding-top:15px;}}
