@@ -1,1 +1,106 @@
-<ISI CSS ANDA DI SINI>
+
+/* Gaya mirip blog Romeltea (disesuaikan) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Verdana", sans-serif;
+  background-color: #f7f7f7;
+  color: #222;
+  line-height: 1.6;
+  padding: 1rem;
+}
+
+header {
+  background: #003366;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.8rem;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+article {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.thumbnail {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+}
+
+.labels {
+  margin: 0.5rem 0;
+}
+
+.label {
+  display: inline-block;
+  background: #006699;
+  color: white;
+  padding: 2px 8px;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  margin-right: 5px;
+}
+
+.label a {
+  color: white;
+  text-decoration: none;
+}
+
+nav.pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+nav.pagination a {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 0 4px;
+  text-decoration: none;
+  border: 1px solid #ccc;
+  color: #333;
+  border-radius: 4px;
+}
+
+nav.pagination a.active {
+  background: #003366;
+  color: white;
+  border-color: #003366;
+}
+
+aside {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  height: fit-content;
+}
+
+footer {
+  background: #003366;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
