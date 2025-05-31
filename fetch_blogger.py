@@ -96,7 +96,7 @@ def generate_post_page(post):
     filepath = os.path.join("posts", filename)
     thumbnail = extract_thumbnail(post["content"])
     labels = render_labels(post.get("labels", []), prefix="../")
-    description = strip_html(post['content'])[:150]
+    description = strip_html(post['content'])[:100]
     canonical_url = f"https://example.com/posts/{filename}"
     breadcrumb = render_breadcrumb(post['title'], is_post=True, prefix="../")
 
@@ -172,7 +172,6 @@ def generate_index_pages(posts):
     </div>
     <div class='post-info'>
       <h2 class='post-title' itemprop='headline'><a href='posts/{post_file}'>{title}</a></h2>
-      {labels}
       <p class='post-snippet'>{snippet}... <a href='posts/{post_file}'>Selengkapnya</a></p>
     </div>
   </article>"""
