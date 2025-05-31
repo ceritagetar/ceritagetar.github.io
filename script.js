@@ -1,6 +1,5 @@
-// GANTI DENGAN API KEY DAN ID BLOG ANDA
-const API_KEY = 'AIzaSyDL33-qN4ylKeMIFcOQHw0mwn8Dv8HZH8k';
-const BLOG_ID = '4310151456111498512';
+const API_KEY = 'AIzaSyDL33-qN4ylKeMIFcOQHw0mwn8Dv8HZH8k'; // API Key Anda
+const BLOG_ID = '4310151456111498512'; // ID Blog Anda
 
 const postsContainer = document.getElementById('posts-container');
 
@@ -9,17 +8,17 @@ async function fetchBlogPosts() {
         // Hapus pesan loading awal
         postsContainer.innerHTML = '';
 
-        // Panggil Blogger API
+        // Panggil Blogger API untuk mendapatkan daftar postingan
         const response = await fetch(`https://www.googleapis.com/blogger/v3/blogs/${BLOG_ID}/posts?key=${API_KEY}`);
 
         if (!response.ok) {
             // Tangani jika respons bukan 200 OK
-            throw new Error(`Error: ${response.status} - ${response.statusText}. Pastikan API Key dan Blog ID benar serta blog publik.`);
+            throw new Error(`Error: ${response.status} - ${response.statusText}. Pastikan API Key dan Blog ID benar, serta blog Anda bersifat publik.`);
         }
 
         const data = await response.json();
 
-        // Pastikan ada postingan yang ditemukan
+        // Periksa apakah ada postingan yang ditemukan
         if (data.items && data.items.length > 0) {
             data.items.forEach(post => {
                 const postElement = document.createElement('div');
@@ -32,7 +31,8 @@ async function fetchBlogPosts() {
 
                 // Tanggal Publikasi
                 const postDate = document.createElement('span');
-                const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+                // Atur format tanggal sesuai keinginan Anda
+                const dateOptions = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZoneName: 'short' };
                 postDate.textContent = `Dipublikasikan pada: ${new Date(post.published).toLocaleDateString('id-ID', dateOptions)}`;
                 postDate.className = 'post-date';
                 postElement.appendChild(postDate);
@@ -40,17 +40,9 @@ async function fetchBlogPosts() {
                 // Konten Postingan (HTML dari Blogger)
                 const postContent = document.createElement('div');
                 postContent.className = 'post-content';
-                // Gunakan innerHTML untuk menampilkan konten HTML dari Blogger
+                // Gunakan innerHTML untuk menampilkan konten HTML dari Blogger secara langsung
                 postContent.innerHTML = post.content;
                 postElement.appendChild(postContent);
-
-                // Link "Baca Selengkapnya" ke postingan asli di Blogger
-                const readMoreLink = document.createElement('a');
-                readMoreLink.href = post.url;
-                readMoreLink.target = '_blank'; // Buka di tab baru
-                readMoreLink.className = 'read-more-link';
-                readMoreLink.textContent = 'Baca Selengkapnya';
-                postElement.appendChild(readMoreLink);
 
                 postsContainer.appendChild(postElement);
             });
@@ -59,10 +51,11 @@ async function fetchBlogPosts() {
         }
 
     } catch (error) {
+        // Tangani kesalahan dan tampilkan pesan ke pengguna
         console.error('Terjadi kesalahan saat memuat artikel:', error);
-        postsContainer.innerHTML = `<p class="error-message">Maaf, terjadi kesalahan saat memuat artikel: ${error.message}.</p>`;
+        postsContainer.innerHTML = `<p class="error-message">Maaf, terjadi kesalahan saat memuat artikel: ${error.message}. Silakan cek konsol browser untuk detail lebih lanjut.</p>`;
     }
 }
 
-// Panggil fungsi saat halaman dimuat
+// Panggil fungsi untuk mengambil dan menampilkan postingan saat halaman dimuat
 fetchBlogPosts();
