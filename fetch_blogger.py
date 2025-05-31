@@ -121,7 +121,7 @@ def generate_post_page(post):
 </head>
 <body>
   {HEADER_HTML}
-  <div class="content-wrapper"><main>
+  <div id="content-wrapper"><main>
     {breadcrumb}
     <article class='post-item'>
       <h1 class='post-title' itemprop='headline'>{post['title']}</h1>
@@ -155,7 +155,7 @@ def generate_index_pages(posts):
 </head>
 <body>
   {HEADER_HTML}
-  <div class="content-wrapper"><main>
+  <div id="content-wrapper"><main>
     {breadcrumb}"""
 
         for post in page_posts:
@@ -213,7 +213,7 @@ def generate_label_pages(posts):
 </head>
 <body>
   {HEADER_HTML}
-  <div class="content-wrapper"><main>
+  <div id="content-wrapper"><main>
     {breadcrumb}
     <h1 class='post-title'>Kategori: {label}</h1>"""
 
