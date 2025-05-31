@@ -116,19 +116,19 @@ def generate_post_page(post):
   <meta name='twitter:title' content='{post['title']}'>
   <meta name='twitter:description' content='{description}'>
   <meta name='twitter:image' content='{thumbnail}'>
-  <link rel='stylesheet' href='assets/style.css'>
+  <link rel='stylesheet' href='https://ceritagetar.github.io/assets/style.css'>
   {HEAD_HTML}
 </head>
 <body>
   {HEADER_HTML}
-  <main class="content-wrapper">
+  <div class="content-wrapper"><main>
     {breadcrumb}
-    <div class='post-detail'>
+    <article class='post-item'>
       <h1 class='post-title' itemprop='headline'>{post['title']}</h1>
       {labels}
       <div class='post-content' itemprop='articleBody'>{post['content']}</div>
-    </div>
-  </main>
+    </article>
+  </main></div>
   {FOOTER_HTML}
 </body>
 </html>"""
@@ -155,7 +155,7 @@ def generate_index_pages(posts):
 </head>
 <body>
   {HEADER_HTML}
-  <main class="content-wrapper">
+  <div class="content-wrapper"><main>
     {breadcrumb}"""
 
         for post in page_posts:
@@ -184,7 +184,7 @@ def generate_index_pages(posts):
         html += "</nav>"
 
         html += f"""
-  </main>
+  </main></div>
   {FOOTER_HTML}
 </body>
 </html>"""
@@ -213,7 +213,7 @@ def generate_label_pages(posts):
 </head>
 <body>
   {HEADER_HTML}
-  <main class="content-wrapper">
+  <div class="content-wrapper"><main>
     {breadcrumb}
     <h1 class='post-title'>Kategori: {label}</h1>"""
 
@@ -235,7 +235,7 @@ def generate_label_pages(posts):
   </article>"""
 
         html += f"""
-  </main>
+  </main></div>
   {FOOTER_HTML}
 </body>
 </html>"""
