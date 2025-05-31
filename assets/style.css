@@ -52,7 +52,7 @@ main {
 }
 
 .post-thumbnail {
-  flex: 0 0 150px;
+  flex: 0 0 320px;
 }
 .post-thumbnail img {
   width: 100%;
