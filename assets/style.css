@@ -1,280 +1,206 @@
-/* General Body and Typography */
+/* === Normalize === */
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
 body {
-    font-family: 'Roboto', sans-serif; /* Menggunakan font Roboto */
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f2f5; /* Latar belakang abu-abu muda ala website modern */
-    color: #333;
+  margin: 0;
+  background-color: #f4f5f6;
+  color: #333;
+  font-family: 'ProximaNova', sans-serif;
+  font-size: 18px;
+  line-height: 1.625;
+  padding-bottom: 100px;
 }
-
+article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
+  display: block;
+}
+img {
+  border: 0;
+  max-width: 100%;
+  height: auto;
+}
 a {
-    color: inherit; /* Tautan mewarisi warna teks induknya */
-    text-decoration: none;
+  color: #25a0db;
+  text-decoration: none;
+  transition: all 0.1s ease-in-out;
 }
-
 a:hover {
-    text-decoration: none; /* Tidak ada underline saat hover secara default */
+  color: #333;
+}
+p, br {
+  margin: 0 0 1.625em 0;
+  padding: 0;
+}
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+li {
+  margin: 10px 0;
+}
+b, strong {
+  font-weight: 700;
+  color: #4c4c4c;
+}
+blockquote, cite, em, i {
+  font-style: italic;
+}
+blockquote {
+  margin: 40px;
+}
+blockquote::before {
+  content: "\201C";
+  font-size: 30px;
+  position: relative;
+  top: -10px;
+  left: -20px;
+  display: block;
 }
 
-/* Header */
-header {
-    background-color: #fff; /* Header putih */
-    color: #333;
-    padding: 1rem 0;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sedikit bayangan */
-    margin-bottom: 20px;
+/* === Font === */
+@font-face {
+  font-family: 'ProximaNova';
+  src: url('https://pelukjanda.github.io/proximanova.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2rem; /* Ukuran font lebih proporsional */
-    font-weight: 700;
+/* === Headings === */
+h1, h2, h3, h4, h5, h6 {
+  color: #4c4c4c;
+  font-family: 'ProximaNova', sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.625em 0;
+  letter-spacing: -0.015em;
+}
+h1, h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 20px;
+}
+h4, h5, h6 {
+  font-size: 18px;
 }
 
-/* Main Content Area */
+/* === Layout === */
 main {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 0 15px;
-    gap: 20px;
+  display: flex;
+  max-width: 1000px;
+  margin: 40px auto;
+  gap: 20px;
+  padding: 0 5%;
+  flex-wrap: wrap;
 }
-
 section {
-    flex: 3;
-    min-width: 300px;
-    background-color: #fff; /* Konten utama putih */
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  flex: 1 1 60%;
 }
-
 aside {
-    flex: 1;
-    min-width: 250px; /* Lebar minimum sidebar */
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  flex: 1 1 30%;
 }
 
-/* Article Styling (List Items) */
+/* === Post preview === */
 article {
-    /* Menggunakan class dari contoh Kompas.com: hlItem-link */
-    display: flex;
-    align-items: flex-start;
-    gap: 16px; /* Jarak antara thumbnail dan konten */
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 15px; /* Padding di sekitar setiap artikel */
-    margin-bottom: 15px; /* Jarak antar artikel */
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Bayangan halus */
-    transition: all 0.2s ease-in-out; /* Transisi untuk efek hover */
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-
-article:hover {
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Bayangan lebih jelas saat hover */
-    transform: translateY(-2px); /* Sedikit naik saat hover */
+.thumbnail {
+  width: 120px;
+  height: auto;
+  margin-right: 20px;
+  object-fit: cover;
+  border-radius: 4px;
 }
-
-/* Thumbnail Styling */
-article .thumbnail {
-    /* Menggunakan class dari contoh Kompas.com: hlImg */
-    width: 100px; /* Lebar thumbnail tetap */
-    height: 100px; /* Tinggi thumbnail tetap */
-    min-width: 100px; /* Pastikan tidak mengecil */
-    object-fit: cover;
-    border-radius: 8px;
-    overflow: hidden; /* Penting untuk gambar yang melebihi batas */
-    flex-shrink: 0; /* Agar thumbnail tidak mengecil */
-}
-
-article .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block; /* Hilangkan spasi bawah gambar */
-}
-
-/* Content Box (Judul dan Snippet) */
-article > a { /* Targetkan langsung tautan yang membungkus konten */
-    display: flex;
-    flex-direction: row; /* Kembali ke baris untuk flexbox */
-    align-items: flex-start;
-    gap: 16px;
-    flex-grow: 1;
-    width: 100%; /* Penting untuk flexbox yang membungkus */
-}
-
-/* Judul Artikel */
 article h2 {
-    /* Menggunakan class dari contoh Kompas.com: hlTitle */
-    margin: 0;
-    font-family: 'Inter', sans-serif; /* Font Inter untuk judul */
-    font-size: 1.15rem; /* Ukuran font lebih besar */
-    line-height: 1.4;
-    color: #212121; /* Warna judul lebih gelap */
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Batasi judul hingga 3 baris */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 600; /* Judul lebih tebal */
+  margin: 0 0 10px;
+  font-size: 20px;
 }
-
 article p {
-    margin: 8px 0 0; /* Jarak atas snippet */
-    color: #555;
-    font-size: 0.9rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Batasi snippet hingga 2 baris */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 16px;
+  color: #555;
 }
-
-/* Labels */
 .labels {
-    margin-top: 5px; /* Lebih dekat ke judul/snippet */
-    margin-bottom: 10px;
-    font-size: 0.8em;
+  margin: 10px 0;
 }
-
 .label {
-    display: inline-block;
-    background-color: #e9ecef; /* Warna latar belakang label lebih terang */
-    color: #6c757d; /* Warna teks label */
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    white-space: nowrap; /* Cegah label putus baris */
+  background: #eee;
+  padding: 3px 8px;
+  border-radius: 3px;
+  margin-right: 5px;
+  font-size: 14px;
 }
-
 .label a {
-    color: #6c757d;
-    text-decoration: none;
+  color: #333;
 }
 
-.label a:hover {
-    color: #495057;
+/* === Post page === */
+.post {
+  background: #fff;
+  padding: 40px 10%;
+  max-width: 800px;
+  margin: 40px auto;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
 }
 
-/* Pagination */
+/* === Pagination === */
 .pagination {
-    text-align: center;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 30px;
 }
-
 .pagination a {
-    display: inline-block;
-    padding: 8px 15px;
-    margin: 0 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    color: #007bff;
-    text-decoration: none;
-    transition: all 0.2s ease;
+  display: inline-block;
+  margin: 0 5px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: #ddd;
+  color: #333;
+  text-decoration: none;
+}
+.pagination a.active {
+  background: #25a0db;
+  color: #fff;
 }
 
-.pagination a.active,
-.pagination a:hover {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
+/* === Responsive === */
+@media only screen and (max-width: 768px) {
+  main {
+    flex-direction: column;
+    padding: 0 3%;
+  }
+  .thumbnail {
+    width: 100px;
+    margin-right: 10px;
+  }
+  article {
+    flex-direction: row;
+  }
 }
-
-/* Footer */
-footer {
-    background-color: #343a40; /* Warna footer lebih gelap */
-    color: #f8f9fa;
+@media only screen and (max-width: 480px) {
+  body {
+    font-size: 15px;
+    background: #fff;
+  }
+  .post {
+    padding: 20px 5%;
+  }
+  h1, h2 {
+    font-size: 20px;
+  }
+  article {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    padding: 1.5rem 0;
-    margin-top: 40px;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    main {
-        flex-direction: column;
-    }
-
-    section, aside {
-        min-width: unset;
-        width: 100%;
-        padding: 15px; /* Kurangi padding di mobile */
-    }
-
-    article {
-        flex-direction: column; /* Thumbnail di atas, judul di bawah */
-        align-items: center;
-        text-align: center;
-        padding: 12px;
-    }
-
-    article > a { /* Sesuaikan flex-direction untuk konten di dalam tautan */
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 10px;
-    }
-
-    article .thumbnail {
-        width: 100%;
-        max-width: 200px; /* Batasi lebar thumbnail di mobile */
-        height: auto; /* Tinggi menyesuaikan */
-        margin-bottom: 10px;
-    }
-
-    article h2 {
-        font-size: 1rem; /* Ukuran judul lebih kecil */
-        -webkit-line-clamp: unset; /* Izinkan judul lebih panjang */
-        overflow: visible;
-        text-overflow: unset;
-    }
-
-    article p {
-        -webkit-line-clamp: unset; /* Izinkan snippet lebih panjang */
-        overflow: visible;
-        text-overflow: unset;
-    }
-
-    .labels {
-        text-align: center;
-        margin-top: 10px;
-        margin-bottom: 5px;
-    }
-}
-
-@media (max-width: 480px) {
-    header h1 {
-        font-size: 1.6rem;
-    }
-
-    article {
-        padding: 10px;
-    }
-
-    article h2 {
-        font-size: 0.95rem;
-    }
-
-    article p {
-        font-size: 0.85rem;
-    }
-
-    .pagination a {
-        padding: 6px 12px;
-        margin: 0 3px;
-        font-size: 0.9rem;
-    }
+  }
+  .thumbnail {
+    margin: 0 0 10px;
+  }
 }
