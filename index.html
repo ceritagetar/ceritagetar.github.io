@@ -5,27 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Saya - Beranda</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* Variabel CSS untuk kemudahan kustomisasi */
         :root {
-            --primary-color: #3F51B5; /* Deep Purple 500 */
-            --primary-color-dark: #303F9F; /* Deep Purple 700 */
+            --primary-color: #3F51B5; /* Indigo 500 */
+            --primary-color-dark: #303F9F; /* Indigo 700 */
             --accent-color: #FFC107; /* Amber 500 */
             --text-color: #212121;
             --secondary-text-color: #757575;
-            --divider-color: #BDBDBD;
-            --background-color: #f5f5f5; /* Grey 100 */
-            --card-background: #ffffff;
+            --divider-color: #E0E0E0; /* Grey 300 */
+            --background-color: #F5F5F5; /* Grey 100 */
+            --card-background: #FFFFFF;
         }
 
         body {
-            font-family: 'Roboto', sans-serif; /* Menggunakan Roboto, font standar Android */
-            margin: 0; /* Hapus margin default */
-            padding-top: 56px; /* Ruang untuk app bar tetap */
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding-top: 56px; /* Ruang untuk app bar tetap di atas */
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden; /* Mencegah scroll horizontal */
+        }
+
+        /* Loading Overlay (Menutupi seluruh halaman) */
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(255, 255, 255, 0.95); /* Latar belakang semi-transparan */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Pastikan di atas semua elemen */
+            transition: opacity 0.3s ease-in-out; /* Animasi saat muncul/hilang */
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #loadingOverlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            color: var(--secondary-text-color);
+            font-size: 1.1em;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* App Bar (Toolbar) */
@@ -41,48 +87,47 @@
             align-items: center;
             padding: 0 16px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
+            z-index: 1000; /* Di atas konten, di bawah loading overlay */
         }
 
         .app-bar h1 {
-            font-size: 1.25em; /* Ukuran font standar untuk judul app bar */
+            font-size: 1.25em;
             margin: 0;
-            flex-grow: 1; /* Agar judul mengambil ruang yang tersisa */
+            flex-grow: 1;
+            font-weight: 500;
         }
 
-        /* Content Area */
-        .content-container {
-            margin: 16px; /* Margin standar untuk konten di Android */
-            padding: 0;
+        /* Main Content Container */
+        .content-wrapper {
+            max-width: 800px; /* Batasi lebar konten untuk estetika */
+            margin: 16px auto; /* Margin atas/bawah dan auto untuk tengah */
+            padding: 0 16px; /* Padding samping untuk responsivitas */
         }
 
         #posts-list-container {
             background-color: var(--card-background);
-            border-radius: 8px; /* Sudut membulat untuk tampilan kartu */
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); /* Shadow Material Design */
-            padding: 16px; /* Padding dalam kartu */
-            margin-bottom: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+            padding: 16px;
         }
 
+        /* Gaya untuk setiap ringkasan artikel (akan diisi oleh index-script.js) */
         .post-summary {
             border-bottom: 1px solid var(--divider-color);
-            padding-bottom: 16px;
-            margin-bottom: 16px;
-            display: flex; /* Menggunakan flexbox untuk tata letak yang lebih baik */
-            flex-direction: column;
+            padding: 16px 0;
+            margin-bottom: 0; /* Hapus margin bawah default */
         }
 
         .post-summary:last-child {
             border-bottom: none;
-            margin-bottom: 0;
         }
 
         .post-summary h2 {
             color: var(--primary-color-dark);
-            font-size: 1.2em; /* Ukuran judul artikel yang lebih kecil */
+            font-size: 1.2em;
             margin-top: 0;
             margin-bottom: 8px;
-            font-weight: 500; /* Medium weight */
+            font-weight: 500;
         }
 
         .post-summary h2 a {
@@ -119,12 +164,12 @@
             background-color: var(--primary-color);
             color: white;
             text-decoration: none;
-            border-radius: 4px; /* Sedikit membulat */
+            border-radius: 4px;
             transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            align-self: flex-start; /* Agar tombol tidak melebar */
             font-weight: 500;
-            text-transform: uppercase; /* Gaya tombol Material Design */
+            text-transform: uppercase;
             box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+            font-size: 0.85em; /* Sedikit lebih kecil untuk mobile */
         }
 
         .read-full-link:hover {
@@ -132,46 +177,16 @@
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Progress Bar */
-        .progress-bar-container {
-            width: 100%;
-            height: 4px; /* Tinggi progress bar */
-            background-color: rgba(0, 0, 0, 0.1); /* Warna latar belakang */
-            position: fixed;
-            top: 56px; /* Di bawah app bar */
-            left: 0;
-            z-index: 1001;
-            overflow: hidden; /* Penting untuk animasi */
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%; /* Dimulai dari 0% */
-            background-color: var(--accent-color); /* Warna aksen */
-            transition: width 0.3s ease-in-out; /* Animasi mulus saat lebar berubah */
-        }
-
-        .loading-message, .error-message {
-            text-align: center;
-            padding: 20px;
-            color: var(--secondary-text-color);
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-
         /* Floating Action Button (FAB) */
         .fab {
             position: fixed;
             bottom: 24px;
             right: 24px;
-            width: 56px; /* Ukuran standar FAB */
+            width: 56px;
             height: 56px;
             background-color: var(--accent-color);
-            border-radius: 50%; /* Membuat lingkaran */
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3); /* Shadow FAB */
+            border-radius: 50%;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -186,11 +201,38 @@
         }
 
         .fab .material-icons {
-            color: var(--primary-color-dark); /* Warna ikon di FAB */
+            color: var(--primary-color-dark);
             font-size: 24px;
         }
 
-        /* Responsive adjustments */
+        /* Media Queries untuk Responsivitas */
+        @media (max-width: 599px) {
+            body {
+                padding-top: 56px; /* Konsisten untuk mobile */
+            }
+            .app-bar {
+                height: 56px;
+            }
+            .content-wrapper {
+                margin: 8px auto; /* Margin lebih kecil di mobile */
+                padding: 0 8px;
+            }
+            #posts-list-container {
+                padding: 12px;
+                border-radius: 0; /* Kartu penuh lebar di mobile */
+                box-shadow: none; /* Hapus shadow di mobile untuk tampilan lebih datar */
+            }
+            .post-summary {
+                padding: 12px 0;
+            }
+            .fab {
+                bottom: 16px;
+                right: 16px;
+                width: 50px; /* Sedikit lebih kecil di mobile */
+                height: 50px;
+            }
+        }
+
         @media (min-width: 600px) {
             body {
                 padding-top: 64px; /* Tinggi app bar di tablet/desktop */
@@ -198,122 +240,72 @@
             .app-bar {
                 height: 64px;
             }
-            .progress-bar-container {
-                top: 64px;
+            .app-bar h1 {
+                font-size: 1.4em;
             }
-            .content-container {
-                max-width: 960px; /* Lebar konten yang lebih besar di desktop */
-                margin: 24px auto; /* Tengahkan konten */
+            .content-wrapper {
+                margin: 24px auto; /* Margin lebih besar di desktop */
+                padding: 0 24px;
             }
         }
     </style>
 </head>
 <body>
+    <div id="loadingOverlay">
+        <div class="spinner"></div>
+        <p class="loading-text">Memuat konten...</p>
+    </div>
+
     <div class="app-bar">
         <h1>Blog Saya</h1>
         <span class="material-icons">search</span>
     </div>
 
-    <div class="progress-bar-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-
-    <div class="content-container">
+    <div class="content-wrapper">
         <div id="posts-list-container">
-            <p class="loading-message">Memuat daftar artikel...</p>
-        </div>
+            </div>
     </div>
 
     <div class="fab" id="fab">
         <span class="material-icons">add</span>
     </div>
 
+    <script src="index-script.js"></script>
+
     <script>
-        // Simulasi data artikel
-        const dummyPosts = [
-            {
-                id: 1,
-                title: "Memulai dengan Pengembangan Aplikasi Android",
-                date: "2025-05-28",
-                snippet: "Pelajari dasar-dasar pengembangan aplikasi Android, mulai dari setup lingkungan hingga membuat aplikasi pertama Anda. Artikel ini mencakup Java/Kotlin, Android Studio, dan komponen UI dasar.",
-                fullContent: "<p>Detail lengkap tentang memulai pengembangan Android...</p>"
-            },
-            {
-                id: 2,
-                title: "Desain Material untuk Aplikasi Web Modern",
-                date: "2025-05-25",
-                snippet: "Desain Material adalah sistem desain adaptif yang dikembangkan oleh Google. Temukan bagaimana menerapkannya pada proyek web Anda untuk pengalaman pengguna yang intuitif.",
-                fullContent: "<p>Detail lengkap tentang Desain Material...</p>"
-            },
-            {
-                id: 3,
-                title: "Manajemen State di React: Context API vs Redux",
-                date: "2025-05-22",
-                snippet: "Memahami bagaimana mengelola state di aplikasi React sangat penting. Artikel ini membandingkan Context API dengan Redux dan kapan harus menggunakan masing-masing.",
-                fullContent: "<p>Detail lengkap tentang manajemen state React...</p>"
-            },
-            {
-                id: 4,
-                title: "Pengantar Machine Learning dengan Python",
-                date: "2025-05-19",
-                snippet: "Jelajahi dasar-dasar machine learning menggunakan Python. Artikel ini membahas konsep-konsep inti, algoritma populer, dan library seperti scikit-learn.",
-                fullContent: "<p>Detail lengkap tentang Machine Learning dengan Python...</p>"
+        // --- Bagian JavaScript untuk Mengelola Loading Overlay ---
+        // Anda perlu memanggil fungsi ini di index-script.js Anda
+
+        // Fungsi untuk menyembunyikan loading overlay
+        function hideLoadingOverlay() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            if (loadingOverlay) {
+                loadingOverlay.classList.add('hidden');
             }
-        ];
-
-        const postsListContainer = document.getElementById('posts-list-container');
-        const progressBar = document.getElementById('progressBar');
-        const fab = document.getElementById('fab');
-
-        // Fungsi untuk menampilkan progress bar
-        function showProgressBar() {
-            progressBar.style.width = '50%'; // Mulai animasi
         }
 
-        // Fungsi untuk menyembunyikan progress bar
-        function hideProgressBar() {
-            progressBar.style.width = '100%';
-            setTimeout(() => {
-                progressBar.style.width = '0%'; // Kembali ke 0% setelah selesai
-                progressBar.style.display = 'none'; // Sembunyikan sepenuhnya
-            }, 300); // Sesuaikan dengan durasi transisi CSS
-        }
+        // Contoh bagaimana Anda akan menggunakan ini di index-script.js:
+        // Panggil `hideLoadingOverlay()` setelah data dari API Blogger Anda berhasil dimuat dan dirender.
 
-        // Fungsi untuk memuat artikel
-        function loadPosts() {
-            showProgressBar(); // Tampilkan progress bar saat mulai memuat
-
-            // Simulasikan penundaan jaringan
-            setTimeout(() => {
-                postsListContainer.innerHTML = ''; // Kosongkan kontainer
-
-                if (dummyPosts.length === 0) {
-                    postsListContainer.innerHTML = '<p class="loading-message">Belum ada artikel yang tersedia.</p>';
-                } else {
-                    dummyPosts.forEach(post => {
-                        const postSummary = document.createElement('div');
-                        postSummary.classList.add('post-summary');
-                        postSummary.innerHTML = `
-                            <h2><a href="detail.html?id=${post.id}">${post.title}</a></h2>
-                            <span class="post-date">${new Date(post.date).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                            <p class="snippet">${post.snippet}</p>
-                            <a href="detail.html?id=${post.id}" class="read-full-link">Baca Selengkapnya</a>
-                        `;
-                        postsListContainer.appendChild(postSummary);
-                    });
-                }
-                hideProgressBar(); // Sembunyikan progress bar setelah selesai memuat
-            }, 1500); // Simulasi loading 1.5 detik
-        }
+        // Simulasikan pemuatan data (HANYA UNTUK DEMO, HAPUS INI DARI PRODUKSI)
+        // Anggaplah ini adalah akhir dari fetch API di index-script.js Anda
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     setTimeout(() => {
+        //         // Ini adalah tempat di mana index-script.js Anda akan mengisi #posts-list-container
+        //         // postsListContainer.innerHTML = '<h2>Artikel dari Blogger API Anda akan tampil di sini!</h2>';
+        //         // Setelah selesai, sembunyikan overlay
+        //         hideLoadingOverlay();
+        //     }, 2000); // Simulasi 2 detik loading
+        // });
 
         // Event listener untuk FAB (contoh: navigasi ke halaman tambah artikel)
-        fab.addEventListener('click', () => {
-            alert('FAB diklik! Anda bisa mengarahkan ke halaman tambah artikel baru.');
-            // window.location.href = 'tambah-artikel.html';
-        });
-
-        // Panggil fungsi untuk memuat artikel saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', loadPosts);
+        const fab = document.getElementById('fab');
+        if (fab) {
+            fab.addEventListener('click', () => {
+                alert('FAB diklik! Anda bisa mengarahkan ke halaman tambah artikel baru.');
+                // window.location.href = 'tambah-artikel.html';
+            });
+        }
     </script>
 </body>
 </html>
