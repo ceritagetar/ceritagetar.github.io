@@ -4,6 +4,7 @@ import json
 from datetime import datetime
 import re
 
+# Ambil Kredensial dari GitHub Secrets
 API_KEY = os.getenv('BLOGGER_API_KEY')
 BLOG_ID = os.getenv('BLOG_ID')
 
@@ -11,13 +12,15 @@ if not API_KEY or not BLOG_ID:
     print("Error: BLOGGER_API_KEY or BLOG_ID not set in environment variables.")
     exit(1)
 
+# Menambahkan parameter fetchBodies=true untuk memastikan konten penuh diambil
+# Menambahkan maxResults=100 untuk mengambil hingga 100 postingan
 BLOGGER_API_URL = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&fetchBodies=true&maxResults=100"
 
 print(f"Fetching posts from Blogger API for Blog ID: {BLOG_ID}")
 
 try:
     response = requests.get(BLOGGER_API_URL)
-    response.raise_for_status()
+    response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
     data = response.json()
 except requests.exceptions.RequestException as e:
     print(f"Error fetching data from Blogger API: {e}")
@@ -25,10 +28,12 @@ except requests.exceptions.RequestException as e:
 
 posts_data = data.get('items', [])
 
+# Create output directory for posts
 output_dir = "posts"
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
+# Helper function to create SEO-friendly URLs (slugify)
 def slugify(text):
     text = text.lower()
     text = re.sub(r'[^\w\s-]', '', text)
@@ -41,19 +46,24 @@ homepage_snippets = []
 for post in posts_data:
     title = post.get('title', 'No Title')
     published_date_str = post.get('published', '')
-    post_content_html = post.get('content', '')
+    post_content_html = post.get('content', '') # Full HTML content
     
+    # Extract snippet for homepage (e.g., first 200 chars)
+    # A more robust snippet extraction would parse HTML, but for simplicity, we truncate
     snippet = post_content_html[:200] + "..." if len(post_content_html) > 200 else post_content_html
     
+    # Format date
     try:
         published_date = datetime.fromisoformat(published_date_str.replace('Z', '+00:00'))
         display_date = published_date.strftime('%d %B %Y')
     except ValueError:
         display_date = published_date_str
 
+    # Create URL slug for the post
     post_slug = slugify(title)
-    detail_page_url = f"/{output_dir}/{post_slug}.html"
+    detail_page_url = f"/{output_dir}/{post_slug}.html" # URL relative to site root
 
+    # --- Generate HTML content for the detail page ---
     detail_html_content = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -85,6 +95,7 @@ for post in posts_data:
 </body>
 </html>
 """
+    # Save the detail HTML file
     detail_filename = f"{output_dir}/{post_slug}.html"
     try:
         with open(detail_filename, 'w', encoding='utf-8') as f:
@@ -93,16 +104,19 @@ for post in posts_data:
     except IOError as e:
         print(f"Error saving detail page {detail_filename}: {e}")
 
+    # Add snippet to the list for the homepage
     homepage_snippets.append(f"""
-    <div class="post-snippet">
-        <h2><a href="{detail_page_url}">{title}</a></h2>
-        <p class="post-meta">Published: {display_date}</p>
-        <p>{snippet} <a href="{detail_page_url}">Read More</a></p>
-    </div>
-    """)
+            <div class="post-snippet">
+                <h2><a href="{detail_page_url}">{title}</a></h2>
+                <p class="post-meta">Published: {display_date}</p>
+                <p>{snippet} <a href="{detail_page_url}">Read More</a></p>
+            </div>
+            """)
 
+# --- Generate Homepage (index.html) ---
 homepage_content = "\n".join(homepage_snippets)
-current_year = datetime.now().year
+
+current_year = datetime.now().year # Get current year for copyright
 
 index_html_content = f"""
 <!DOCTYPE html>
@@ -135,7 +149,7 @@ index_html_content = f"""
 </body>
 </html>
 """
-
+# Save index.html
 try:
     with open("index.html", 'w', encoding='utf-8') as f:
         f.write(index_html_content)
