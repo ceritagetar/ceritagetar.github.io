@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Saya - Di-host di GitHub Pages</title>
+    <title>Blog Saya - Beranda</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -12,12 +12,14 @@
             padding: 0 15px;
             color: #333;
             background-color: #f9f9f9;
+            line-height: 1.6;
         }
         header {
             text-align: center;
             padding: 40px 0;
             background-color: #fff;
             margin-bottom: 20px;
+            border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         header h1 {
@@ -25,26 +27,39 @@
             font-size: 2.5em;
             margin: 0;
         }
-        #posts-container {
+        header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        #posts-list-container { /* ID diubah untuk membedakan dari halaman detail */
             background-color: #fff;
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        .post {
+        .post-summary { /* Class baru untuk ringkasan artikel */
             border-bottom: 1px solid #eee;
             padding-bottom: 25px;
             margin-bottom: 25px;
         }
-        .post:last-child {
+        .post-summary:last-child {
             border-bottom: none;
             margin-bottom: 0;
         }
-        .post h2 {
+        .post-summary h2 {
             color: #3498db;
             font-size: 1.8em;
             margin-top: 0;
             margin-bottom: 10px;
+        }
+        .post-summary h2 a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+        .post-summary h2 a:hover {
+            color: #2980b9;
         }
         .post-date {
             font-size: 0.9em;
@@ -52,20 +67,20 @@
             margin-bottom: 15px;
             display: block;
         }
-        .post-content img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 15px auto;
-            border-radius: 4px;
+        .snippet { /* Class untuk snippet */
+            font-size: 1em;
+            color: #555;
+            margin-bottom: 15px;
+            /* Batasi tinggi dan tambahkan elipsis jika ingin menampilkan snippet lebih pendek */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* Tampilkan hanya 3 baris */
+            -webkit-box-orient: vertical;
         }
-        .post-content p {
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
-        .read-more-link {
+        .read-full-link {
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 10px;
             padding: 8px 15px;
             background-color: #3498db;
             color: white;
@@ -73,7 +88,7 @@
             border-radius: 5px;
             transition: background-color 0.3s ease;
         }
-        .read-more-link:hover {
+        .read-full-link:hover {
             background-color: #2980b9;
         }
         .loading-message, .error-message {
@@ -90,13 +105,12 @@
 <body>
     <header>
         <h1>Blog Saya</h1>
-        <p>Artikel terbaru langsung dari Blogger!</p>
+        <p>Beranda Blog: Snippet Artikel Terbaru</p>
     </header>
 
-    <div id="posts-container">
-        <p class="loading-message">Memuat artikel terbaru...</p>
+    <div id="posts-list-container">
+        <p class="loading-message">Memuat daftar artikel...</p>
     </div>
 
-    <script src="script.js"></script>
-</body>
+    <script src="index-script.js"></script> </body>
 </html>
