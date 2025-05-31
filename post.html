@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Artikel - Blog Saya</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 0 15px;
+            color: #333;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background-color: #fff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin: 0;
+        }
+        header p {
+            color: #666;
+            font-size: 1.1em;
+            margin-top: 10px;
+        }
+        #post-detail-container { /* ID berbeda untuk halaman detail */
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .post-full-title {
+            color: #3498db;
+            font-size: 2.2em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .post-full-date {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+            display: block;
+            text-align: center;
+        }
+        .post-full-content img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 4px;
+        }
+        .post-full-content p {
+            margin-bottom: 10px;
+        }
+        .loading-message, .error-message {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+        }
+        .error-message {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .back-to-home {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        .back-to-home a {
+            color: #3498db;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .back-to-home a:hover {
+            color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Blog Saya</h1>
+        <p>Detail Artikel</p>
+    </header>
+
+    <div id="post-detail-container">
+        <p class="loading-message">Memuat artikel...</p>
+    </div>
+
+    <p class="back-to-home"><a href="index.html">← Kembali ke Beranda</a></p>
+
+    <script src="post-script.js"></script> </body>
+</html>
