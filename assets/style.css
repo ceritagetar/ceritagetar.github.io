@@ -54,3 +54,43 @@ h2.post-title a:hover, h1.post-title a:hover {
 h2.post-title, .post-snippet {
 	margin-left: 218px;
 }
+
+.post-snippet {
+font-size: 15px;
+}
+
+@media only screen and (max-width:640px){
+	.post-thumbnail {
+		float: left;
+		width: 125px;
+		height: auto;
+		margin: 3px 10px 0px 0px;
+	}
+	.post-thumbnail img {
+		width: 125px;
+		height: 70.31px;
+	}
+
+h2.post-title, .post-snippet {
+		margin-left: 0px;
+	}
+	.post-snippet {
+		margin-top: 10px;
+	}
+	.post-item {
+		overflow: hidden;
+	}
+	h1{font-size:170%}
+	h2{font-size:150%}
+	h3{font-size:130%}
+	h4{font-size:120%}
+	h5{font-size:110%}
+	h6{font-size:100%}
+	h2.post-title {
+		font-size: 18px;
+		display: inline;
+	}
+	h1.post-title {
+		font-size: 24px;
+	}
+}
