@@ -4,3 +4,14 @@
  border: 1px solid rgba(231,233,234,1);
  padding: 20px;
 }
+.post-thumbnail {
+	position: relative;
+	float: left;
+	width: 200px;
+	height: 112.5px;
+}
+.post-thumbnail img {
+	width: 200px;
+	height: 112.5px;
+	display: block;
+}
