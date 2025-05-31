@@ -10,7 +10,7 @@ li {margin:10px;}
 
 .post-item {margin: 7px 0;
  border: 1px solid rgba(231,233,234,1);
- padding: 20px;
+ padding: 20px; background:#fff;
 }
 .post-thumbnail {
 	position: relative;
@@ -27,18 +27,18 @@ li {margin:10px;}
 
 .post-item {margin: 7px 0;
  border: 1px solid rgba(231,233,234,1);
- padding: 20px 10%;
+ padding: 20px 10%; background:#fff;
 }
 
 .post-thumbnail {
 	position: relative;
 	float: left;
-	width: 320px;
-	height: 224.5px;
+	width: 260px;
+	height: 164.5px;
 }
 .post-thumbnail img {
-	width: 320px;
-	height: 224.5px;
+	width: 260px;
+	height: 164.5px;
 	display: block;
 }
 
@@ -60,7 +60,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 
 h2.post-title, .post-snippet {
-	margin-left: 218px;
+	margin-left: 278px;
 }
 
 .post-snippet {
@@ -86,7 +86,7 @@ h2.post-title, .post-snippet {
 		margin-top: 10px;
 	}
 	.post-item {
-		overflow: hidden;
+		overflow: hidden;padding: 20px 5%;
 	}
 	h1{font-size:170%}
 	h2{font-size:150%}
