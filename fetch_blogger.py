@@ -1,28 +1,22 @@
-import requests
 import os
 import re
 import json
+import requests
 from html.parser import HTMLParser
 
 API_KEY = os.environ.get('BLOGGER_API_KEY')
 BLOG_ID = os.environ.get('BLOG_ID')
-
-if not API_KEY or not BLOG_ID:
-    raise EnvironmentError("Secrets BLOGGER_API_KEY dan BLOG_ID belum tersedia.")
-
-DATA_DIR = 'data'
-POST_DIR = 'posts'
-LABEL_DIR = 'labels'
-ASSETS_DIR = 'assets'
-POSTS_JSON = os.path.join(DATA_DIR, 'posts.json')
 POSTS_PER_PAGE = 10
 
-os.makedirs(DATA_DIR, exist_ok=True)
-os.makedirs(POST_DIR, exist_ok=True)
-os.makedirs(LABEL_DIR, exist_ok=True)
+if not API_KEY or not BLOG_ID:
+    raise EnvironmentError("BLOGGER_API_KEY dan BLOG_ID harus tersedia sebagai environment variable.")
 
-# === Utilitas ===
+# Direktori
+os.makedirs("data", exist_ok=True)
+os.makedirs("posts", exist_ok=True)
+os.makedirs("labels", exist_ok=True)
 
+# HTML Util
 class ImageExtractor(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -37,158 +31,121 @@ class ImageExtractor(HTMLParser):
 def extract_thumbnail(html):
     parser = ImageExtractor()
     parser.feed(html)
-    return parser.thumbnail or 'https://via.placeholder.com/600x200?text=No+Image'
+    return parser.thumbnail or "https://via.placeholder.com/600x300?text=No+Image"
 
 def strip_html(html):
-    return re.sub('<[^<]+?>', '', html)
+    return re.sub("<[^<]+?>", "", html)
 
-def sanitize_filename(title):
-    return re.sub(r'\W+', '-', title.lower()).strip('-')
+def sanitize(text):
+    return re.sub(r'\W+', '-', text.lower()).strip('-')
 
-def render_labels(labels):
+def render_labels(labels, prefix=''):
     if not labels:
         return ""
     html = '<div class="labels">'
     for label in labels:
-        label_filename = sanitize_filename(label)
-        html += f'<span class="label"><a href="labels/{label_filename}.html">{label}</a></span> '
+        html += f'<span class="label"><a href="{prefix}labels/{sanitize(label)}.html">{label}</a></span> '
     html += "</div>"
     return html
 
-# === Ambil semua postingan dari Blogger ===
-
-def fetch_posts():
-    all_posts = []
+def fetch_all_posts():
+    posts = []
     page_token = ''
-
     while True:
         url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=50"
         if page_token:
             url += f"&pageToken={page_token}"
-
         res = requests.get(url)
         if res.status_code != 200:
-            raise Exception(f"Gagal fetch: {res.status_code} {res.text}")
-
+            raise Exception(f"Gagal ambil data: {res.status_code} {res.text}")
         data = res.json()
-        items = data.get("items", [])
-        all_posts.extend(items)
+        posts.extend(data.get("items", []))
         page_token = data.get("nextPageToken")
         if not page_token:
             break
-
-    with open(POSTS_JSON, "w", encoding="utf-8") as f:
-        json.dump(all_posts, f, ensure_ascii=False, indent=2)
-
-    return all_posts
-
-# === Bangun halaman HTML ===
+    with open("data/posts.json", "w", encoding="utf-8") as f:
+        json.dump(posts, f, ensure_ascii=False, indent=2)
+    return posts
 
 def generate_post_page(post):
-    filename = f"{sanitize_filename(post['title'])}-{post['id']}.html"
-    filepath = os.path.join(POST_DIR, filename)
-    labels_html = render_labels(post.get("labels", []))
-    with open(filepath, 'w', encoding='utf-8') as f:
+    filename = f"{sanitize(post['title'])}-{post['id']}.html"
+    filepath = os.path.join("posts", filename)
+    labels = render_labels(post.get("labels", []), prefix="../")
+    with open(filepath, "w", encoding="utf-8") as f:
         f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
+<html><head>
   <meta charset="UTF-8">
   <title>{post['title']}</title>
   <link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-  <header><h1>{post['title']}</h1><p><a href="../index.html">← Kembali</a></p></header>
-  <main>
-    <article>
-      {labels_html}
-      <div>{post['content']}</div>
-    </article>
-  </main>
+</head><body>
+  <header><h1>{post['title']}</h1><a href="../index.html">← Kembali</a></header>
+  <main>{labels}<div>{post['content']}</div></main>
   <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
+</body></html>""")
     return filename
 
-def generate_index(posts):
-    with open("index.html", 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
+def generate_index_pages(posts):
+    total_pages = (len(posts) + POSTS_PER_PAGE - 1) // POSTS_PER_PAGE
+    for i in range(total_pages):
+        page_posts = posts[i*POSTS_PER_PAGE:(i+1)*POSTS_PER_PAGE]
+        fname = "index.html" if i == 0 else f"page{i+1}.html"
+        with open(fname, "w", encoding="utf-8") as f:
+            f.write(f"""<!DOCTYPE html>
+<html><head>
   <meta charset="UTF-8">
-  <title>Beranda Blog</title>
+  <title>Halaman {i+1}</title>
   <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
+</head><body>
   <header><h1>Blog Saya</h1></header>
-  <main><section>
-""")
-        for post in posts:
-            filename = generate_post_page(post)
-            snippet = strip_html(post['content'])[:150]
-            thumb = extract_thumbnail(post['content'])
-            labels = render_labels(post.get('labels', []))
-            f.write(f"""
+  <main><section>""")
+            for post in page_posts:
+                post_file = generate_post_page(post)
+                snippet = strip_html(post['content'])[:150]
+                thumb = extract_thumbnail(post['content'])
+                labels = render_labels(post.get('labels', []))
+                f.write(f"""
   <article>
-    <a href="posts/{filename}">
-      <img class="thumbnail" src="{thumb}" alt="">
-      <h2>{post['title']}</h2>
-    </a>
+    <a href="posts/{post_file}"><img class="thumbnail" src="{thumb}"><h2>{post['title']}</h2></a>
     {labels}
-    <p>{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
+    <p>{snippet}... <a href="posts/{post_file}">Baca selengkapnya</a></p>
   </article>""")
-        f.write("""
-  </section></main>
-  <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
+            f.write("</section></main><nav class='pagination'>")
+            for j in range(total_pages):
+                page_name = "index.html" if j == 0 else f"page{j+1}.html"
+                active = "class='active'" if j == i else ""
+                f.write(f"<a href='{page_name}' {active}>{j+1}</a>")
+            f.write("</nav><footer><p>&copy; 2025 Blog</p></footer></body></html>")
 
 def generate_label_pages(posts):
     label_map = {}
-
     for post in posts:
-        if 'labels' in post:
-            for label in post['labels']:
-                label_map.setdefault(label, []).append(post)
+        for label in post.get("labels", []):
+            label_map.setdefault(label, []).append(post)
 
-    for label, label_posts in label_map.items():
-        filename = f"{sanitize_filename(label)}.html"
-        filepath = os.path.join(LABEL_DIR, filename)
-        with open(filepath, 'w', encoding='utf-8') as f:
+    for label, items in label_map.items():
+        fname = f"labels/{sanitize(label)}.html"
+        with open(fname, "w", encoding="utf-8") as f:
             f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
+<html><head>
   <meta charset="UTF-8">
-  <title>Kategori: {label}</title>
+  <title>{label}</title>
   <link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-  <header><h1>Kategori: {label}</h1><p><a href="../index.html">← Kembali</a></p></header>
-  <main><section>
-""")
-            for post in label_posts:
+</head><body>
+  <header><h1>Kategori: {label}</h1><a href="../index.html">← Kembali</a></header>
+  <main><section>""")
+            for post in items:
                 post_file = generate_post_page(post)
                 snippet = strip_html(post['content'])[:150]
                 thumb = extract_thumbnail(post['content'])
                 f.write(f"""
   <article>
-    <a href="../posts/{post_file}">
-      <img class="thumbnail" src="{thumb}" alt="">
-      <h2>{post['title']}</h2>
-    </a>
+    <a href="../posts/{post_file}"><img class="thumbnail" src="{thumb}"><h2>{post['title']}</h2></a>
     <p>{snippet}... <a href="../posts/{post_file}">Baca selengkapnya</a></p>
   </article>""")
-            f.write("""
-  </section></main>
-  <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
-
-# === Eksekusi ===
+            f.write("</section></main><footer><p>&copy; 2025 Blog</p></footer></body></html>")
 
 if __name__ == '__main__':
-    print("📥 Mengambil artikel...")
-    posts = fetch_posts()
-    print("✅ Artikel diambil:", len(posts))
-    generate_index(posts)
+    posts = fetch_all_posts()
+    generate_index_pages(posts)
     generate_label_pages(posts)
-    print("✅ Halaman index, posting, dan label selesai dibuat.")
+    print(f"✅ {len(posts)} artikel berhasil digenerate.")
