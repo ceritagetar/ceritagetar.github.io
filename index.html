@@ -22,7 +22,8 @@
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
-            padding-top: 56px; /* Ruang untuk app bar tetap di atas */
+            /* padding-top akan disesuaikan oleh JS setelah loading selesai, atau bisa diatur di CSS */
+            padding-top: 0; /* Dimulai dari 0 karena overlay menutupi semua */
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -44,9 +45,9 @@
             justify-content: center;
             align-items: center;
             z-index: 9999; /* Pastikan di atas semua elemen */
-            transition: opacity 0.3s ease-in-out; /* Animasi saat muncul/hilang */
-            opacity: 1;
-            visibility: visible;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; /* Animasi saat muncul/hilang */
+            opacity: 1; /* Default: terlihat */
+            visibility: visible; /* Default: terlihat */
         }
 
         #loadingOverlay.hidden {
@@ -88,6 +89,15 @@
             padding: 0 16px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             z-index: 1000; /* Di atas konten, di bawah loading overlay */
+            /* Pastikan app-bar disembunyikan sampai loading selesai */
+            opacity: 0; /* Default: disembunyikan */
+            visibility: hidden; /* Default: disembunyikan */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .app-bar.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .app-bar h1 {
@@ -102,6 +112,16 @@
             max-width: 800px; /* Batasi lebar konten untuk estetika */
             margin: 16px auto; /* Margin atas/bawah dan auto untuk tengah */
             padding: 0 16px; /* Padding samping untuk responsivitas */
+            /* Konten utama juga disembunyikan sampai loading selesai */
+            opacity: 0; /* Default: disembunyikan */
+            visibility: hidden; /* Default: disembunyikan */
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+
+        .content-wrapper.visible {
+            opacity: 1;
+            visibility: visible;
+            padding-top: 56px; /* Tambahkan padding setelah app bar terlihat */
         }
 
         #posts-list-container {
@@ -191,8 +211,15 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
             z-index: 1002;
+            opacity: 0; /* Default: disembunyikan */
+            visibility: hidden; /* Default: disembunyikan */
+        }
+
+        .fab.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .fab:hover {
@@ -207,8 +234,9 @@
 
         /* Media Queries untuk Responsivitas */
         @media (max-width: 599px) {
-            body {
-                padding-top: 56px; /* Konsisten untuk mobile */
+            .app-bar, .content-wrapper, .fab {
+                /* Atur padding-top body di JS untuk konsistensi */
+                padding-top: 0;
             }
             .app-bar {
                 height: 56px;
@@ -234,9 +262,6 @@
         }
 
         @media (min-width: 600px) {
-            body {
-                padding-top: 64px; /* Tinggi app bar di tablet/desktop */
-            }
             .app-bar {
                 height: 64px;
             }
@@ -247,6 +272,10 @@
                 margin: 24px auto; /* Margin lebih besar di desktop */
                 padding: 0 24px;
             }
+            /* Atur padding-top body di JS untuk konsistensi di desktop juga */
+            body.content-loaded {
+                padding-top: 64px;
+            }
         }
     </style>
 </head>
@@ -256,12 +285,12 @@
         <p class="loading-text">Memuat konten...</p>
     </div>
 
-    <div class="app-bar">
+    <div class="app-bar" id="appBar">
         <h1>Blog Saya</h1>
         <span class="material-icons">search</span>
     </div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="contentWrapper">
         <div id="posts-list-container">
             </div>
     </div>
@@ -273,39 +302,73 @@
     <script src="index-script.js"></script>
 
     <script>
-        // --- Bagian JavaScript untuk Mengelola Loading Overlay ---
-        // Anda perlu memanggil fungsi ini di index-script.js Anda
-
-        // Fungsi untuk menyembunyikan loading overlay
-        function hideLoadingOverlay() {
+        // Fungsi untuk menyembunyikan loading overlay dan menampilkan konten
+        function hideLoadingOverlayAndShowContent() {
             const loadingOverlay = document.getElementById('loadingOverlay');
+            const appBar = document.getElementById('appBar');
+            const contentWrapper = document.getElementById('contentWrapper');
+            const fab = document.getElementById('fab');
+            const body = document.body;
+
             if (loadingOverlay) {
                 loadingOverlay.classList.add('hidden');
+                loadingOverlay.addEventListener('transitionend', () => {
+                    loadingOverlay.remove(); // Hapus dari DOM setelah transisi selesai
+                }, { once: true });
             }
+
+            // Tampilkan app bar, konten utama, dan FAB dengan transisi
+            if (appBar) {
+                appBar.classList.add('visible');
+            }
+            if (contentWrapper) {
+                contentWrapper.classList.add('visible');
+            }
+            if (fab) {
+                fab.classList.add('visible');
+            }
+
+            // Atur padding-top pada body agar konten tidak tertutup app-bar
+            // Ini disesuaikan dengan ukuran app-bar (56px untuk mobile, 64px untuk desktop)
+            const appBarHeight = appBar ? appBar.offsetHeight : 56; // Ambil tinggi aktual app-bar
+            body.style.paddingTop = `${appBarHeight}px`;
+            body.classList.add('content-loaded'); // Tambahkan kelas untuk media query
         }
 
-        // Contoh bagaimana Anda akan menggunakan ini di index-script.js:
-        // Panggil `hideLoadingOverlay()` setelah data dari API Blogger Anda berhasil dimuat dan dirender.
+        // Event listener untuk FAB (tetap sama)
+        document.addEventListener('DOMContentLoaded', () => {
+            const fabButton = document.getElementById('fab'); // Ubah nama variabel untuk menghindari konflik
+            if (fabButton) {
+                fabButton.addEventListener('click', () => {
+                    alert('FAB diklik! Anda bisa mengarahkan ke halaman tambah artikel baru.');
+                    // window.location.href = 'tambah-artikel.html';
+                });
+            }
+        });
 
-        // Simulasikan pemuatan data (HANYA UNTUK DEMO, HAPUS INI DARI PRODUKSI)
-        // Anggaplah ini adalah akhir dari fetch API di index-script.js Anda
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     setTimeout(() => {
-        //         // Ini adalah tempat di mana index-script.js Anda akan mengisi #posts-list-container
-        //         // postsListContainer.innerHTML = '<h2>Artikel dari Blogger API Anda akan tampil di sini!</h2>';
-        //         // Setelah selesai, sembunyikan overlay
-        //         hideLoadingOverlay();
-        //     }, 2000); // Simulasi 2 detik loading
-        // });
+        // PENTING: Anda harus memanggil hideLoadingOverlayAndShowContent() di index-script.js Anda
+        // setelah semua konten dari API Blogger berhasil dimuat dan dirender.
+        // Contoh:
+        /*
+        // Di dalam index-script.js Anda, setelah fetch() berhasil dan Anda mengisi posts-list-container:
+        fetch('URL_API_BLOGGER_ANDA')
+            .then(response => response.json())
+            .then(data => {
+                // ... kode untuk merender artikel ke #posts-list-container ...
 
-        // Event listener untuk FAB (contoh: navigasi ke halaman tambah artikel)
-        const fab = document.getElementById('fab');
-        if (fab) {
-            fab.addEventListener('click', () => {
-                alert('FAB diklik! Anda bisa mengarahkan ke halaman tambah artikel baru.');
-                // window.location.href = 'tambah-artikel.html';
+                // Setelah semua artikel ditambahkan ke DOM:
+                if (typeof hideLoadingOverlayAndShowContent === 'function') {
+                    hideLoadingOverlayAndShowContent();
+                }
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+                // Pastikan overlay tetap hilang bahkan jika ada error
+                if (typeof hideLoadingOverlayAndShowContent === 'function') {
+                    hideLoadingOverlayAndShowContent();
+                }
             });
-        }
+        */
     </script>
 </body>
 </html>
