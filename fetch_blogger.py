@@ -37,6 +37,17 @@ def extract_thumbnail(html):
     parser.feed(html)
     return parser.thumbnail or "https://via.placeholder.com/600x300?text=No+Image"
 
+def load_component(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+HEAD_HTML = load_component("custom_head.html")
+HEADER_HTML = load_component("custom_header.html")
+FOOTER_HTML = load_component("custom_footer.html")
+
+
 def fetch_all_posts():
     posts = []
     page_token = ''
@@ -65,6 +76,21 @@ def render_labels(labels, prefix=''):
     html += '</div>'
     return html
 
+def render_breadcrumb(title, is_post=False, prefix=''):
+    breadcrumb = f"""
+<div class='breadcrumbs' itemscope itemtype='https://schema.org/BreadcrumbList'>
+  <span itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'>
+    <a itemprop='item' href='{prefix}index.html'><span itemprop='name'>Beranda</span></a>
+    <meta itemprop='position' content='1' />
+  </span>
+  <span class='separator'>›</span>
+  <span itemprop='itemListElement' itemscope itemtype='https://schema.org/ListItem'>
+    <span itemprop='name'>{title}</span>
+    <meta itemprop='position' content='2' />
+  </span>
+</div>"""
+    return breadcrumb
+
 def generate_post_page(post):
     filename = f"{sanitize(post['title'])}-{post['id']}.html"
     filepath = os.path.join("posts", filename)
@@ -72,28 +98,38 @@ def generate_post_page(post):
     labels = render_labels(post.get("labels", []), prefix="../")
     description = strip_html(post['content'])[:150]
     canonical_url = f"https://example.com/posts/{filename}"
+    breadcrumb = render_breadcrumb(post['title'], is_post=True, prefix="../")
 
     html = f"""<!DOCTYPE html>
-<html lang='id'>
+<html lang='id' itemscope itemtype='https://schema.org/BlogPosting'>
 <head>
   <meta charset='UTF-8'>
   <title>{post['title']}</title>
   <meta name='description' content='{description}'>
   <link rel='canonical' href='{canonical_url}'>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
+  <meta property='og:title' content='{post['title']}'>
+  <meta property='og:description' content='{description}'>
+  <meta property='og:image' content='{thumbnail}'>
+  <meta property='og:type' content='article'>
+  <meta name='twitter:card' content='summary_large_image'>
+  <meta name='twitter:title' content='{post['title']}'>
+  <meta name='twitter:description' content='{description}'>
+  <meta name='twitter:image' content='{thumbnail}'>
   <link rel='stylesheet' href='../assets/style.css'>
+  {HEAD_HTML}
 </head>
 <body>
-  <header><h1 class='site-title'>Blog Saya</h1></header>
+  {HEADER_HTML}
   <main>
+    {breadcrumb}
     <div class='post-detail'>
-      <h1 class='post-title'>{post['title']}</h1>
+      <h1 class='post-title' itemprop='headline'>{post['title']}</h1>
       {labels}
-      <div class='post-content'>{post['content']}</div>
+      <div class='post-content' itemprop='articleBody'>{post['content']}</div>
     </div>
   </main>
-  <footer><p>&copy; 2025 Blog Saya</p></footer>
+  {FOOTER_HTML}
 </body>
 </html>"""
 
@@ -106,19 +142,21 @@ def generate_index_pages(posts):
     for i in range(total_pages):
         page_posts = posts[i*POSTS_PER_PAGE:(i+1)*POSTS_PER_PAGE]
         fname = "index.html" if i == 0 else f"page{i+1}.html"
+        breadcrumb = render_breadcrumb(f"Halaman {i+1}")
 
         html = f"""<!DOCTYPE html>
-<html lang='id'>
+<html lang='id' itemscope itemtype='https://schema.org/Blog'>
 <head>
   <meta charset='UTF-8'>
   <title>Beranda - Halaman {i+1}</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
   <link rel='stylesheet' href='assets/style.css'>
+  {HEAD_HTML}
 </head>
 <body>
-  <header><h1 class='site-title'>Blog Saya</h1></header>
-  <main>"""
+  {HEADER_HTML}
+  <main>
+    {breadcrumb}"""
 
         for post in page_posts:
             post_file = generate_post_page(post)
@@ -128,20 +166,27 @@ def generate_index_pages(posts):
             labels = render_labels(post.get("labels", []))
 
             html += f"""
-  <article class='post-item'>
+  <article class='post-item' itemscope itemtype='https://schema.org/BlogPosting'>
     <div class='post-thumbnail'>
-      <a href='posts/{post_file}'><img src='{thumb}' alt='Thumbnail untuk {title}'></a>
+      <a href='posts/{post_file}'><img src='{thumb}' alt='Thumbnail untuk {title}' itemprop='image'></a>
     </div>
     <div class='post-info'>
-      <h2 class='post-title'><a href='posts/{post_file}'>{title}</a></h2>
+      <h2 class='post-title' itemprop='headline'><a href='posts/{post_file}'>{title}</a></h2>
       {labels}
       <p class='post-snippet'>{snippet}... <a href='posts/{post_file}'>Selengkapnya</a></p>
     </div>
   </article>"""
 
+        html += "<nav class='pagination'>"
+        for j in range(total_pages):
+            page_name = "index.html" if j == 0 else f"page{j+1}.html"
+            active = " class='active'" if j == i else ""
+            html += f"<a href='{page_name}'{active}>{j+1}</a> "
+        html += "</nav>"
+
         html += f"""
   </main>
-  <footer><p>&copy; 2025 Blog Saya</p></footer>
+  {FOOTER_HTML}
 </body>
 </html>"""
 
@@ -156,18 +201,22 @@ def generate_label_pages(posts):
 
     for label, items in label_map.items():
         fname = f"labels/{sanitize(label)}.html"
+        breadcrumb = render_breadcrumb(label, prefix="../")
+
         html = f"""<!DOCTYPE html>
-<html lang='id'>
+<html lang='id' itemscope itemtype='https://schema.org/Blog'>
 <head>
   <meta charset='UTF-8'>
   <title>Kategori: {label}</title>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
-  <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap' rel='stylesheet'>
   <link rel='stylesheet' href='../assets/style.css'>
+  {HEAD_HTML}
 </head>
 <body>
-  <header><h1 class='site-title'>Kategori: {label}</h1></header>
-  <main>"""
+  {HEADER_HTML}
+  <main>
+    {breadcrumb}
+    <h1 class='post-title'>Kategori: {label}</h1>"""
 
         for post in items:
             post_file = generate_post_page(post)
@@ -176,19 +225,19 @@ def generate_label_pages(posts):
             thumb = extract_thumbnail(post['content'])
 
             html += f"""
-  <article class='post-item'>
+  <article class='post-item' itemscope itemtype='https://schema.org/BlogPosting'>
     <div class='post-thumbnail'>
-      <a href='../posts/{post_file}'><img src='{thumb}' alt='Thumbnail untuk {title}'></a>
+      <a href='../posts/{post_file}'><img src='{thumb}' alt='Thumbnail untuk {title}' itemprop='image'></a>
     </div>
     <div class='post-info'>
-      <h2 class='post-title'><a href='../posts/{post_file}'>{title}</a></h2>
+      <h2 class='post-title' itemprop='headline'><a href='../posts/{post_file}'>{title}</a></h2>
       <p class='post-snippet'>{snippet}... <a href='../posts/{post_file}'>Selengkapnya</a></p>
     </div>
   </article>"""
 
         html += f"""
   </main>
-  <footer><p>&copy; 2025 Blog Saya</p></footer>
+  {FOOTER_HTML}
 </body>
 </html>"""
 
