@@ -16,6 +16,18 @@ os.makedirs("data", exist_ok=True)
 os.makedirs("posts", exist_ok=True)
 os.makedirs("labels", exist_ok=True)
 
+# Load custom components
+def load_component(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return ""
+
+HEAD_HTML = load_component("custom_head.html")
+HEADER_HTML = load_component("custom_header.html")
+SIDEBAR_HTML = load_component("custom_sidebar.html")
+FOOTER_HTML = load_component("custom_footer.html")
+
 # HTML Util
 class ImageExtractor(HTMLParser):
     def __init__(self):
@@ -77,10 +89,18 @@ def generate_post_page(post):
   <meta charset="UTF-8">
   <title>{post['title']}</title>
   <link rel="stylesheet" href="../assets/style.css">
+  {HEAD_HTML}
 </head><body>
-  <header><h1>{post['title']}</h1><a href="../index.html">← Kembali</a></header>
-  <main>{labels}<div>{post['content']}</div></main>
-  <footer><p>&copy; 2025 Blog</p></footer>
+  {HEADER_HTML}
+  <main>
+    <section>
+      <h1>{post['title']}</h1>
+      {labels}
+      <div>{post['content']}</div>
+    </section>
+    <aside>{SIDEBAR_HTML}</aside>
+  </main>
+  {FOOTER_HTML}
 </body></html>""")
     return filename
 
@@ -95,26 +115,27 @@ def generate_index_pages(posts):
   <meta charset="UTF-8">
   <title>Halaman {i+1}</title>
   <link rel="stylesheet" href="assets/style.css">
+  {HEAD_HTML}
 </head><body>
-  <header><h1>Blog Saya</h1></header>
+  {HEADER_HTML}
   <main><section>""")
             for post in page_posts:
                 post_file = generate_post_page(post)
                 snippet = strip_html(post['content'])[:150]
                 thumb = extract_thumbnail(post['content'])
-                labels = render_labels(post.get('labels', []))
+                labels = render_labels(post.get("labels", []))
                 f.write(f"""
   <article>
     <a href="posts/{post_file}"><img class="thumbnail" src="{thumb}"><h2>{post['title']}</h2></a>
     {labels}
     <p>{snippet}... <a href="posts/{post_file}">Baca selengkapnya</a></p>
   </article>""")
-            f.write("</section></main><nav class='pagination'>")
+            f.write("</section><aside>{}</aside></main><nav class='pagination'>".format(SIDEBAR_HTML))
             for j in range(total_pages):
                 page_name = "index.html" if j == 0 else f"page{j+1}.html"
                 active = "class='active'" if j == i else ""
                 f.write(f"<a href='{page_name}' {active}>{j+1}</a>")
-            f.write("</nav><footer><p>&copy; 2025 Blog</p></footer></body></html>")
+            f.write(f"</nav>{FOOTER_HTML}</body></html>")
 
 def generate_label_pages(posts):
     label_map = {}
@@ -130,9 +151,10 @@ def generate_label_pages(posts):
   <meta charset="UTF-8">
   <title>{label}</title>
   <link rel="stylesheet" href="../assets/style.css">
+  {HEAD_HTML}
 </head><body>
-  <header><h1>Kategori: {label}</h1><a href="../index.html">← Kembali</a></header>
-  <main><section>""")
+  {HEADER_HTML}
+  <main><section><h1>Kategori: {label}</h1>""")
             for post in items:
                 post_file = generate_post_page(post)
                 snippet = strip_html(post['content'])[:150]
@@ -142,7 +164,7 @@ def generate_label_pages(posts):
     <a href="../posts/{post_file}"><img class="thumbnail" src="{thumb}"><h2>{post['title']}</h2></a>
     <p>{snippet}... <a href="../posts/{post_file}">Baca selengkapnya</a></p>
   </article>""")
-            f.write("</section></main><footer><p>&copy; 2025 Blog</p></footer></body></html>")
+            f.write(f"</section><aside>{SIDEBAR_HTML}</aside></main>{FOOTER_HTML}</body></html>")
 
 if __name__ == '__main__':
     posts = fetch_all_posts()
