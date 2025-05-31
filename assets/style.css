@@ -1,206 +1,118 @@
-/* === Normalize === */
-html {
-  font-family: sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-body {
+/* === Font & Reset === */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
   margin: 0;
-  background-color: #f4f5f6;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #f4f5f6;
   color: #333;
-  font-family: 'ProximaNova', sans-serif;
-  font-size: 18px;
-  line-height: 1.625;
+  font-size: 16px;
+  line-height: 1.6;
   padding-bottom: 100px;
 }
-article, aside, details, figcaption, figure, footer, header, hgroup, main, nav, section, summary {
-  display: block;
-}
-img {
-  border: 0;
-  max-width: 100%;
-  height: auto;
-}
+
 a {
   color: #25a0db;
   text-decoration: none;
-  transition: all 0.1s ease-in-out;
+  transition: 0.2s ease;
 }
 a:hover {
   color: #333;
 }
-p, br {
-  margin: 0 0 1.625em 0;
-  padding: 0;
+
+/* === Header & Footer === */
+header, footer {
+  background: #fff;
+  text-align: center;
+  padding: 20px 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
-ul, ol {
-  margin: 0;
-  padding: 0;
+.site-title {
+  font-size: 22px;
+  font-weight: bold;
 }
-li {
-  margin: 10px 0;
+
+/* === Main Layout === */
+main {
+  max-width: 960px;
+  margin: 30px auto;
+  padding: 0 20px;
 }
-b, strong {
-  font-weight: 700;
-  color: #4c4c4c;
+
+/* === Post List === */
+.post-item {
+  display: flex;
+  background: #fff;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
-blockquote, cite, em, i {
-  font-style: italic;
+
+.post-thumbnail {
+  flex: 0 0 150px;
 }
-blockquote {
-  margin: 40px;
-}
-blockquote::before {
-  content: "\201C";
-  font-size: 30px;
-  position: relative;
-  top: -10px;
-  left: -20px;
+.post-thumbnail img {
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-/* === Font === */
-@font-face {
-  font-family: 'ProximaNova';
-  src: url('https://pelukjanda.github.io/proximanova.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+.post-info {
+  padding: 15px;
+  flex: 1;
 }
 
-/* === Headings === */
-h1, h2, h3, h4, h5, h6 {
-  color: #4c4c4c;
-  font-family: 'ProximaNova', sans-serif;
+.post-title {
+  font-size: 20px;
   font-weight: 700;
-  line-height: 1.2;
-  margin: 0 0 0.625em 0;
-  letter-spacing: -0.015em;
-}
-h1, h2 {
-  font-size: 22px;
-}
-h3 {
-  font-size: 20px;
-}
-h4, h5, h6 {
-  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-/* === Layout === */
-main {
-  display: flex;
-  max-width: 1000px;
-  margin: 40px auto;
-  gap: 20px;
-  padding: 0 5%;
-  flex-wrap: wrap;
-}
-section {
-  flex: 1 1 60%;
-}
-aside {
-  flex: 1 1 30%;
-}
-
-/* === Post preview === */
-article {
-  display: flex;
-  align-items: flex-start;
-  background: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-.thumbnail {
-  width: 120px;
-  height: auto;
-  margin-right: 20px;
-  object-fit: cover;
-  border-radius: 4px;
-}
-article h2 {
-  margin: 0 0 10px;
-  font-size: 20px;
-}
-article p {
-  font-size: 16px;
+.post-snippet {
+  font-size: 15px;
   color: #555;
 }
-.labels {
-  margin: 10px 0;
+
+.post-labels {
+  margin-bottom: 10px;
 }
 .label {
+  display: inline-block;
   background: #eee;
   padding: 3px 8px;
-  border-radius: 3px;
   margin-right: 5px;
-  font-size: 14px;
-}
-.label a {
+  font-size: 13px;
+  border-radius: 3px;
   color: #333;
 }
 
-/* === Post page === */
-.post {
+/* === Post Detail === */
+.post-detail {
   background: #fff;
-  padding: 40px 10%;
-  max-width: 800px;
-  margin: 40px auto;
-  border-radius: 8px;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+  padding: 30px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
-
-/* === Pagination === */
-.pagination {
-  text-align: center;
-  margin-top: 30px;
+.post-detail h1 {
+  font-size: 22px;
+  margin-bottom: 15px;
 }
-.pagination a {
-  display: inline-block;
-  margin: 0 5px;
-  padding: 8px 12px;
-  border-radius: 4px;
-  background: #ddd;
-  color: #333;
-  text-decoration: none;
-}
-.pagination a.active {
-  background: #25a0db;
-  color: #fff;
+.post-content p {
+  margin-bottom: 1.25em;
 }
 
 /* === Responsive === */
-@media only screen and (max-width: 768px) {
-  main {
+@media (max-width: 768px) {
+  .post-item {
     flex-direction: column;
-    padding: 0 3%;
   }
-  .thumbnail {
-    width: 100px;
-    margin-right: 10px;
-  }
-  article {
-    flex-direction: row;
-  }
-}
-@media only screen and (max-width: 480px) {
-  body {
-    font-size: 15px;
-    background: #fff;
-  }
-  .post {
-    padding: 20px 5%;
-  }
-  h1, h2 {
-    font-size: 20px;
-  }
-  article {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-  .thumbnail {
-    margin: 0 0 10px;
+  .post-thumbnail {
+    width: 100%;
   }
 }
