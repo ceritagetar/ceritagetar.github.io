@@ -1,1 +1,6 @@
 .breadcrumbs { background-color: rgba(231,233,234,1); padding: 10px 15px; font-size: 0.8em; color: #a3a5a7;margin-bottom:-7px;} .breadcrumbs a { color: #333; } .breadcrumbs a:hover { color: #25a0db; }
+
+.post-item {margin: 7px 0;
+ border: 1px solid rgba(231,233,234,1);
+ padding: 20px;
+}
