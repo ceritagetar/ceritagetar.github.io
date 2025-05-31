@@ -1,37 +1,48 @@
 name: Build Blogger Blog
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  schedule:
-    - cron: '0 0 * * *'  # update tiap hari
 
 jobs:
   build-blog:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
-    - name: Install requests
-      run: pip install requests
+      - name: Install requests
+        run: pip install requests
 
-    - name: Run Python to generate HTML
-      env:
-        BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
-        BLOG_ID: ${{ secrets.BLOG_ID }}
-      run: python fetch_blogger.py
+      - name: Debug Secrets
+        run: |
+          echo "📦 BLOGGER_API_KEY = ${BLOGGER_API_KEY:0:4}****"
+          echo "📝 BLOG_ID length = ${#BLOG_ID}"
+        env:
+          BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
+          BLOG_ID: ${{ secrets.BLOG_ID }}
 
-    - name: Commit & Push
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-        git add .
-        git commit -m "Update blog HTML from Blogger" || echo "No changes"
-        git push
+      - name: Generate HTML from Blogger
+        env:
+          BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
+          BLOG_ID: ${{ secrets.BLOG_ID }}
+        run: python fetch_blogger.py
+
+      - name: Commit & Push if changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          if git diff --cached --quiet; then
+            echo "✅ Tidak ada perubahan"
+          else
+            git commit -m "🔄 Update blog HTML from Blogger"
+            git push
+          fi
