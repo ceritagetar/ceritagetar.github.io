@@ -1,130 +1,167 @@
 /* General Body and Typography */
 body {
-    font-family: 'Georgia', serif; /* Font klasik untuk cerpen */
+    font-family: 'Roboto', sans-serif; /* Menggunakan font Roboto */
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4; /* Latar belakang lembut */
+    background-color: #f0f2f5; /* Latar belakang abu-abu muda ala website modern */
     color: #333;
 }
 
 a {
-    color: #007bff; /* Warna tautan standar */
+    color: inherit; /* Tautan mewarisi warna teks induknya */
     text-decoration: none;
 }
 
 a:hover {
-    text-decoration: underline;
+    text-decoration: none; /* Tidak ada underline saat hover secara default */
 }
 
 /* Header */
 header {
-    background-color: #333;
-    color: #fff;
+    background-color: #fff; /* Header putih */
+    color: #333;
     padding: 1rem 0;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sedikit bayangan */
+    margin-bottom: 20px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2rem; /* Ukuran font lebih proporsional */
+    font-weight: 700;
 }
 
 /* Main Content Area */
 main {
     display: flex;
-    flex-wrap: wrap; /* Izinkan wrap untuk responsif */
+    flex-wrap: wrap;
     max-width: 1200px;
     margin: 20px auto;
     padding: 0 15px;
-    gap: 20px; /* Jarak antar kolom */
+    gap: 20px;
 }
 
 section {
-    flex: 3; /* Bagian utama ambil 3 bagian lebar */
-    min-width: 300px; /* Lebar minimum untuk responsif */
-    background-color: #fff;
+    flex: 3;
+    min-width: 300px;
+    background-color: #fff; /* Konten utama putih */
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 aside {
-    flex: 1; /* Sidebar ambil 1 bagian lebar */
-    min-width: 200px; /* Lebar minimum untuk responsif */
+    flex: 1;
+    min-width: 250px; /* Lebar minimum sidebar */
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Article Styling (Post List) */
+/* Article Styling (List Items) */
 article {
-    display: flex; /* Menggunakan flexbox untuk tata letak thumbnail dan judul */
-    align-items: flex-start; /* Sejajarkan item ke atas */
-    margin-bottom: 30px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 20px;
+    /* Menggunakan class dari contoh Kompas.com: hlItem-link */
+    display: flex;
+    align-items: flex-start;
+    gap: 16px; /* Jarak antara thumbnail dan konten */
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px; /* Padding di sekitar setiap artikel */
+    margin-bottom: 15px; /* Jarak antar artikel */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08); /* Bayangan halus */
+    transition: all 0.2s ease-in-out; /* Transisi untuk efek hover */
 }
 
-article:last-child {
-    border-bottom: none; /* Hilangkan garis bawah pada artikel terakhir */
+article:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Bayangan lebih jelas saat hover */
+    transform: translateY(-2px); /* Sedikit naik saat hover */
 }
 
+/* Thumbnail Styling */
 article .thumbnail {
-    width: 150px; /* Lebar thumbnail tetap */
+    /* Menggunakan class dari contoh Kompas.com: hlImg */
+    width: 100px; /* Lebar thumbnail tetap */
     height: 100px; /* Tinggi thumbnail tetap */
-    object-fit: cover; /* Pastikan gambar mengisi area tanpa distorsi */
-    margin-right: 20px; /* Jarak antara thumbnail dan teks */
-    border-radius: 5px;
-    flex-shrink: 0; /* Pastikan thumbnail tidak mengecil */
+    min-width: 100px; /* Pastikan tidak mengecil */
+    object-fit: cover;
+    border-radius: 8px;
+    overflow: hidden; /* Penting untuk gambar yang melebihi batas */
+    flex-shrink: 0; /* Agar thumbnail tidak mengecil */
 }
 
+article .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* Hilangkan spasi bawah gambar */
+}
+
+/* Content Box (Judul dan Snippet) */
+article > a { /* Targetkan langsung tautan yang membungkus konten */
+    display: flex;
+    flex-direction: row; /* Kembali ke baris untuk flexbox */
+    align-items: flex-start;
+    gap: 16px;
+    flex-grow: 1;
+    width: 100%; /* Penting untuk flexbox yang membungkus */
+}
+
+/* Judul Artikel */
 article h2 {
-    margin-top: 0;
-    font-size: 1.5rem;
-    line-height: 1.3;
-}
-
-article h2 a {
-    color: #333;
-}
-
-article h2 a:hover {
-    color: #007bff;
+    /* Menggunakan class dari contoh Kompas.com: hlTitle */
+    margin: 0;
+    font-family: 'Inter', sans-serif; /* Font Inter untuk judul */
+    font-size: 1.15rem; /* Ukuran font lebih besar */
+    line-height: 1.4;
+    color: #212121; /* Warna judul lebih gelap */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Batasi judul hingga 3 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600; /* Judul lebih tebal */
 }
 
 article p {
-    margin-top: 10px;
+    margin: 8px 0 0; /* Jarak atas snippet */
     color: #555;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Batasi snippet hingga 2 baris */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Labels */
 .labels {
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: 5px; /* Lebih dekat ke judul/snippet */
+    margin-bottom: 10px;
+    font-size: 0.8em;
 }
 
 .label {
     display: inline-block;
-    background-color: #e2e6ea;
-    color: #495057;
-    padding: 5px 10px;
-    border-radius: 3px;
-    font-size: 0.85rem;
+    background-color: #e9ecef; /* Warna latar belakang label lebih terang */
+    color: #6c757d; /* Warna teks label */
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
     margin-right: 5px;
     margin-bottom: 5px;
+    white-space: nowrap; /* Cegah label putus baris */
 }
 
 .label a {
-    color: #495057;
+    color: #6c757d;
     text-decoration: none;
 }
 
 .label a:hover {
-    color: #0056b3;
+    color: #495057;
 }
 
 /* Pagination */
@@ -133,7 +170,7 @@ article p {
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     margin-top: 20px;
 }
 
@@ -145,6 +182,7 @@ article p {
     border-radius: 4px;
     color: #007bff;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .pagination a.active,
@@ -156,58 +194,87 @@ article p {
 
 /* Footer */
 footer {
-    background-color: #333;
-    color: #fff;
+    background-color: #343a40; /* Warna footer lebih gelap */
+    color: #f8f9fa;
     text-align: center;
-    padding: 1rem 0;
-    margin-top: 30px;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    padding: 1.5rem 0;
+    margin-top: 40px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     main {
-        flex-direction: column; /* Ubah tata letak kolom menjadi satu kolom */
+        flex-direction: column;
     }
 
     section, aside {
-        min-width: unset; /* Hapus min-width */
-        width: 100%; /* Ambil lebar penuh */
+        min-width: unset;
+        width: 100%;
+        padding: 15px; /* Kurangi padding di mobile */
     }
 
     article {
-        flex-direction: column; /* Tumpuk thumbnail dan teks di bawahnya */
-        align-items: center; /* Pusatkan item */
+        flex-direction: column; /* Thumbnail di atas, judul di bawah */
+        align-items: center;
         text-align: center;
+        padding: 12px;
+    }
+
+    article > a { /* Sesuaikan flex-direction untuk konten di dalam tautan */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
     }
 
     article .thumbnail {
-        margin-right: 0;
-        margin-bottom: 15px; /* Tambah jarak di bawah thumbnail */
+        width: 100%;
+        max-width: 200px; /* Batasi lebar thumbnail di mobile */
+        height: auto; /* Tinggi menyesuaikan */
+        margin-bottom: 10px;
     }
 
     article h2 {
-        font-size: 1.3rem;
+        font-size: 1rem; /* Ukuran judul lebih kecil */
+        -webkit-line-clamp: unset; /* Izinkan judul lebih panjang */
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    article p {
+        -webkit-line-clamp: unset; /* Izinkan snippet lebih panjang */
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    .labels {
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 5px;
     }
 }
 
 @media (max-width: 480px) {
     header h1 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
     }
 
-    article .thumbnail {
-        width: 100%; /* Thumbnail ambil lebar penuh */
-        height: auto; /* Tinggi menyesuaikan proporsi */
-        max-width: 200px; /* Batasi ukuran maksimum thumbnail */
+    article {
+        padding: 10px;
     }
 
-    .labels {
-        text-align: center;
+    article h2 {
+        font-size: 0.95rem;
     }
 
-    .label {
-        font-size: 0.75rem;
-        padding: 4px 8px;
+    article p {
+        font-size: 0.85rem;
+    }
+
+    .pagination a {
+        padding: 6px 12px;
+        margin: 0 3px;
+        font-size: 0.9rem;
     }
 }
