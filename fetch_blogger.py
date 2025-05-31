@@ -8,7 +8,7 @@ from html.parser import HTMLParser
 API_KEY = os.environ.get('BLOGGER_API_KEY')
 BLOG_ID = os.environ.get('BLOG_ID')
 POSTS_PER_PAGE = 10
-BASE_URL = https://ceritagetar.github.io # Ganti dengan URL dasar blog Anda
+
 
 if not API_KEY or not BLOG_ID:
     raise EnvironmentError("BLOGGER_API_KEY dan BLOG_ID harus tersedia sebagai environment variable.")
