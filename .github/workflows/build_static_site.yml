@@ -1,9 +1,9 @@
 name: Build Static Site from Blogger
 
 on:
-  workflow_dispatch: # Memungkinkan trigger manual dari GitHub UI
+  workflow_dispatch: # Allows manual trigger from GitHub UI
   schedule:
-    - cron: '0 0 * * *' # Jalankan setiap hari pada tengah malam UTC
+    - cron: '0 0 * * *' # Run daily at midnight UTC
 
 jobs:
   build_and_deploy:
@@ -20,21 +20,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install requests # Install library requests
+          pip install requests
 
       - name: Run Python script to generate site
         env:
+          # Pastikan nama secrets ini sama persis dengan yang Anda buat di GitHub Secrets
           BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
           BLOG_ID: ${{ secrets.BLOG_ID }}
         run: |
-          # ----- MULAI KODE PYTHON INLINE -----
+          # --- START PYTHON SCRIPT ---
           import os
           import requests
           import json
           from datetime import datetime
           import re
 
-          # Ambil Kredensial dari GitHub Secrets
           API_KEY = os.getenv('BLOGGER_API_KEY')
           BLOG_ID = os.getenv('BLOG_ID')
 
@@ -42,14 +42,15 @@ jobs:
               print("Error: BLOGGER_API_KEY or BLOG_ID not set in environment variables.")
               exit(1)
 
-          BLOGGER_API_URL = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}"
+          # Menambahkan parameter fetchBodies=true untuk memastikan konten penuh diambil
+          # Menambahkan maxResults=100 untuk mengambil hingga 100 postingan
+          BLOGGER_API_URL = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&fetchBodies=true&maxResults=100"
 
           print(f"Fetching posts from Blogger API for Blog ID: {BLOG_ID}")
 
-          # Ambil Data Postingan
           try:
               response = requests.get(BLOGGER_API_URL)
-              response.raise_for_status()
+              response.raise_for_status() # Raise HTTPError for bad responses (4xx or 5xx)
               data = response.json()
           except requests.exceptions.RequestException as e:
               print(f"Error fetching data from Blogger API: {e}")
@@ -57,12 +58,12 @@ jobs:
 
           posts_data = data.get('items', [])
 
-          # Buat Direktori untuk Halaman Detail Postingan
+          # Create output directory for posts
           output_dir = "posts"
           if not os.path.exists(output_dir):
               os.makedirs(output_dir)
 
-          # Fungsi Pembantu untuk Membuat URL Ramah SEO
+          # Helper function to create SEO-friendly URLs (slugify)
           def slugify(text):
               text = text.lower()
               text = re.sub(r'[^\w\s-]', '', text)
@@ -70,29 +71,29 @@ jobs:
               text = text.strip('-')
               return text
 
-          # Generate Halaman Detail untuk Setiap Postingan
           homepage_snippets = []
 
           for post in posts_data:
               title = post.get('title', 'No Title')
               published_date_str = post.get('published', '')
-              post_content_html = post.get('content', '')
+              post_content_html = post.get('content', '') # Full HTML content
               
-              # Ekstrak snippet dari konten (misal, 200 karakter pertama atau sampai paragraf pertama)
+              # Extract snippet for homepage (e.g., first 200 chars)
+              # A more robust snippet extraction would parse HTML, but for simplicity, we truncate
               snippet = post_content_html[:200] + "..." if len(post_content_html) > 200 else post_content_html
               
-              # Format tanggal
+              # Format date
               try:
                   published_date = datetime.fromisoformat(published_date_str.replace('Z', '+00:00'))
                   display_date = published_date.strftime('%d %B %Y')
               except ValueError:
                   display_date = published_date_str
 
-              # Buat URL slug untuk postingan
+              # Create URL slug for the post
               post_slug = slugify(title)
-              detail_page_url = f"/{output_dir}/{post_slug}.html"
+              detail_page_url = f"/{output_dir}/{post_slug}.html" # URL relative to site root
 
-              # Buat Konten HTML untuk Halaman Detail Postingan
+              # --- Generate HTML content for the detail page ---
               detail_html_content = f"""
 <!DOCTYPE html>
 <html lang="en">
@@ -124,7 +125,7 @@ jobs:
 </body>
 </html>
 """
-              # Simpan file HTML detail
+              # Save the detail HTML file
               detail_filename = f"{output_dir}/{post_slug}.html"
               try:
                   with open(detail_filename, 'w', encoding='utf-8') as f:
@@ -133,7 +134,7 @@ jobs:
               except IOError as e:
                   print(f"Error saving detail page {detail_filename}: {e}")
 
-              # Tambahkan snippet ke daftar untuk halaman beranda
+              # Add snippet to the list for the homepage
               homepage_snippets.append(f"""
             <div class="post-snippet">
                 <h2><a href="{detail_page_url}">{title}</a></h2>
@@ -142,8 +143,10 @@ jobs:
             </div>
             """)
 
-          # Generate Halaman Beranda (index.html)
+          # --- Generate Homepage (index.html) ---
           homepage_content = "\n".join(homepage_snippets)
+
+          current_year = datetime.now().year # Get current year for copyright
 
           index_html_content = f"""
 <!DOCTYPE html>
@@ -171,12 +174,12 @@ jobs:
         {homepage_content if homepage_content else "<p>No posts found.</p>"}
     </main>
     <footer>
-        <p>&copy; {datetime.now().year} My Blogger Static Site. All rights reserved.</p>
+        <p>&copy; {current_year} My Blogger Static Site. All rights reserved.</p>
     </footer>
 </body>
 </html>
 """
-          # Simpan index.html
+          # Save index.html
           try:
               with open("index.html", 'w', encoding='utf-8') as f:
                   f.write(index_html_content)
@@ -185,17 +188,20 @@ jobs:
               print(f"Error saving index.html: {e}")
 
           print("Site generation complete.")
-          # ----- AKHIR KODE PYTHON INLINE -----
+          # --- END PYTHON SCRIPT ---
 
       - name: Add and commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add index.html posts/ # Tambahkan index.html dan folder posts ke staging
-          git commit -m "Automated: Update Blogger content" || echo "No changes to commit"
+          # Tambahkan index.html dan folder posts ke staging
+          git add index.html posts/ 
+          # Hanya commit jika ada perubahan, mencegah action gagal jika tidak ada perubahan
+          git commit -m "Automated: Update Blogger content" || echo "No changes to commit" 
 
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main # Atau nama branch GitHub Pages Anda (misal: 'gh-pages')
+          # Pastikan branch ini adalah branch utama repositori Anda (biasanya 'main')
+          branch: main
