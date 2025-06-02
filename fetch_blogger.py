@@ -202,7 +202,7 @@ def generate_label_pages(posts):
                 snippet = strip_html(post['content'])[:150]
                 thumb = extract_thumbnail(post['content'])
                 items_html += f"""
-<article>
+<article id="post-wrapper">
   <a href="../posts/{filename}">
     <img class="thumbnail" src="{thumb}" alt="">
     <h2>{post['title']}</h2>
