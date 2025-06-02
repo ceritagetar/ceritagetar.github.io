@@ -164,15 +164,14 @@ def generate_index(posts):
             thumb = extract_thumbnail(post['content'])
             labels = render_labels(post.get('labels', []))
             items_html += f"""
-<div id="post-wrapper">
 <article class="post">
+  {labels}
   <div class="post-body"><a href="posts/{filename}">
     <img class="thumbnail" src="{thumb}" alt="">
     <h2>{post['title']}</h2>
   </a>
-  {labels}
   <p>{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
-</div></article></div>
+</div></article>
 """
         pagination = generate_pagination_links("index", page, total_pages)
         html = render_template(INDEX_TEMPLATE, items=items_html, pagination=pagination)
