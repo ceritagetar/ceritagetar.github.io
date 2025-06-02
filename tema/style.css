@@ -26,6 +26,22 @@ word-wrap: break-word;
 user-select: none;
 }
 
+h2.post-title, .post-snippet {
+margin-left: 218px;
+}
+
+.img-thumbnail {
+position: relative;
+float: left;
+width: 200px;
+height: 112.5px;
+}
+.img-thumbnail img {
+width: 200px;
+height: 112.5px;
+display: block;
+}
+
 .label-line{position:relative;margin-bottom:15px}.label-line::before{background:rgba(195,195,195,0.15);z-index:1;content:"";width:100%;height:2px;position:absolute;top:50%;left:0}.label-info-th{position:relative;z-index:2;display:inline-block;height:30px;padding-right:3px}.label-info-th a{background:rgba(195,195,195,0.15);border-radius:4px;display:inline-block;padding:6px 12px;margin:2px 0;font-size:13px;font-size:.8125rem;font-weight:500;text-decoration: none}
 .label-info-th {
 background: #fff;
