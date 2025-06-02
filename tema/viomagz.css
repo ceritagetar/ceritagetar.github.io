@@ -159,12 +159,9 @@ overflow: hidden;
 background: #fff;
 }
 /* HEADER */
-.garis-header {
-height: 2px;background-color: #fff;position:fixed;top:0;width:100%;z-index:1200;-webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);box-shadow: 0 2px 4px 0 rgba(0,0,0,0.4);
-}
+
 #header-container {
-background: #fff;
-border-bottom: 1px solid #dfdfdf;
+background: #137faa;
 position: fixed;
 top: 0;
 left: 0;
@@ -187,11 +184,11 @@ white-space: nowrap;
 text-overflow: ellipsis;
 }
 .header h1.title, .header p.title {
-font: 500 25px Roboto, Arial, sans-serif;
-color: #000000;
+font: 700 25px Roboto, Arial, sans-serif;
+color: #FFF;
 margin: 0;
 text-transform: uppercase;
-padding: 9px 0;
+padding: 9px 0;height:60px;
 }
 .header .description {
 color: #000000;
