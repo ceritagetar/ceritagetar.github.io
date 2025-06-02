@@ -172,7 +172,7 @@ def generate_index(posts):
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
     <h2 class="post-title><a href="posts/{filename}">{post['title']}</a></h2>
   
-  <p class="snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
+  <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
 </div></article>
 """
         pagination = generate_pagination_links("index", page, total_pages)
