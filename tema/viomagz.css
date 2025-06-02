@@ -188,7 +188,7 @@ font: 700 25px Roboto, Arial, sans-serif;
 color: #FFF;
 margin: 0;
 text-transform: uppercase;
-padding: 9px 0;height:60px;
+padding: 9px 0;
 }
 .header .description {
 color: #000000;
@@ -970,7 +970,7 @@ display: inline-block;
 width: 22px;
 height: 22px;
 --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23000' d='M456.69 421.39L362.6 327.3a173.8 173.8 0 0 0 34.84-104.58C397.44 126.38 319.06 48 222.72 48S48 126.38 48 222.72s78.38 174.72 174.72 174.72A173.8 173.8 0 0 0 327.3 362.6l94.09 94.09a25 25 0 0 0 35.3-35.3M97.92 222.72a124.8 124.8 0 1 1 124.8 124.8a124.95 124.95 0 0 1-124.8-124.8'/%3E%3C/svg%3E");
-background-color: #000;
+background-color: #fff;
 -webkit-mask-image: var(--svg);
 mask-image: var(--svg);
 -webkit-mask-repeat: no-repeat;
@@ -985,7 +985,7 @@ right: 0px;
 font-size: 19px;
 }
 .search-icon a {
-color: #000000;
+color: #fff;
 }
 #searchfs {
 position: fixed;
@@ -1273,8 +1273,8 @@ right: 0px;
 display: block;
 height: 4px;
 width: 30px;
-border-top: 3px solid #000000;
-border-bottom: 3px solid #000000;
+border-top: 3px solid #fff;
+border-bottom: 3px solid #fff;
 content:''
 }
 .button:before {
@@ -1284,7 +1284,7 @@ right: 0px;
 display: block;
 height: 3px;
 width: 30px;
-background: #000000;
+background: #fff;
 content:''
 }
 .button.menu-opened:after {
