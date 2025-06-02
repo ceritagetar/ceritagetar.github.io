@@ -39,4 +39,5 @@ jobs:
             echo "✅ Tidak ada perubahan"
           else
             git commit -m "🔄 Update artikel otomatis dari Blogger"
-            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main fi
+            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
+          fi
