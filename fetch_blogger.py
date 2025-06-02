@@ -68,11 +68,31 @@ def paginate(total_items, per_page):
     return total_pages
 
 def generate_pagination_links(base_url, current, total):
-    links = ""
-    for i in range(1, total + 1):
-        cls = 'active' if i == current else ''
-        links += f'<a class="{cls}" href="{base_url}-{i}.html">{i}</a> '
-    return f'<nav class="pagination">{links}</nav>' if total > 1 else ''
+    html = '<nav class="pagination">'
+
+    def page_link(page):
+        cls = 'active' if page == current else ''
+        suffix = "" if page == 1 and "index" in base_url else f"-{page}"
+        return f'<a class="{cls}" href="{base_url}{suffix}.html">{page}</a>'
+
+    if total <= 10:
+        for i in range(1, total + 1):
+            html += page_link(i)
+    else:
+        for i in range(1, 4):
+            html += page_link(i)
+        if current > 5:
+            html += '<span>...</span>'
+        if 4 <= current <= total - 3:
+            html += page_link(current)
+        if current < total - 4:
+            html += '<span>...</span>'
+        for i in range(total - 1, total + 1):
+            if i > 3:
+                html += page_link(i)
+
+    html += '</nav>'
+    return html
 
 # === Ambil semua postingan dari Blogger ===
 
