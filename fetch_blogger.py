@@ -94,6 +94,20 @@ def generate_pagination_links(base_url, current, total):
     html += '</nav>'
     return html
 
+# === Komponen Custom (Head, Header, Sidebar, Footer) ===
+
+def safe_load(path):
+    return load_template(path) if os.path.exists(path) else ""
+
+CUSTOM_HEAD = safe_load("custom_head.html")
+CUSTOM_JS = safe_load("custom_js.html")
+CUSTOM_HEADER = safe_load("custom_header.html")
+CUSTOM_SIDEBAR = safe_load("custom_sidebar.html")
+CUSTOM_FOOTER = safe_load("custom_footer.html")
+
+# Gabungkan ke dalam satu blok <head>
+CUSTOM_HEAD_FULL = CUSTOM_HEAD + CUSTOM_JS
+
 # === Ambil semua postingan dari Blogger ===
 
 def fetch_posts():
@@ -121,15 +135,18 @@ def fetch_posts():
 
     return all_posts
 
-# === Halaman per postingan ===
+# === Template ===
 
 POST_TEMPLATE = load_template("post_template.html")
+INDEX_TEMPLATE = load_template("index_template.html")
+LABEL_TEMPLATE = load_template("label_template.html")
+
+# === Halaman per postingan ===
 
 def generate_post_page(post, all_posts):
     filename = f"{sanitize_filename(post['title'])}-{post['id']}.html"
     filepath = os.path.join(POST_DIR, filename)
 
-    # Related posts: acak, beda ID
     related = [p for p in all_posts if p['id'] != post['id']]
     related_sample = random.sample(related, min(5, len(related)))
     related_html = "<ul>" + "".join(
@@ -141,15 +158,19 @@ def generate_post_page(post, all_posts):
         title=post['title'],
         content=post['content'],
         labels=render_labels(post.get("labels", [])),
-        related=related_html
+        related=related_html,
+        custom_head=CUSTOM_HEAD_FULL,
+        custom_header=CUSTOM_HEADER,
+        custom_sidebar=CUSTOM_SIDEBAR,
+        custom_footer=CUSTOM_FOOTER
     )
+
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(html)
+
     return filename
 
 # === Halaman index beranda ===
-
-INDEX_TEMPLATE = load_template("index_template.html")
 
 def generate_index(posts):
     total_pages = paginate(len(posts), POSTS_PER_PAGE)
@@ -165,25 +186,30 @@ def generate_index(posts):
             labels = render_labels(post.get('labels', []))
             items_html += f"""
 <article class="post">
-  
   <div class="post-body">
-  <div class='label-line'>
-<span class='label-info-th'>{labels}</span></div>
+    <div class='label-line'>
+      <span class='label-info-th'>{labels}</span>
+    </div>
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
-  
-  <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
-</div></article>
+    <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
+  </div>
+</article>
 """
         pagination = generate_pagination_links("index", page, total_pages)
-        html = render_template(INDEX_TEMPLATE, items=items_html, pagination=pagination)
+        html = render_template(INDEX_TEMPLATE,
+            items=items_html,
+            pagination=pagination,
+            custom_head=CUSTOM_HEAD_FULL,
+            custom_header=CUSTOM_HEADER,
+            custom_sidebar=CUSTOM_SIDEBAR,
+            custom_footer=CUSTOM_FOOTER
+        )
         output_file = f"index.html" if page == 1 else f"index-{page}.html"
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
 
 # === Halaman per label ===
-
-LABEL_TEMPLATE = load_template("label_template.html")
 
 def generate_label_pages(posts):
     label_map = {}
@@ -218,7 +244,11 @@ def generate_label_pages(posts):
             html = render_template(LABEL_TEMPLATE,
                 label=label,
                 items=items_html,
-                pagination=pagination
+                pagination=pagination,
+                custom_head=CUSTOM_HEAD_FULL,
+                custom_header=CUSTOM_HEADER,
+                custom_sidebar=CUSTOM_SIDEBAR,
+                custom_footer=CUSTOM_FOOTER
             )
             output_file = os.path.join(LABEL_DIR, f"{sanitize_filename(label)}-{page}.html")
             with open(output_file, 'w', encoding='utf-8') as f:
