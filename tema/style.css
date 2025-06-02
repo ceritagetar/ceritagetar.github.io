@@ -13,3 +13,15 @@ width:65%;
 max-width:650px;
 margin:0 0 10px;
 }
+
+.post {
+margin-bottom: 13px;
+}
+.post-body {
+font:normal normal 16px Roboto, Arial, sans-serif;
+color:#575757;
+line-height: 1.6em;
+text-align: left;
+word-wrap: break-word;
+user-select: none;
+}
