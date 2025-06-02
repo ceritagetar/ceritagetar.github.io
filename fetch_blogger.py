@@ -170,7 +170,7 @@ def generate_index(posts):
   <div class='label-line'>
 <span class='label-info-th'>{labels}</span></div>
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
-    <h2 class="post-title><a href="posts/{filename}">{post['title']}</a></h2>
+    <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
   
   <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
 </div></article>
