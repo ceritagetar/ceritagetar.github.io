@@ -26,7 +26,7 @@ word-wrap: break-word;
 user-select: none;
 }
 
-h2.post-title a, .post-snippet {
+h2.post-title, .post-snippet {
 margin-left: 218px;
 }
 
