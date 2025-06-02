@@ -164,7 +164,7 @@ def generate_index(posts):
             thumb = extract_thumbnail(post['content'])
             labels = render_labels(post.get('labels', []))
             items_html += f"""
-<article>
+<article id="content-wrapper">
   <a href="posts/{filename}">
     <img class="thumbnail" src="{thumb}" alt="">
     <h2>{post['title']}</h2>
