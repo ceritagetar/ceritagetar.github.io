@@ -2,18 +2,17 @@ import requests
 import os
 import re
 import json
+import random
 from html.parser import HTMLParser
+
+# === Konfigurasi ===
 
 API_KEY = os.environ.get('BLOGGER_API_KEY')
 BLOG_ID = os.environ.get('BLOG_ID')
 
-if not API_KEY or not BLOG_ID:
-    raise EnvironmentError("Secrets BLOGGER_API_KEY dan BLOG_ID belum tersedia.")
-
 DATA_DIR = 'data'
 POST_DIR = 'posts'
 LABEL_DIR = 'labels'
-ASSETS_DIR = 'assets'
 POSTS_JSON = os.path.join(DATA_DIR, 'posts.json')
 POSTS_PER_PAGE = 10
 
@@ -50,10 +49,30 @@ def render_labels(labels):
         return ""
     html = '<div class="labels">'
     for label in labels:
-        label_filename = sanitize_filename(label)
-        html += f'<span class="label"><a href="labels/{label_filename}.html">{label}</a></span> '
+        filename = sanitize_filename(label)
+        html += f'<span class="label"><a href="labels/{filename}-1.html">{label}</a></span> '
     html += "</div>"
     return html
+
+def load_template(path):
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+def render_template(template, **context):
+    for key, value in context.items():
+        template = template.replace(f'{{{{ {key} }}}}', str(value))
+    return template
+
+def paginate(total_items, per_page):
+    total_pages = (total_items + per_page - 1) // per_page
+    return total_pages
+
+def generate_pagination_links(base_url, current, total):
+    links = ""
+    for i in range(1, total + 1):
+        cls = 'active' if i == current else ''
+        links += f'<a class="{cls}" href="{base_url}-{i}.html">{i}</a> '
+    return f'<nav class="pagination">{links}</nav>' if total > 1 else ''
 
 # === Ambil semua postingan dari Blogger ===
 
@@ -82,113 +101,113 @@ def fetch_posts():
 
     return all_posts
 
-# === Bangun halaman HTML ===
+# === Halaman per postingan ===
 
-def generate_post_page(post):
+POST_TEMPLATE = load_template("post_template.html")
+
+def generate_post_page(post, all_posts):
     filename = f"{sanitize_filename(post['title'])}-{post['id']}.html"
     filepath = os.path.join(POST_DIR, filename)
-    labels_html = render_labels(post.get("labels", []))
+
+    # Related posts: acak, beda ID
+    related = [p for p in all_posts if p['id'] != post['id']]
+    related_sample = random.sample(related, min(5, len(related)))
+    related_html = "<ul>" + "".join(
+        f'<li><a href="{sanitize_filename(p["title"])}-{p["id"]}.html">{p["title"]}</a></li>'
+        for p in related_sample
+    ) + "</ul>"
+
+    html = render_template(POST_TEMPLATE,
+        title=post['title'],
+        content=post['content'],
+        labels=render_labels(post.get("labels", [])),
+        related=related_html
+    )
     with open(filepath, 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>{post['title']}</title>
-  <link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-  <header><h1>{post['title']}</h1><p><a href="../index.html">← Kembali</a></p></header>
-  <main>
-    <article>
-      {labels_html}
-      <div>{post['content']}</div>
-    </article>
-  </main>
-  <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
+        f.write(html)
     return filename
 
+# === Halaman index beranda ===
+
+INDEX_TEMPLATE = load_template("index_template.html")
+
 def generate_index(posts):
-    with open("index.html", 'w', encoding='utf-8') as f:
-        f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Beranda Blog</title>
-  <link rel="stylesheet" href="assets/style.css">
-</head>
-<body>
-  <header><h1>Blog Saya</h1></header>
-  <main><section>
-""")
-        for post in posts:
-            filename = generate_post_page(post)
+    total_pages = paginate(len(posts), POSTS_PER_PAGE)
+    for page in range(1, total_pages + 1):
+        start = (page - 1) * POSTS_PER_PAGE
+        end = start + POSTS_PER_PAGE
+        items = posts[start:end]
+        items_html = ""
+        for post in items:
+            filename = generate_post_page(post, posts)
             snippet = strip_html(post['content'])[:150]
             thumb = extract_thumbnail(post['content'])
             labels = render_labels(post.get('labels', []))
-            f.write(f"""
-  <article>
-    <a href="posts/{filename}">
-      <img class="thumbnail" src="{thumb}" alt="">
-      <h2>{post['title']}</h2>
-    </a>
-    {labels}
-    <p>{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
-  </article>""")
-        f.write("""
-  </section></main>
-  <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
+            items_html += f"""
+<article>
+  <a href="posts/{filename}">
+    <img class="thumbnail" src="{thumb}" alt="">
+    <h2>{post['title']}</h2>
+  </a>
+  {labels}
+  <p>{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
+</article>
+"""
+        pagination = generate_pagination_links("index", page, total_pages)
+        html = render_template(INDEX_TEMPLATE, items=items_html, pagination=pagination)
+        output_file = f"index.html" if page == 1 else f"index-{page}.html"
+        with open(output_file, 'w', encoding='utf-8') as f:
+            f.write(html)
+
+# === Halaman per label ===
+
+LABEL_TEMPLATE = load_template("label_template.html")
 
 def generate_label_pages(posts):
     label_map = {}
-
     for post in posts:
         if 'labels' in post:
             for label in post['labels']:
                 label_map.setdefault(label, []).append(post)
 
     for label, label_posts in label_map.items():
-        filename = f"{sanitize_filename(label)}.html"
-        filepath = os.path.join(LABEL_DIR, filename)
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(f"""<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>Kategori: {label}</title>
-  <link rel="stylesheet" href="../assets/style.css">
-</head>
-<body>
-  <header><h1>Kategori: {label}</h1><p><a href="../index.html">← Kembali</a></p></header>
-  <main><section>
-""")
-            for post in label_posts:
-                post_file = generate_post_page(post)
+        total_pages = paginate(len(label_posts), POSTS_PER_PAGE)
+        for page in range(1, total_pages + 1):
+            start = (page - 1) * POSTS_PER_PAGE
+            end = start + POSTS_PER_PAGE
+            items = label_posts[start:end]
+            items_html = ""
+            for post in items:
+                filename = generate_post_page(post, posts)
                 snippet = strip_html(post['content'])[:150]
                 thumb = extract_thumbnail(post['content'])
-                f.write(f"""
-  <article>
-    <a href="../posts/{post_file}">
-      <img class="thumbnail" src="{thumb}" alt="">
-      <h2>{post['title']}</h2>
-    </a>
-    <p>{snippet}... <a href="../posts/{post_file}">Baca selengkapnya</a></p>
-  </article>""")
-            f.write("""
-  </section></main>
-  <footer><p>&copy; 2025 Blog</p></footer>
-</body>
-</html>""")
+                items_html += f"""
+<article>
+  <a href="../posts/{filename}">
+    <img class="thumbnail" src="{thumb}" alt="">
+    <h2>{post['title']}</h2>
+  </a>
+  <p>{snippet}... <a href="../posts/{filename}">Baca selengkapnya</a></p>
+</article>
+"""
+            pagination = generate_pagination_links(
+                f"{sanitize_filename(label)}", page, total_pages
+            )
+            html = render_template(LABEL_TEMPLATE,
+                label=label,
+                items=items_html,
+                pagination=pagination
+            )
+            output_file = os.path.join(LABEL_DIR, f"{sanitize_filename(label)}-{page}.html")
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write(html)
 
 # === Eksekusi ===
 
 if __name__ == '__main__':
     print("📥 Mengambil artikel...")
     posts = fetch_posts()
-    print("✅ Artikel diambil:", len(posts))
+    print(f"✅ Artikel diambil: {len(posts)}")
     generate_index(posts)
     generate_label_pages(posts)
-    print("✅ Halaman index, posting, dan label selesai dibuat.")
+    print("✅ Halaman index, label, dan artikel selesai dibuat.")
