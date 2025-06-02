@@ -50,7 +50,7 @@ def render_labels(labels):
     html = '<div class="labels">'
     for label in labels:
         filename = sanitize_filename(label)
-        html += f'<span class="label"><a href="labels/{filename}-1.html">{label}</a></span> '
+        html += f'<span class="label"><a href="/labels/{filename}-1.html">{label}</a></span> '
     html += "</div>"
     return html
 
