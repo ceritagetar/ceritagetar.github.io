@@ -165,7 +165,8 @@ def generate_index(posts):
             labels = render_labels(post.get('labels', []))
             items_html += f"""
 <article class="post">
-  {labels}
+  <div class='label-line'>
+<span class='label-info-th'>{labels}</span></div>
   <div class="post-body"><a href="posts/{filename}">
     <img class="thumbnail" src="{thumb}" alt="">
     <h2>{post['title']}</h2>
