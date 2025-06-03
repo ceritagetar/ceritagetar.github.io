@@ -192,7 +192,7 @@ def generate_index(posts):
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
     <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
     <div class='label-line'>
-      
+      <span class='label-info-th'></span>
     </div>
   </div>
 </article>
