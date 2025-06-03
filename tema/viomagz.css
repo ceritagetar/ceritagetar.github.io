@@ -297,6 +297,7 @@ float:none;
 width:100%;
 margin:0 0 10px;
 padding: 20px 10%;
+max-width: 800px;
 }
 .breadcrumbs a {
 color: #575757;
@@ -363,7 +364,7 @@ background: #fff;
 @media only screen and (max-width: 800px) {
   body {
     background: #fff;
-    font-size: 15.7px;
+    font-size: 15px;
   }
 
 
