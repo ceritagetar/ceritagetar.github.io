@@ -311,7 +311,10 @@ padding: 20px 10%;
   width: calc(50% - 10px); /* 2 kolom seimbang */
   margin-bottom: 20px;
   box-sizing: border-box;
+   height:130px;
 }
+.post-snippet { 
+   display:none;}
 
 /* =============== RESPONSIVE MOBILE ================== */
 @media screen and (max-width: 768px) {
