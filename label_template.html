@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Kategori: {{ label }}</title>
+  {{ custom_head }}
 </head>
-<body>
+{{ custom_header }}
   <h1>Kategori: {{ label }}</h1>
   <main>
     {{ items }}
   </main>
   {{ pagination }}
-</body>
+{{ custom_footer }}
 </html>
