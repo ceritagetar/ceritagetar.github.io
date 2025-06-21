@@ -1,16 +1,23 @@
-**
-* Eric Meyer&#39;s Reset CSS v2.0 http://meyerweb.com/eric/tools/css/reset/ 
+/*
+* Eric Meyer's Reset CSS v2.0 http://meyerweb.com/eric/tools/css/reset/
 * http://cssreset.com
 */
+
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;/*font-size:100%;*/font:inherit;vertical-align:baseline;}
+
 /* HTML5 display-role reset for older browsers */
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;display:block;}*{margin:0;padding:0;}html{display:block;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
+body{line-height:1;display:block;}
+*{margin:0;padding:0;}
+html{display:block;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
+table{border-collapse:collapse;border-spacing:0;}
 
 /* Blogger CSS Reset */
 .section,.widget{margin:0 0 0 0;padding:0 0 0 0;}
 .navbar,.blog-feeds,.feed-links,#backlinks-container,a.home-link,.blog-mobile-link{display:none;}
 .post-body .separator > a, .post-body .separator > span {margin-left: 0 !important;}
-
 .quickedit,.thread-toggle,.edit-post,.item-control{display:none;}
 
 /* disable font boosting on mobile browsers */
@@ -28,7 +35,8 @@ a:hover{color:#005f99;text-decoration:none;}
 a img{border:none;border-width:0;outline:none;}
 abbr,acronym{border-bottom:1px dotted;cursor:help;}
 sup,sub{vertical-align:baseline;position:relative;top:-.4em;font-size:86%;}
-sub{top:.4em;}small{font-size:86%;}
+sub{top:.4em;}
+small{font-size:86%;}
 kbd{font-size:80%;border:1px solid #777;padding:2px 5px;border-bottom-width:2px;border-radius:3px;}
 mark{background-color:#ffce00;color:black;}
 p,blockquote,pre,table,figure,hr,form,ol,ul,dl{margin:1.5em 0;}
@@ -61,13 +69,13 @@ pre,code{font-family:"Courier New",Courier,Monospace;color:inherit;}
 pre{white-space:pre;word-wrap:normal;overflow:auto;}
 blockquote{background:#f6f6f6;margin-left:2em;margin-right:2em;padding:1em 1em;font-style:italic;font-size:105%;}
 blockquote:before {
-    content: "\f10d"; 
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    padding-right:4px;
-	color:#666;
+  content: "\f10d";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  padding-right:4px;
+  color:#666;
 }
 
 /* table */
@@ -103,29 +111,21 @@ td.tr-caption {
 	height: 0;
 }
 
-
 /* TRANSISI */
 a:link, .label-count, #cssmenu ul ul li, #cssmenu > ul > li.has-sub > a:before, #cssmenu ul ul li.has-sub > a:before, .button:before, .button.menu-opened:after, .berlangganan-box input.submit-email[type="submit"], .berlangganan-box input.email-address[type="text"] {
 	transition: all 0.2s;
 	-moz-transition: all 0.2s;
 	-webkit-transition: all 0.2s;
 }
-
 .related-post-style-3 .related-post-item {
 	transition: opacity 0.2s linear;
 }
-.img-thumbnail, .img-thumbnail img, .label-info-th a, .info-1, .info-2, h2.post-title, .post-snippet, .sidebar-sticky {
-	transition: all .2s linear; 
-	-o-transition: all .2s linear; 
-	-moz-transition: all .2s linear; 
-	-webkit-transition: all .2s linear; 
+/* Memperbaiki transisi agar lebih spesifik dan tidak mengganggu performa berlebihan */
+.img-thumbnail, .img-thumbnail img, .label-info-th a, h2.post-title, .post-snippet, .sidebar-sticky {
+	transition: all .2s ease-in-out; /* Menggunakan ease-in-out untuk transisi yang lebih halus */
 }
-
 #searchfs input[type="search"], h1,h2,h3,h4,h5,h6 {
-	transition: font-size .2s linear; 
-	-o-transition: font-size .2s linear; 
-	-moz-transition: font-size .2s linear; 
-	-webkit-transition: font-size .2s linear; 
+	transition: font-size .2s ease-in-out;
 }
 
 .img-thumbnail, .img-thumbnail img, .FeaturedPost .post-summary, .FeaturedPost .image, .PopularPosts .item-thumbnail, .PopularPosts .widget-content ul li img, .Profile .widget-content, .PopularPosts .widget-content ul, .list-label-widget-content ul, .label-info-th a, .displaypageNum a, .showpage a, .pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a, .Profile .profile-link, .label-size, .berlangganan-box, #baca-juga, #baca-juga h2, .related-post-item-thumbnail, #baca-juga ul, .PopularPosts ul li .item-thumbnail-only:before, .PopularPosts ul li .item-content:before {
@@ -140,8 +140,8 @@ a:link, .label-count, #cssmenu ul ul li, #cssmenu > ul > li.has-sub > a:before, 
 
 body {
 	background: #f5f5f5;
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
+	margin: 0; /* Hapus padding yang tidak perlu di sini */
+	padding: 0;
 	color: #1e1e2f;
 	font: 400 16px/1.6 'Segoe UI', Roboto, sans-serif;
 	text-align: left;
@@ -153,7 +153,7 @@ body {
 	max-width: 1000px;
     margin: 0 auto;
     padding: 70px 30px 30px;
-    overflow: hidden;
+    overflow: hidden; /* Penting untuk menampung float atau flex children */
 }
 
 /* HEADER */
@@ -176,7 +176,7 @@ body {
 }
 .header {
 	max-width: 400px;
-	float: left;
+	float: left; /* Biarkan float untuk header logo/title */
 	margin-right: 28px;
 	overflow: hidden;
     white-space: nowrap;
@@ -196,7 +196,7 @@ body {
     font-size: 0.7em;
 	display: none;
 }
-.header a, .header a:hover  {
+.header a, .header a:hover {
 	color: #ffffff;
 }
 .header img {
@@ -205,45 +205,127 @@ body {
     margin: 11px 0;
     max-height: 24px;
 }
-
 .label-info-th {
-background: #fff;
+    background: #fff; /* Ini ada di sini juga, pertimbangkan untuk menyatukannya */
 }
 
-/* POST WRAPPER */
+/* POST WRAPPER DAN PERBAIKAN ARTIKEL INDEX */
 .post-container {
-	padding-right: 25px;
+	padding-right: 25px; /* Ini mungkin perlu disesuaikan jika sidebar berubah */
 }
-#post-wrapper {
+
+#post-wrapper { /* Ini mungkin untuk halaman single post atau container utama artikel */
 	background:transparent;
 	float:left;
 	width:70%;
 	max-width:700px;
 	margin:0 0 10px;
 }
+
 .breadcrumbs a {
 	color: #1e1e2f;
 }
-.post {
+
+.post { /* Kelas .post sepertinya untuk single post, bukan item di indeks */
 	margin-bottom: 20px;
 }
+
+/* --- PERBAIKAN UTAMA UNTUK ARTIKEL DI HALAMAN INDEKS --- */
 .post-body {
-	font:400 16px 'Segoe UI', sans-serif;
-	color:#1e1e2f;
-	line-height: 1.6em;
-	text-align: left;
-	word-wrap: break-word;
+    /* Hapus properti float dan margin-left yang sudah tidak relevan */
+    /* font:400 16px 'Segoe UI', sans-serif; */ /* Font sudah diatur di body */
+    color:#1e1e2f;
+    line-height: 1.6em;
+    text-align: left;
+    word-wrap: break-word;
+    margin-bottom: 25px; /* Jarak antar artikel */
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* display: block; -- default, tapi bisa ditambahkan untuk kejelasan */
+    overflow: hidden; /* Membersihkan float internal jika masih ada */
 }
+
+.label-line {
+    position: relative;
+    margin-bottom: 15px;
+    /* Pastikan label selalu berada di barisnya sendiri, di atas konten flex */
+    clear: both; /* Jika ada float di atasnya */
+    width: 100%; /* Pastikan mengambil lebar penuh jika berada di dalam flex container */
+    padding-bottom: 15px; /* Jarak antara label dan kontainer flex */
+}
+.label-line::before{
+    background:rgba(195,195,195,0.15);
+    z-index:1;
+    content:"";
+    width:100%;
+    height:2px;
+    position:absolute;
+    top:50%;
+    left:0;
+}
+.label-info-th{
+    position:relative;
+    z-index:2;
+    display:inline-block;
+    height:30px;
+    padding-right:3px;
+    background: #fff; /* Mengatasi background ganda jika ada */
+}
+.label-info-th a{
+    background:rgba(195,195,195,0.15);
+    border-radius:4px;
+    display:inline-block;
+    padding:6px 12px;
+    margin:2px 0;
+    font-size:13px;
+    font-size:.8125rem;
+    font-weight:500;
+    text-decoration: none;
+}
+
+/* Kontainer Flexbox untuk Gambar dan Teks */
+.content-flex-container {
+    display: flex; /* Aktifkan Flexbox */
+    flex-direction: row; /* Elemen akan berjejer horizontal */
+    align-items: flex-start; /* Sejajarkan item ke atas */
+    gap: 20px; /* Jarak antara gambar dan teks (pengganti margin-right pada .img-thumbnail) */
+    width: 100%; /* Pastikan mengisi lebar parent */
+}
+
+.img-thumbnail {
+    /* Hapus float: left; */
+    flex-shrink: 0; /* Penting: mencegah gambar mengecil */
+    width: 255px; /* Lebar tetap untuk gambar */
+    height: 170px; /* Tinggi tetap untuk gambar */
+    /* margin-right: 20px; */ /* Diganti oleh gap di .content-flex-container */
+    border-radius: 4px; /* Sudut membulat pada kontainer thumbnail */
+    overflow: hidden; /* Memastikan gambar tidak keluar dari batasnya */
+}
+.img-thumbnail img {
+    width: 100%; /* Gambar mengisi lebar container */
+    height: 100%; /* Gambar mengisi tinggi container */
+    display: block;
+    object-fit: cover; /* Penting: menjaga rasio aspek dan mengisi area */
+    border-radius: 4px; /* Sudut membulat pada gambar */
+}
+
+.post-text-content { /* Kelas baru untuk membungkus judul dan snippet */
+    flex-grow: 1; /* Biarkan elemen ini mengisi sisa ruang yang tersedia */
+}
+
 h2.post-title, h1.post-title {
 	font: 700 24px 'Segoe UI', sans-serif;
+    margin-bottom: 8px; /* Mengurangi margin bawah judul */
+    line-height: 1.3em;
 }
-h1.post-title {
+
+h1.post-title { /* Mungkin untuk halaman single post, sesuaikan jika perlu */
 	font-size: 30px;
 	margin-bottom: 12px;
 }
-h2.post-title {
-	margin-bottom: 12px;
-}
+
 h2.post-title a, h1.post-title a, h2.post-title, h1.post-title {
 	color: #1e1e2f;
 	line-height: 1.3em;
@@ -251,25 +333,21 @@ h2.post-title a, h1.post-title a, h2.post-title, h1.post-title {
 h2.post-title a:hover, h1.post-title a:hover {
 	color: #007acc;
 }
-.img-thumbnail {
-	position: relative;
-	float: left;
-	width: 255px;
-	height: 170px;
-}
-.img-thumbnail img {
-	width: 255px;
-	height: 170px;
-	display: block;
-}
 
-.label-line{position:relative;margin-bottom:15px}.label-line::before{background:rgba(195,195,195,0.15);z-index:1;content:"";width:100%;height:2px;position:absolute;top:50%;left:0}.label-info-th{position:relative;z-index:2;display:inline-block;height:30px;padding-right:3px}.label-info-th a{background:rgba(195,195,195,0.15);border-radius:4px;display:inline-block;padding:6px 12px;margin:2px 0;font-size:13px;font-size:.8125rem;font-weight:500;text-decoration: none}
+.post-snippet {
+    /* margin-left: 275px; */ /* Hapus ini karena sudah pakai Flexbox */
+    margin-top: 5px; /* Jarak antara judul dan snippet */
+    font-size: 15px; /* Sedikit lebih kecil untuk snippet */
+    line-height: 1.5;
+}
 
 .post-info {
 	color: #777777;
 	font: 400 14px 'Segoe UI', sans-serif;
+    margin-top: 10px; /* Jarak antara snippet dan info post */
 }
-.info-1, .info-2, h2.post-title, .post-snippet {
+/* Hapus info-1, info-2 karena sudah tidak relevan dengan layout flexbox */
+/* .info-1, .info-2, h2.post-title, .post-snippet {
 	margin-left: 275px;
 }
 .info-1 {
@@ -277,9 +355,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .info-2 {
 	margin-top: 12px;
-}
+} */
+
 .info-3 {
-	margin-bottom: 1.6em;
+	margin-bottom: 1.6em; /* Ini mungkin masih relevan untuk info di bawah konten utama */
 }
 .post-info a {
 	display: inline-block;
@@ -296,9 +375,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	content: "-";
 	padding: 0 2px;
 }
-
-
-
 
 /* SIDEBAR WIDGET */
 #sidebar-wrapper {
@@ -350,8 +426,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	border: none;
 	overflow: hidden;
 }
-
-
 
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
@@ -475,10 +549,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	display: block;
 }
 
-
-
-
-
 /* Artikel Terbaru */
 .artikel-terbaru ul li {
 	border-bottom: 2px dotted #cccccc;
@@ -491,7 +561,7 @@ h2.post-title a:hover, h1.post-title a:hover {
     padding-bottom: 5px;
 }
 .artikel-terbaru ul li:before, .list-label-widget-content ul li:before, .LinkList ul li:before, .PageList ul li:before {
-    content: "\f14b"; 
+    content: "\f14b";
     font-family: FontAwesome;
     font-style: normal;
     font-weight: normal;
@@ -502,16 +572,14 @@ h2.post-title a:hover, h1.post-title a:hover {
     content: "\f14b";
 }
 .list-label-widget-content ul li:before {
-    content: "\f07b"; 
+    content: "\f07b";
 }
 .LinkList ul li:before {
-	content: "\f14c"; 
+	content: "\f14c";
 }
 .PageList ul li:before {
-	content: "\f249"; 
+	content: "\f249";
 }
-
-
 
 /* Back to top */
 #back-to-top {
@@ -530,13 +598,7 @@ h2.post-title a:hover, h1.post-title a:hover {
     z-index: 998;
 }
 
-
-
-
-
-
 /* PAGE NAVIGATION */
-
 #blog-pager {
 	clear:both !important;
 	padding:2px 0;
@@ -562,7 +624,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	color: #005f99;
 	border: 1px solid #005f99;
 }
-.showpageOf { 
+.showpageOf {
 	display: none !important;
 }
 #blog-pager .pages {
@@ -622,8 +684,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	padding: 20px 0px;
 }
 
-
-
 /* SEARCH FORM */
 .search-icon {
     position: absolute;
@@ -642,32 +702,27 @@ h2.post-title a:hover, h1.post-title a:hover {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.8);
-    
     -webkit-transition: all 0.1s ease-in-out;
 	-moz-transition: all 0.1s ease-in-out;
 	-o-transition: all 0.1s ease-in-out;
 	-ms-transition: all 0.1s ease-in-out;
 	transition: all 0.1s ease-in-out;
-
     -webkit-transform: translate(0px, -100%) scale(0, 0);
 	-moz-transform: translate(0px, -100%) scale(0, 0);
 	-o-transform: translate(0px, -100%) scale(0, 0);
 	-ms-transform: translate(0px, -100%) scale(0, 0);
 	transform: translate(0px, -100%) scale(0, 0);
-    
     opacity: 0;
 }
-
 #searchfs.open {
     -webkit-transform: translate(0px, 0px) scale(1, 1);
     -moz-transform: translate(0px, 0px) scale(1, 1);
 	-o-transform: translate(0px, 0px) scale(1, 1);
 	-ms-transform: translate(0px, 0px) scale(1, 1);
-	transform: translate(0px, 0px) scale(1, 1); 
+	transform: translate(0px, 0px) scale(1, 1);
     opacity: 1;
 	z-index: 9999;
 }
-
 #searchfs input[type="search"] {
 	position: absolute;
     top: 50%;
@@ -798,7 +853,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 #cssmenu li:hover > ul > li {
 	height: 33px
-} 
+}
 #cssmenu ul ul ul{
 	margin-left: 100%;
 	top: 0
@@ -819,7 +874,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 #cssmenu ul ul li:last-child > a,#cssmenu ul ul li.last-item > a {
 	border-bottom: 0
 }
-
 #cssmenu ul ul li.has-sub > a:after {
 	position: absolute;
 	top: 16px;
@@ -853,12 +907,12 @@ h2.post-title a:hover, h1.post-title a:hover {
 #cssmenu > ul > li.has-sub > ul > li.active > a,#cssmenu > ul ul > li.has-sub > ul > li.active> a{
 	border-top: 1px solid #333
 }
-
 @media screen and (min-width:801px){
 	#cssmenu ul {
 		display: block !important;
 	}
 }
+
 @media screen and (max-width:800px){
 	#cssmenu {
 		float: none;
@@ -1044,8 +1098,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	color: #007acc;
 }
 
-
-
 /* RELATED POSTS */
 .related-post {
 	margin: 30px auto 0;
@@ -1078,7 +1130,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	overflow: hidden;
 }
 .related-post-style-3 .related-post-item {
-	float: left;
+	float: left; /* Biarkan float untuk tata letak grid, atau ganti dengan flex/grid */
 	width: 23.5%;
 	height: auto;
 	margin-right: 2%;
@@ -1101,29 +1153,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 .related-post-style-3 .related-post-item-title {
 	color: #444;
 }
-.related-post-style-3 .related-post-item-tooltip {
-    padding: 10px 0;
-}
 .related-post-item-tooltip .related-post-item-title {
     font-weight: 500;
     display: block;
 }
-
-@media only screen and (max-width:480px){
-	.related-post-style-3 .related-post-item {
-		width: 48%;
-		margin-right: 4%;
-	}
-	.related-post-style-3 .related-post-item:nth-of-type(2n+0) {
-		margin-right: 0;
-	}
-	.related-post-style-3 .related-post-item:nth-of-type(2n+1) {
-		clear: both;
-	}
-}
-
-
-
 
 /* MEDIA QUERY */
 @media only screen and (max-width:1080px){
@@ -1140,17 +1173,24 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.sticky-mobile {
 		margin-right: 30px;
 	}
-	.img-thumbnail, .img-thumbnail img {
-		width: 240px;
-		height: 160px;
+	/* Sesuaikan ukuran gambar dan jarak di bawah 1080px */
+	.img-thumbnail {
+		width: 220px; /* Sedikit lebih kecil */
+		height: 147px; /* Sesuaikan rasio */
 	}
-	.info-1, .info-2, h2.post-title, .post-snippet {
+	.img-thumbnail img {
+		width: 100%;
+		height: 100%;
+	}
+	/* Hapus atau sesuaikan margin-left ini karena flexbox */
+	/* .info-1, .info-2, h2.post-title, .post-snippet {
 		margin-left: 260px;
-	}
+	} */
 	.search-icon {
 		right: 30px;
 	}
 }
+
 @media only screen and (max-width:800px){
 	#header-wrapper {
 		padding-left: 0px;
@@ -1185,17 +1225,24 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.header img {
 		display: inline-block !important;
 	}
-	.img-thumbnail, .img-thumbnail img {
+	/* Sesuaikan ukuran gambar dan jarak di bawah 800px */
+	.img-thumbnail {
 		width: 180px;
 		height: 120px;
 	}
-	.info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 195px;
+	.img-thumbnail img {
+		width: 100%;
+		height: 100%;
 	}
+	/* Hapus atau sesuaikan margin-left ini karena flexbox */
+	/* .info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 195px;
+	} */
 	.search-icon {
 		right: 20px;
 	}
 }
+
 @media only screen and (max-width:768px){
 	#post-wrapper, #sidebar-wrapper {
 		float:none;
@@ -1204,6 +1251,28 @@ h2.post-title a:hover, h1.post-title a:hover {
 	}
 	.post-container {
 		padding: 0 0 20px 0;
+	}
+	/* Di layar kecil, tata letak artikel bisa diubah menjadi vertikal */
+	.content-flex-container {
+		flex-direction: column; /* Ubah menjadi tumpukan vertikal */
+		align-items: center; /* Tengahkan item */
+		gap: 15px; /* Jarak antar gambar dan teks */
+	}
+	.img-thumbnail {
+		width: 100%; /* Gambar mengisi lebar penuh */
+		height: auto; /* Tinggi menyesuaikan rasio */
+		max-width: 300px; /* Batasi lebar gambar agar tidak terlalu besar */
+		margin-right: 0; /* Hapus margin kanan jika tumpukan */
+	}
+	.img-thumbnail img {
+		height: auto; /* Tinggi menyesuaikan */
+		max-height: 200px; /* Batasi tinggi gambar */
+	}
+	.post-text-content {
+		text-align: center; /* Tengahkan teks */
+	}
+	h2.post-title, .post-snippet {
+		text-align: center;
 	}
 }
 
@@ -1221,14 +1290,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 15px;
 	}
-	#post-wrapper, #sidebar-wrapper {
-		float:none;
-		width:100%;
-		max-width:100%
-	}
-	.info-1, .info-2, h2.post-title, .post-snippet {
+	/* Sudah ditangani di 768px, tapi bisa disempurnakan lagi */
+	/* .info-1, .info-2, h2.post-title, .post-snippet {
 		margin-left: 190px;
-	}
+	} */
 	.search-icon {
 		right: 15px;
 	}
@@ -1254,23 +1319,27 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 12px;
 	}
+	/* Revisi untuk mobile agar gambar dan teks tidak berbenturan */
 	.img-thumbnail {
-		float: right;
-		width: 100px;
-		height: auto;
-		margin: 3px 0px 0px 10px;
+		float: none; /* Hapus float */
+		width: 100%; /* Gambar mengisi lebar penuh */
+		height: auto; /* Tinggi menyesuaikan rasio */
+		margin: 0 0 15px 0; /* Jarak di bawah gambar */
+		max-width: 250px; /* Batasi lebar di tengah */
 	}
 	.img-thumbnail img {
-		width: 100px;
-		height: 67px;
+		width: 100%;
+		height: auto;
+		max-height: 150px;
 	}
-	.info-1, .info-2, h2.post-title, .post-snippet {
+	/* Hapus margin-left yang tidak perlu setelah flexbox */
+	/* .info-1, .info-2, h2.post-title, .post-snippet {
 		margin-left: 0px;
-	}
+	} */
 	.post-snippet {
 		margin-top: 10px;
 	}
-	.post {
+	.post { /* Kelas .post sepertinya untuk single post, bukan item di indeks */
 		overflow: hidden;
 	}
 	h1{font-size:170%}
@@ -1281,7 +1350,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	h6{font-size:100%}
 	h2.post-title {
 		font-size: 18px;
-		display: inline;
+		/* display: inline; */ /* Ini bisa menyebabkan masalah tata letak, lebih baik block */
 	}
 	h1.post-title {
 		font-size: 24px;
@@ -1333,9 +1402,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 10px;
 	}
-	.info-1, .info-2, h2.post-title, .post-snippet {
+	/* sudah ditangani di 480px */
+	/* .info-1, .info-2, h2.post-title, .post-snippet {
 		margin-left: 0px;
-	}
+	} */
 	.search-icon {
 		right: 10px;
 	}
@@ -1349,7 +1419,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	padding: 10px 25px;
 	background-color: #007acc;
 	color: white !important;
-	font-weight: 500;	
+	font-weight: 500;
 	font-size: 0.9em;
 	text-align: center;
 	text-indent: 15px;
