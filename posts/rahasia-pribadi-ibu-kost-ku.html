@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,43 +179,43 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/gadis-genit-itu-nikmat.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhvnjUad66WGmcLzs2TeUq7Uv3S1DY_6SwKMblXf1t_4aKzpElVhXeogvoWr8XzA1SW50mpFoRCjTiC14MhGfpuj5DzsxQBbeYXwrHUCUSOwaxPBnAs6cA8EmzOmWQT1A8Um-0-gw5h1NItgVxru_EcBDj-O07fFguAfHUnhfVfCxGfC5HaWhnxL2APA/w360-h640/d5faab2bc79c54ec54735296f198a3fd.jpg" alt="Gadis Genit Itu Nikmat">
+                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
                 </a>
-                <div class="item-title"><a href="/posts/gadis-genit-itu-nikmat.html">Gadis Genit Itu Nikmat</a></div>
-                <div class="item-snippet">Ironisnya, aku mempunyai hasrat seks yang tinggi, aku mudah terangsang bila melihat cewek yang bagik...</div>
+                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
+                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
             </li>
         
             <li>
-                <a href="/posts/keperawanan-kakak-kandung-ku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuhzZMRTvgm0K5y52731fw6BQUrp7cSaq7EWytHvAr8cn8eC6n-iFBEg23P322kDJ4WMj2rZ7vHEsZc7-xuqcpvUnWbKUNK0tC-t0Ob9bmpv5P68oIQwQJlGJwYv7e30d_3k7oNEQQ7rXmoQkFS6RvOxDsZ6Fn5vzVw3tx5gH63fXhKXmJMFQxUIRgqvI/s320/391623529_230687470015497_2341219323328554378_n.jpg" alt="Keperawanan kakak kandung ku">
+                <a href="/posts/rahasia-ku-dengan-tetanggaku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh53buk3U7ogeW-BRjA7QuXvDntMjbuR9PjEPMGd6dB9gi8k9GVReObsmB1aFwYdE-Tk0ra6KMgXoDVT5TQyVGGuwYg-8QlHnPadE9ZjY4kJN7T9NLCZv3WpqeDuHI376WCYQPDaOCVZEC4dIK1H4iU-Siwb3nvQMkIaXecyieqONVpGgBvbexKQ99DcPs/w640-h640/12279218_114526145581758_4752466125938272219_n.jpg" alt="Rahasia Ku Dengan Tetanggaku">
                 </a>
-                <div class="item-title"><a href="/posts/keperawanan-kakak-kandung-ku.html">Keperawanan kakak kandung ku</a></div>
-                <div class="item-snippet">Cerita ini berawal saat saya sedang di rumah, saya memiliki mbak yang sangak seksi serta semok membu...</div>
+                <div class="item-title"><a href="/posts/rahasia-ku-dengan-tetanggaku.html">Rahasia Ku Dengan Tetanggaku</a></div>
+                <div class="item-snippet">Awal Kisah ini Di mulai saat baru saja terima rapor cawu I, Kelas 2 SMA. Rumah Yang Tepat Berhadapan...</div>
             </li>
         
             <li>
-                <a href="/posts/belenggu-rindu-yang-tertahan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZwduN7P8Moay3nkU2OxTM6rLsexjRLW9WdaynlK4DLu9ChAGT8DcUHze1kGHut-zFd1LvSUTEkzTyZFURi55-1JgNzXZqjuJdytLtzHmiv87TNzmPLEu3IsceU5Stvj9YQfSqXY0l6q4PyWFUMtNysu7sz7OFYfRX82AiTKYUpiPJFu96dmHF_TARCg/w512-h640/395484066_122135340620028015_337979339352738165_n.jpg" alt="Belenggu Rindu Yang Tertahan">
+                <a href="/posts/bercinta-dengan-adik-kandung.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEigsT7nzY6VSPFGkFAvIgE7qATBQL7_VWBcxp5uG_w14c03ZXDwClgQNsBQWznHAvfx9_ib3oEtog4utBUb_PLyRAd-F-WEC6o6uDvXm89jbciTAd3OJjSdKjelw_v8lz-asMzmCNYiV9crM45KjcX3XprEtX37bpKTPNQRnwk1y4HqCQIzHl5bjULB" alt="Bercinta Dengan Adik Kandung">
                 </a>
-                <div class="item-title"><a href="/posts/belenggu-rindu-yang-tertahan.html">Belenggu Rindu Yang Tertahan</a></div>
-                <div class="item-snippet">Siang itu di sebuah rumah yang cukup asri, seorang gadis yang berambut panjang terurai dengan raut w...</div>
+                <div class="item-title"><a href="/posts/bercinta-dengan-adik-kandung.html">Bercinta Dengan Adik Kandung</a></div>
+                <div class="item-snippet">Namaku Ani, mahasiswi tingkat tiga di sebuah perguruan tinggi negeri di Bandung. Aku dan saudaraku e...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-kakak-kembar-kak-rina-dan-kak-rani.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW9jqxnUcpEStZsqj91LgU7tDCGypCNjLIySzUOnqFksyl8MS2ohO9Dq32nl8dCDOKP0H9e4aJH0CXsGSSDz9ATyTRnsvS429o6iCD9C09tQtsMZXTeT_9UpdW2eN7GCi9VtqZvtfbt0Lc2wVpnrt5IlUNplICPa3apPwwiPDoITvirz418xmfMgG4Tw/w328-h640/8a690c1d05dd20eead9a0603e0bb0118.jpg" alt="NIkmatnya Kakak Kembar Kak Rina dan Kak Rani">
+                <a href="/posts/cewek-impianku-adalah-lontenya-papaku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhQQHXafH63ZIe_Z28dBvsE9nKQR_6aRPyMB9i_B6DVAcqkKgE18rCo94PVabyGIrUNkFXxHkq5e-lnf7oG7BEcwQgDVcIV_QzJR3LHi4iH8efatgymPM6V78jH_zrx6A5bb3GtIjQySmMb-cHdsxbbdcmt-Q5F8XRlVK-1REKWGzTyMIAg2rOhExJnTQ=w531-h640" alt="Cewek Impianku adalah Lontenya Papaku">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-kakak-kembar-kak-rina-dan-kak-rani.html">NIkmatnya Kakak Kembar Kak Rina dan Kak Rani</a></div>
-                <div class="item-snippet">Perpisahan yang sungguh berat, terutama bagiku; mungkin bagi tante U, hal itu sudah biasa karena hub...</div>
+                <div class="item-title"><a href="/posts/cewek-impianku-adalah-lontenya-papaku.html">Cewek Impianku adalah Lontenya Papaku</a></div>
+                <div class="item-snippet">Yang menarik adalah penghuni kostnya salah satunya adalah mbak marisa , dari semua penghuni kost dis...</div>
             </li>
         
             <li>
-                <a href="/posts/menikmati-ratih-adikku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
+                <a href="/posts/kakak-ku-yang-baik-hati.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiNZmyNO7T5MWyEtGrkLfitHhU9dL3vYkDvEy9e3OpvP2ktjdXyexexVGeG_Li2kW3OcI3GuCUawC1SkeP0KQbOapmBgdFVd2cj7wUyQZQw4810g1NY35A59R6csPwnqg082u7Kn8u_tnjuawvqKdpJB6oCcNQduqSYycpO3_gPMAvCq7n7EXyZRQpV3Q=w360-h640" alt="Kakak ku yang Baik Hati">
                 </a>
-                <div class="item-title"><a href="/posts/menikmati-ratih-adikku.html">Menikmati Ratih Adikku</a></div>
-                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
+                <div class="item-title"><a href="/posts/kakak-ku-yang-baik-hati.html">Kakak ku yang Baik Hati</a></div>
+                <div class="item-snippet">Kenalkan, nama saya Boy, teman-teman biasa memanggilku Mas Boy. Saya seorang pemuda berusia 25 tahun...</div>
             </li>
         
             </ul>

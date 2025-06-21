@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,27 +179,11 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
+                <a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSZwh5b-t9bh2idA9VyW2TNCMk0Pw9OBmwexZtH_bS6uVL8i80ipF9NjL7zKfOFZgYPKlV3B1tg7ZKVrqLGF6RJcbEj32ji4Uo9R-j-xUH0NquGq8VzHgI8b81DpWIV7RstNXvDSCKUUQf2vg6DMljV6FDiS_FWCI0BhY_iXoRp3COCn-FMyYvFZ166A=w512-h640" alt="Birahi Kakak Iparku Yang Sangat Liar">
                 </a>
-                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
-                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
-                </a>
-                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
-                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/hadiah-perpisahan-dari-rina.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUnGUK3aLjwLhe-Sr9EBs6taFICXJQ7h9kRLrZ2Ym7C6cgmf747gDsUauDWjPsTqZWDooFoltDHkamUtYLbcG-U8o0lcIXpqT4jA4jCkpDjx7QgKQSw-D8r1sqFyp522rd9liQ6_d8bowdzCOnfhNlauDaofWHTShxkU6YXA6nOVVyz5C7MAjIIGH0Vw/w432-h640/0254fbcd7ff386ecc1922e884bad72b7.jpg" alt="Hadiah Perpisahan Dari Rina">
-                </a>
-                <div class="item-title"><a href="/posts/hadiah-perpisahan-dari-rina.html">Hadiah Perpisahan Dari Rina</a></div>
-                <div class="item-snippet">Pеrріѕаhаn ѕеkоlаh sudah ѕеmаkіn dеkаt, аku dаn teman tеmаn berencana bеrlіbur di раntаі раngаndаrаn...</div>
+                <div class="item-title"><a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">Birahi Kakak Iparku Yang Sangat Liar</a></div>
+                <div class="item-snippet">Memang benar kalau kata kaum hawa, lelaki itu memang buaya darat, dan tidak pernah puas dengan 1 pas...</div>
             </li>
         
             <li>
@@ -159,11 +195,27 @@ Otong Sinaga
             </li>
         
             <li>
-                <a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSZwh5b-t9bh2idA9VyW2TNCMk0Pw9OBmwexZtH_bS6uVL8i80ipF9NjL7zKfOFZgYPKlV3B1tg7ZKVrqLGF6RJcbEj32ji4Uo9R-j-xUH0NquGq8VzHgI8b81DpWIV7RstNXvDSCKUUQf2vg6DMljV6FDiS_FWCI0BhY_iXoRp3COCn-FMyYvFZ166A=w512-h640" alt="Birahi Kakak Iparku Yang Sangat Liar">
+                <a href="/posts/susu-gede-diva.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhEA-yTsNflZgxn21qIYF2cYWht2vJKFbfEgmkv-t2VVJBmHL4H9Sb9vsUKHw56YNdHLpbw49hKDc9Pap8QObsU-kqDzxZLZwSmUfs4ae7b5XiXWJH2Kzh1oAFeR536FJlV-F4z2Zc84ZQZ4XwiX0dykAtTLIdGgzPQCOVrUzbvQejn8Lu4Bf2hL62AGA=w360-h640" alt="Susu Gede Diva">
                 </a>
-                <div class="item-title"><a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">Birahi Kakak Iparku Yang Sangat Liar</a></div>
-                <div class="item-snippet">Memang benar kalau kata kaum hawa, lelaki itu memang buaya darat, dan tidak pernah puas dengan 1 pas...</div>
+                <div class="item-title"><a href="/posts/susu-gede-diva.html">Susu Gede Diva</a></div>
+                <div class="item-snippet">Cewek yang bernama Diva di daerahku terkenal dengan buah dada yang besar, dengan pedenya dia selalu ...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/kakak-ku-yang-baik-hati.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiNZmyNO7T5MWyEtGrkLfitHhU9dL3vYkDvEy9e3OpvP2ktjdXyexexVGeG_Li2kW3OcI3GuCUawC1SkeP0KQbOapmBgdFVd2cj7wUyQZQw4810g1NY35A59R6csPwnqg082u7Kn8u_tnjuawvqKdpJB6oCcNQduqSYycpO3_gPMAvCq7n7EXyZRQpV3Q=w360-h640" alt="Kakak ku yang Baik Hati">
+                </a>
+                <div class="item-title"><a href="/posts/kakak-ku-yang-baik-hati.html">Kakak ku yang Baik Hati</a></div>
+                <div class="item-snippet">Kenalkan, nama saya Boy, teman-teman biasa memanggilku Mas Boy. Saya seorang pemuda berusia 25 tahun...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/hadiah-perpisahan-dari-rina.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUnGUK3aLjwLhe-Sr9EBs6taFICXJQ7h9kRLrZ2Ym7C6cgmf747gDsUauDWjPsTqZWDooFoltDHkamUtYLbcG-U8o0lcIXpqT4jA4jCkpDjx7QgKQSw-D8r1sqFyp522rd9liQ6_d8bowdzCOnfhNlauDaofWHTShxkU6YXA6nOVVyz5C7MAjIIGH0Vw/w432-h640/0254fbcd7ff386ecc1922e884bad72b7.jpg" alt="Hadiah Perpisahan Dari Rina">
+                </a>
+                <div class="item-title"><a href="/posts/hadiah-perpisahan-dari-rina.html">Hadiah Perpisahan Dari Rina</a></div>
+                <div class="item-snippet">Pеrріѕаhаn ѕеkоlаh sudah ѕеmаkіn dеkаt, аku dаn teman tеmаn berencana bеrlіbur di раntаі раngаndаrаn...</div>
             </li>
         
             </ul>

@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,22 +179,6 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgOD2KfR9TzX-ezPV8xk9GGUAoJ4zMgrS_SBkFNIrvvSY3T-sWTltJ-trGSlPoZAJOaE9-XA44YHY4-db8Rc_8JQ7JddYoW2iKia8oXI0c_rlc05qf5RO_FM7BqV1boL8dkA4GDoBpVkP5nLZ2BD2wNi0Ny_BJB9yfhZZkYB9hZlN17gfBHvLPDtuutwQ=w312-h640" alt="Atasan Cantik Mengerang Mendesah Meronta">
-                </a>
-                <div class="item-title"><a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
-                <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/gadis-genit-itu-nikmat.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhvnjUad66WGmcLzs2TeUq7Uv3S1DY_6SwKMblXf1t_4aKzpElVhXeogvoWr8XzA1SW50mpFoRCjTiC14MhGfpuj5DzsxQBbeYXwrHUCUSOwaxPBnAs6cA8EmzOmWQT1A8Um-0-gw5h1NItgVxru_EcBDj-O07fFguAfHUnhfVfCxGfC5HaWhnxL2APA/w360-h640/d5faab2bc79c54ec54735296f198a3fd.jpg" alt="Gadis Genit Itu Nikmat">
-                </a>
-                <div class="item-title"><a href="/posts/gadis-genit-itu-nikmat.html">Gadis Genit Itu Nikmat</a></div>
-                <div class="item-snippet">Ironisnya, aku mempunyai hasrat seks yang tinggi, aku mudah terangsang bila melihat cewek yang bagik...</div>
-            </li>
-        
-            <li>
                 <a href="/posts/keperawanan-kakak-kandung-ku.html">
                     <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuhzZMRTvgm0K5y52731fw6BQUrp7cSaq7EWytHvAr8cn8eC6n-iFBEg23P322kDJ4WMj2rZ7vHEsZc7-xuqcpvUnWbKUNK0tC-t0Ob9bmpv5P68oIQwQJlGJwYv7e30d_3k7oNEQQ7rXmoQkFS6RvOxDsZ6Fn5vzVw3tx5gH63fXhKXmJMFQxUIRgqvI/s320/391623529_230687470015497_2341219323328554378_n.jpg" alt="Keperawanan kakak kandung ku">
                 </a>
@@ -151,19 +187,35 @@ Otong Sinaga
             </li>
         
             <li>
-                <a href="/posts/selingkuh-dengan-bu-rt.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
+                <a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgOD2KfR9TzX-ezPV8xk9GGUAoJ4zMgrS_SBkFNIrvvSY3T-sWTltJ-trGSlPoZAJOaE9-XA44YHY4-db8Rc_8JQ7JddYoW2iKia8oXI0c_rlc05qf5RO_FM7BqV1boL8dkA4GDoBpVkP5nLZ2BD2wNi0Ny_BJB9yfhZZkYB9hZlN17gfBHvLPDtuutwQ=w312-h640" alt="Atasan Cantik Mengerang Mendesah Meronta">
                 </a>
-                <div class="item-title"><a href="/posts/selingkuh-dengan-bu-rt.html">Selingkuh dengan Bu RT</a></div>
-                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
+                <div class="item-title"><a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
+                <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
             </li>
         
             <li>
-                <a href="/posts/selingkuh-sama-cewek-smp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgwF4eGujFrKGjTSxnwjOurQIuole_2mBtuMORBwhvVXHaGtibZo7vFyiGaxOUzj7p4moU3pX0_n5E8Gzb53dD-lLx-AO_BVB9bTdPsMv1nkrfT6I_nrCG3eUT3m1vQWWBjSpJqkfWAiQLCpb-oByRgnOSW0IJnjii78vC99ctWBcOzDJA1tKgAwa7lCw=w483-h640" alt="Selingkuh Sama Cewek SMP">
+                <a href="/posts/ttm-tetangga-tapi-mesra.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5YYyY0PNpYBWxVlAfCXRtIZt7jk0clVXpinzbySwlRppWBLZFQpX4DVFhA7AJ9hngy8sLg5SBsdPkSgGrDX2M5Y6YlLgE3affnPSH5RqjoCxhH74qu20KVi0SQqvhyphenhyphenI_sfraPz8ZEpUsnbq1SIRYoCjqFda0N8_ePq1zTWzw9tnBVk3OSdynvDU-x_1Q/w530-h640/402471024_122101596746114252_6436866729946603286_n.jpg" alt="TTM ( Tetangga Tapi Mesra )">
                 </a>
-                <div class="item-title"><a href="/posts/selingkuh-sama-cewek-smp.html">Selingkuh Sama Cewek SMP</a></div>
-                <div class="item-snippet">Tanpa banyak tanya saya segera bergerak ke alamat yang dituju yang tidak berbeda jauh dari rumahku. ...</div>
+                <div class="item-title"><a href="/posts/ttm-tetangga-tapi-mesra.html">TTM ( Tetangga Tapi Mesra )</a></div>
+                <div class="item-snippet">Inti pertengkaran itu adalah kecurigaan dan kecemburuan Linda terhadap suaminya yang selalu pulang k...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
+                </a>
+                <div class="item-title"><a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
+                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/surga-dunia-dari-ibu.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjz21q6VwKLpLbh4HhTVC8dPpfOFF1LXNZUkWpZWGlMsSjmBLXBDUROqMxffpm8bv7pbWsTVGAdHy1j8DtECCQeKyk2bRJW9vRcAcuenbkqpGZEUgG7HxYPRMtTvJM_0s_u1pOa_SRsF7mCeUQEa6lNuCM-1HivYLCJYJzbYsFga9nVlNu8o_sXxKyaSg=w517-h640" alt="Surga dunia Dari Ibu">
+                </a>
+                <div class="item-title"><a href="/posts/surga-dunia-dari-ibu.html">Surga dunia Dari Ibu</a></div>
+                <div class="item-snippet">Namaku eri. Ayahku bowo berusia 60 tahun dan Ibuku sari berusia 35 tahun. Aku sendiri kini berusia 1...</div>
             </li>
         
             </ul>

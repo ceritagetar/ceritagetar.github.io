@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,43 +179,43 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/tergoda-nafsu-istri-orang.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhgjIOH9mgNlbOZH114gRMeWYOHUf7J7d-nt_X9C_woVtBbRiFDMGh9NyhbXxmjfRA7qwQDI4r0LD4rbmKExUcqHzUwFyyWqTdiCfBrN-gOSzaWnv9J0-kC4GPgHzWpDid8nT9jIcapfU5O02p9uJ6OcGe6HR0-iCcQ1EJdf8y_23GhQthDRXe806v8=w323-h640" alt="Tergoda nafsu istri orang">
+                <a href="/posts/perselingkuhan-yang-romantis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
                 </a>
-                <div class="item-title"><a href="/posts/tergoda-nafsu-istri-orang.html">Tergoda nafsu istri orang</a></div>
-                <div class="item-snippet">Mbak mar… Kupeluk ibu 2 anak itu, tak kusangka mbak mar mencoba melepaskan kedua tanganku, aku tak p...</div>
+                <div class="item-title"><a href="/posts/perselingkuhan-yang-romantis.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
             </li>
         
             <li>
-                <a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFEpPrmmvjduZfUygCf8E_9fPUZOFN7Rx0h7-LKv5C-ksl1jnfBLFhad3uTPttGe6Y9a7aTQWPmS6cevh8-Sfv1kHZkltdSFqLY1ZXCWtkh2sxicG-hU5aznjNL4-irl4S3wjK92BE8xYTg_28ygEephO2vzzBEcHZmBOdv0XZU5EH06AqfYkHb_zbdN8/w512-h640/c509ea9d93278f47c0aa1fc1af3d8fe2.jpg" alt="Awal Perselingkuhan Dengan Teman Istriku">
+                <a href="/posts/skandal-perselingkuhan-lewat-hp.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9gfcyWViRl0zYA-GGZRFOlk4RqLdHqhF8vZ2EJ1aawu1SiZ5npggJAzo3PmH8MLAatLaCyDjrv1y1-Ci6Sg9dLMy5wplRy-fi-DXeIDrtmVEm6hjbX9BJrfB7Mj4Z5kczGZbjhNBYWhleyJg3YrqG0uWbK0aa9Jq3bDiCByf_0iiQDaLhkrKFnFMHI_c/w426-h640/2c6abd0276aa12c7e20e42c44a193d9d.jpg" alt="Skandal Perselingkuhan Lewat Hp">
                 </a>
-                <div class="item-title"><a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">Awal Perselingkuhan Dengan Teman Istriku</a></div>
-                <div class="item-snippet">Peristiwa ini sebenarnya tak pernah kuduga sebelumnya, mengingat Bu Evi (teman istriku) tidak menamp...</div>
+                <div class="item-title"><a href="/posts/skandal-perselingkuhan-lewat-hp.html">Skandal Perselingkuhan Lewat Hp</a></div>
+                <div class="item-snippet">Malam dingin dan sedikit rintik2 hujan tapi aku tetap saja membawa motor ku ke jalan untuk menjemput...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEi8NUfX8BDGCuTsYTQWIddWLjTPuBtHiYsIJKKG1Ahpr-_3YuXGmMbZJPezcYMjIUsp5QKra6rK8PdfJigBAOYq6D5RHE6e0-cBbfg3mIEoHvZSaumblvpJF7ZMiPm0Mey6tkXKvF2_KWPrn_aEosGe2J_cH921g87PtHDqM_vGXpe4AXmkJTXywT1X_Q=w512-h640" alt="Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku">
+                <a href="/posts/sungguh-nikmatnya-tubuh-sepupu-istriku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjfACVetK7wL7a1xgXYuwAVY1twCuE0ejjw7-98M4jz_Mdyom5WsZEeYx5xS7dQDV07gry-j9LVjCeY-T0wcxSh36lUDg2-8M77iA4eOSuZTllg96Hu096Y22NGDpo87YI9c1tViuKorA3h_SS8EdGZjcdGdtM6ESk5zyY2zIS8AUGtiYRsN-kRiRilTQ=w360-h640" alt="Sungguh Nikmatnya Tubuh Sepupu Istriku">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku.html">Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku</a></div>
-                <div class="item-snippet">Om Toto, begitu aku memanggilnya, adalah seorang purnawirawan ABRI yang cukup berpengaruh, kini ia m...</div>
+                <div class="item-title"><a href="/posts/sungguh-nikmatnya-tubuh-sepupu-istriku.html">Sungguh Nikmatnya Tubuh Sepupu Istriku</a></div>
+                <div class="item-snippet">Yuni baru saja selesai mengepel lantai lalu ke belakang. Rasanya ada yang aneh pada Yuni. Tiap hari ...</div>
             </li>
         
             <li>
-                <a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjul2G8W6KPpZ6WQ-axrOTN8KNT-t99V3Urk6lnnDUbLQ9ESsRp_dxLGxpS8wdePHN8tu56vp_HlV3Uj5CXpvjZze2rAUeWj2ANvJPJqoCsgkqO5CAl0U_WwYQpOfIKik8HIXcdkzYTYUSgmX9y0H7EK5RnrTDja7BNo-m3LmsIHDC5-7ZJDF2xO9QlrQ/w628-h640/5066035a5d11bc30cd099c922a4af2ca.jpg" alt="Rina Wanita Desa Yang Kecanduan Orgasme">
+                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
                 </a>
-                <div class="item-title"><a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">Rina Wanita Desa Yang Kecanduan Orgasme</a></div>
-                <div class="item-snippet">Berperawakan sedang ukuran rata-rata, tinggi tidak, pendek tidak, jelek nggak, cakeppun ngga, kulit ...</div>
+                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
+                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
             </li>
         
             <li>
-                <a href="/posts/gurihnya-calon-mertua.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCoMyeZ5sTyB6VeRCAmUXHIxKGuR7wJqIImVpm63OrHpv2FodZAGdeOL1Tl2eMAaJEukLRXjmF7I-GjJH1LAw6Tof0pEQTu-3R2O5hSvS7aTE5YlDPh5M801e3VOq9dlQo2flYlqTGgmD57Po7WxEmVrYcRtPvVzq4MWmFEgd8ehdEqJ3pkqhIT3Nl" alt="Gurihnya Calon Mertua">
+                <a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
                 </a>
-                <div class="item-title"><a href="/posts/gurihnya-calon-mertua.html">Gurihnya Calon Mertua</a></div>
-                <div class="item-snippet">Nama gua Beny Cerita ini asli kisah gua sama ibu pacar gua waktu dulu masih pacaran, waktu itu sekit...</div>
+                <div class="item-title"><a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
+                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
             </li>
         
             </ul>

@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,14 +179,6 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/belajar-sama-tante-erni-yang-cantik.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIq9mu57bDmFR6L2VBsxGcRdmJJE0BRZMFC_R7ZOpANOaU47SXBUPZ__nCz52An5sHgq7_O_0h21--JpDyLnnaZIJN4l_-vGQCFAjbQKkHACJhqZ0YSzJB4ojzE8Zz1kULLrF4x3q32f3ZzEedoxTql2O9FPfMmqxHw-Zr0Z6msdxWO8U8RX_1jXkVOC0" alt="Belajar sama Tante Erni yang cantik">
-                </a>
-                <div class="item-title"><a href="/posts/belajar-sama-tante-erni-yang-cantik.html">Belajar sama Tante Erni yang cantik</a></div>
-                <div class="item-snippet">Insiden ini berlangsung saat saya kelas 3 SMA, yah saya prediksikan usia saya saat itu barusan 14 ta...</div>
-            </li>
-        
-            <li>
                 <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
                     <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
                 </a>
@@ -143,27 +187,35 @@ Otong Sinaga
             </li>
         
             <li>
-                <a href="/posts/liburan-nikmat-bersama-istri-teman.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEh_cnIt0irc16RyCtw1g1ZQkiNPFI_Z2MYU2vq0gLwjFt7sYOTIrJtvgT4JJm9PznA6GbQuxoU-H1v3rl-rAMi6DK-mxTTn0EtP51MmH5vEmbn5VJerq5Alt1SZe2-pOOU84ZU8hIsmGJql1LUb2Io_cw9j1eYwQhETAjvkFuFIHj2frUbosDzTpD5udg=w573-h640" alt="Liburan Nikmat Bersama Istri Teman">
+                <a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhSZiVbxmvxVkLdrwHP1eHg-tpTi9LCQkaIG4RmrRYA05Z9QZXPHyFztBStNBB-nOetUPWAvcS7qZz5-x1ZjJTPdZBv6IpP2EZ-PmlJ1A6Q3shijFSB2ehG16uQVU9Cpdq8g2uVTuhxZd-VlnEa-kBWeFdW5XTKIN6CkllB3FXtrDJFswDE7CIdU-xt6eo/w636-h640/274872396_101414635835486_2310638241744908863_n.jpg" alt="Di Ajari Meraih Kenikmatan Dengan Tante Yosi">
                 </a>
-                <div class="item-title"><a href="/posts/liburan-nikmat-bersama-istri-teman.html">Liburan Nikmat Bersama Istri Teman</a></div>
-                <div class="item-snippet">Keliatan bukan Ratih yang tadi malam aku temui. Aku tersenyum melihat penampilannya yang tomboy itu....</div>
+                <div class="item-title"><a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">Di Ajari Meraih Kenikmatan Dengan Tante Yosi</a></div>
+                <div class="item-snippet">Cerita ini adalah sebuah pengalaman saya yang terjadi sekitar 1 tahun yang lalu. Ini adalah pengalam...</div>
             </li>
         
             <li>
-                <a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBfepzvV2ep-iQRm_EmKBU325Y9kTG4FNIXYZsam26wyKtybuIPiBhSK7FEtQqlAccrZ4OvKCg2fYbwL0L3vuNQa1DEeUEksp_N0cV8YCFAf0-QSsZK3olEo4UnQpa0R17bUWrGccN0Q100DP_UqUvCROwgv3CL1yQL6JThexfkse0t3q48SDuR4jfhqk/w528-h640/1%20(92).jpg" alt="Keenakan Jahil Dengan Teman Sekelas">
+                <a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhexsKiISkmgrh9FiUzDEDMDsTEkBbHWUNTI_osmE13TacOtQX_ylHNVDXJyx6IDzAahO942eaLbg_FjWrjHskBlsqedQuOxgVswsfJ7zXi8D7RqdJcjavngGrQ3-ExLXdL-69-fhb9Db-FCleb1Yq4XTD3OfOIE5I8B-5yQDQyciFKbtskpU3ISK4Qtg/w360-h640/0505b7052be18f44b8ea763cd3cf76d3.jpg" alt="Bercinta Dengan Pengantin Baru Yang Kesepian">
                 </a>
-                <div class="item-title"><a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">Keenakan Jahil Dengan Teman Sekelas</a></div>
-                <div class="item-snippet">Perkenalkan sobat semua, sebelumnya gw mau bilang nama-nama orang dibawah ini hanya samaran, kalau a...</div>
+                <div class="item-title"><a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">Bercinta Dengan Pengantin Baru Yang Kesepian</a></div>
+                <div class="item-snippet">Nama saya Andi, saat itu saya berumur 25 tahun, telah berkeluarga dengan istri bernama Sinta, serta ...</div>
             </li>
         
             <li>
-                <a href="/posts/pertemuan-dengan-abg-imut-pecinta-bdsm.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgxXpjiFPzrwLvkC8xm6WvucC_QWvLzQ4nSBjoKFUliDQqxkL7ldzN_Env94yN5UTIiPuJvyE31-9V6ErGO_qY1VynunaCC31P0wY6ulutUduP2XFH59PRTxOQIj6y3osDuWoMb5xBDWUCD-T8qzolr4bKOfiYqZykTWvQRkg4Jjap_jL-WBIflP-ocXw/w522-h640/FoTnbeDaUAAnIJI.jfif" alt="Pertemuan Dengan ABG Imut Pecinta BDSM">
+                <a href="/posts/nikmatnya-jadi-pasutri.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQYZ9rZ-x_0RMCedPF9Ttg8ptoY3uWYqQw7WclGGYCsI2ymOU_t_gc-tBzpu6nIAwgrY689TuiRxKtSvOFk3B-YEfoyAK9QMgjUNgtXq07V2FAui6WegZsEelI9jUtOP1X1OlbFVZzVRGviLjw5dzL3ZL0n9KvrF7Ow72deXh6ZbwrNnk_0NA4ETDedA/w640-h640/4739e31722cb783bd29379ba7f374e23.jpg" alt="Nikmatnya Jadi Pasutri">
                 </a>
-                <div class="item-title"><a href="/posts/pertemuan-dengan-abg-imut-pecinta-bdsm.html">Pertemuan Dengan ABG Imut Pecinta BDSM</a></div>
-                <div class="item-snippet">Malam yang gelap,tidak ada aktivitas lagi yang aku kerjakan setelah semua tugas-tugas kuliah kelar. ...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-jadi-pasutri.html">Nikmatnya Jadi Pasutri</a></div>
+                <div class="item-snippet">Setelah makan langsung saja aku melepas pakaian dalamku dan aku taruh ke tempat pakaian kotor mungki...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgAO-h1gtBOotst8AW_rSzNReANl1k7ZfcPvb7OsC80fwqfDddV4Fit6-ADo9gDPGzIINGEZvPOVIB4kIF-PQsRZu0rBXBlvUEnP-J0ySG0BChLV0MhuC56mob4dIVzDGWqCJaUHPXfI_-M7jdvct6AuRgs4Bc0nnlx-zhwtt6zH8oMjop7yPuPoV0t_g=w360-h640" alt="Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda">
+                </a>
+                <div class="item-title"><a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda</a></div>
+                <div class="item-snippet">Ceritaku ini terjadi bermula ketika kedua ortuku sedang pergi keluar kota untuk menengok keluarga ay...</div>
             </li>
         
             </ul>

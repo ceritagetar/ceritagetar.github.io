@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,27 +179,35 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhexsKiISkmgrh9FiUzDEDMDsTEkBbHWUNTI_osmE13TacOtQX_ylHNVDXJyx6IDzAahO942eaLbg_FjWrjHskBlsqedQuOxgVswsfJ7zXi8D7RqdJcjavngGrQ3-ExLXdL-69-fhb9Db-FCleb1Yq4XTD3OfOIE5I8B-5yQDQyciFKbtskpU3ISK4Qtg/w360-h640/0505b7052be18f44b8ea763cd3cf76d3.jpg" alt="Bercinta Dengan Pengantin Baru Yang Kesepian">
+                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
                 </a>
-                <div class="item-title"><a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">Bercinta Dengan Pengantin Baru Yang Kesepian</a></div>
-                <div class="item-snippet">Nama saya Andi, saat itu saya berumur 25 tahun, telah berkeluarga dengan istri bernama Sinta, serta ...</div>
+                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
+                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
             </li>
         
             <li>
-                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
+                <a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ6Tf9_H_tqDp9FyhnLk1B0IuL4KK6i3GwvItHSqNeIFuD8hn_TLGTpGEZi1uhGopH667pO91POij2OAyYnRu2YVCKA2PVtGuxHluNih0SYFv6Ul7VLdavuaqA8esgTDrkj-qcxOYx4BhdcBUcLKhv23fbhWYqjhyphenhyphenE74iXa8BCXHn3izX5jFHYmKVxyQ/w512-h640/Fpfaf5BaQAEodj2.jfif" alt="Merasakan Nikmatnya Tembem Milik Tante Medan">
                 </a>
-                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
-                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
+                <div class="item-title"><a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></div>
+                <div class="item-snippet">Kisah ini terjadi ketika aku mash berumur delapanbelas tahun, murid kelas dua sekolah teknik setingk...</div>
             </li>
         
             <li>
-                <a href="/posts/menikmati-ratih-adikku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
+                <a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhSZiVbxmvxVkLdrwHP1eHg-tpTi9LCQkaIG4RmrRYA05Z9QZXPHyFztBStNBB-nOetUPWAvcS7qZz5-x1ZjJTPdZBv6IpP2EZ-PmlJ1A6Q3shijFSB2ehG16uQVU9Cpdq8g2uVTuhxZd-VlnEa-kBWeFdW5XTKIN6CkllB3FXtrDJFswDE7CIdU-xt6eo/w636-h640/274872396_101414635835486_2310638241744908863_n.jpg" alt="Di Ajari Meraih Kenikmatan Dengan Tante Yosi">
                 </a>
-                <div class="item-title"><a href="/posts/menikmati-ratih-adikku.html">Menikmati Ratih Adikku</a></div>
-                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
+                <div class="item-title"><a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">Di Ajari Meraih Kenikmatan Dengan Tante Yosi</a></div>
+                <div class="item-snippet">Cerita ini adalah sebuah pengalaman saya yang terjadi sekitar 1 tahun yang lalu. Ini adalah pengalam...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/keperawanan-kakak-kandung-ku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuhzZMRTvgm0K5y52731fw6BQUrp7cSaq7EWytHvAr8cn8eC6n-iFBEg23P322kDJ4WMj2rZ7vHEsZc7-xuqcpvUnWbKUNK0tC-t0Ob9bmpv5P68oIQwQJlGJwYv7e30d_3k7oNEQQ7rXmoQkFS6RvOxDsZ6Fn5vzVw3tx5gH63fXhKXmJMFQxUIRgqvI/s320/391623529_230687470015497_2341219323328554378_n.jpg" alt="Keperawanan kakak kandung ku">
+                </a>
+                <div class="item-title"><a href="/posts/keperawanan-kakak-kandung-ku.html">Keperawanan kakak kandung ku</a></div>
+                <div class="item-snippet">Cerita ini berawal saat saya sedang di rumah, saya memiliki mbak yang sangak seksi serta semok membu...</div>
             </li>
         
             <li>
@@ -156,14 +216,6 @@ Otong Sinaga
                 </a>
                 <div class="item-title"><a href="/posts/tante-lin.html">Tante Lin</a></div>
                 <div class="item-snippet">Dia sebenarnya sering sekali datang ke Jakarta, dan memang mempunyai sebuah rumah jakarta, serta mem...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/susu-gede-diva.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhEA-yTsNflZgxn21qIYF2cYWht2vJKFbfEgmkv-t2VVJBmHL4H9Sb9vsUKHw56YNdHLpbw49hKDc9Pap8QObsU-kqDzxZLZwSmUfs4ae7b5XiXWJH2Kzh1oAFeR536FJlV-F4z2Zc84ZQZ4XwiX0dykAtTLIdGgzPQCOVrUzbvQejn8Lu4Bf2hL62AGA=w360-h640" alt="Susu Gede Diva">
-                </a>
-                <div class="item-title"><a href="/posts/susu-gede-diva.html">Susu Gede Diva</a></div>
-                <div class="item-snippet">Cewek yang bernama Diva di daerahku terkenal dengan buah dada yang besar, dengan pedenya dia selalu ...</div>
             </li>
         
             </ul>

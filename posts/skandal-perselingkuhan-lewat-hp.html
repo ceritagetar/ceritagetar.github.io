@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,43 +179,43 @@ Otong Sinaga
             <ul>
                 
             <li>
+                <a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFEpPrmmvjduZfUygCf8E_9fPUZOFN7Rx0h7-LKv5C-ksl1jnfBLFhad3uTPttGe6Y9a7aTQWPmS6cevh8-Sfv1kHZkltdSFqLY1ZXCWtkh2sxicG-hU5aznjNL4-irl4S3wjK92BE8xYTg_28ygEephO2vzzBEcHZmBOdv0XZU5EH06AqfYkHb_zbdN8/w512-h640/c509ea9d93278f47c0aa1fc1af3d8fe2.jpg" alt="Awal Perselingkuhan Dengan Teman Istriku">
+                </a>
+                <div class="item-title"><a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">Awal Perselingkuhan Dengan Teman Istriku</a></div>
+                <div class="item-snippet">Peristiwa ini sebenarnya tak pernah kuduga sebelumnya, mengingat Bu Evi (teman istriku) tidak menamp...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
+                </a>
+                <div class="item-title"><a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
+                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/menikmati-gadis-pemandu-karoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZ7lDh8ujBMpYLweFBkgHWRQrAhiERWX8iGICNQNPfwp5TxYEr3fDE-fMvChMK2_d7RdFKIbI8Wkp1VWLSxXbDmnjaoxwo5uDEk_hQpBfIRG-lYCyHW8giXkTV4AUSqU-nFhz3_KOEMDcj2qcnf-EveEeCNy1kpGmzg6EODAH6rt87dC1VEqF3P5OOvg/w512-h640/cf99420d9e43026cf33448579b4cda84.jpg" alt="Menikmati Gadis Pemandu Karoke">
+                </a>
+                <div class="item-title"><a href="/posts/menikmati-gadis-pemandu-karoke.html">Menikmati Gadis Pemandu Karoke</a></div>
+                <div class="item-snippet">Keluargaku sudah terbilang bahagia karena saya merasa sudah cukup, sebab sudah punya rumah sendiri d...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
+                </a>
+                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
+                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
+            </li>
+        
+            <li>
                 <a href="/posts/ttm-tetangga-tapi-mesra.html">
                     <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5YYyY0PNpYBWxVlAfCXRtIZt7jk0clVXpinzbySwlRppWBLZFQpX4DVFhA7AJ9hngy8sLg5SBsdPkSgGrDX2M5Y6YlLgE3affnPSH5RqjoCxhH74qu20KVi0SQqvhyphenhyphenI_sfraPz8ZEpUsnbq1SIRYoCjqFda0N8_ePq1zTWzw9tnBVk3OSdynvDU-x_1Q/w530-h640/402471024_122101596746114252_6436866729946603286_n.jpg" alt="TTM ( Tetangga Tapi Mesra )">
                 </a>
                 <div class="item-title"><a href="/posts/ttm-tetangga-tapi-mesra.html">TTM ( Tetangga Tapi Mesra )</a></div>
                 <div class="item-snippet">Inti pertengkaran itu adalah kecurigaan dan kecemburuan Linda terhadap suaminya yang selalu pulang k...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/diperkosa-teman-sendiri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhmkvUSNe1xjbm9KCo1F_VHW9zbDAPM9ZBOuXxi9LQ2urRKFC--b_rOSHkMM5QDK2mq3SUv6aM1GeYTpK-yxypCqGKo4BSnpxKVC2GpDDwbfgDGGqgtfWqyG10zp58S5gEQmZne64NWdBLr923GQc4xelKY56ATC6UjsFg8-AzQ8-kh6HIgp4mtexYQGuE" alt="Diperkosa Teman Sendiri">
-                </a>
-                <div class="item-title"><a href="/posts/diperkosa-teman-sendiri.html">Diperkosa Teman Sendiri</a></div>
-                <div class="item-snippet">Novy ialah seseorang mahasiswi berumur 22 tahun dalam suatu perguruan tinggi swasta terkenal di Jaka...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/aku-selingkuh-karena-ingin-punya-anak.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhocMOfyFZa7waze7zU1RLWPzr_RdQo1XQfEJFOUduTU13iWGKAvB33nA5KKwwzfYfb66kqqpjaZlu_rlKXPZddBnSyijOZkYNgowIRYPG7X-eRLGUS_1gZvpKnh0okq61Xz2Jjd2R5edtgpndhYRwMrS2vCIeynjspjk-q-raRwCPBPcpO2SX6DpAG4A=w392-h640" alt="Aku Selingkuh Karena Ingin Punya Anak">
-                </a>
-                <div class="item-title"><a href="/posts/aku-selingkuh-karena-ingin-punya-anak.html">Aku Selingkuh Karena Ingin Punya Anak</a></div>
-                <div class="item-snippet">Sebagai pasangan suami istri muda yg baru setahun berumah tangga, kehidupan keluarga kami berjalan d...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/nikmatnya-jadi-pasutri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQYZ9rZ-x_0RMCedPF9Ttg8ptoY3uWYqQw7WclGGYCsI2ymOU_t_gc-tBzpu6nIAwgrY689TuiRxKtSvOFk3B-YEfoyAK9QMgjUNgtXq07V2FAui6WegZsEelI9jUtOP1X1OlbFVZzVRGviLjw5dzL3ZL0n9KvrF7Ow72deXh6ZbwrNnk_0NA4ETDedA/w640-h640/4739e31722cb783bd29379ba7f374e23.jpg" alt="Nikmatnya Jadi Pasutri">
-                </a>
-                <div class="item-title"><a href="/posts/nikmatnya-jadi-pasutri.html">Nikmatnya Jadi Pasutri</a></div>
-                <div class="item-snippet">Setelah makan langsung saja aku melepas pakaian dalamku dan aku taruh ke tempat pakaian kotor mungki...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgAO-h1gtBOotst8AW_rSzNReANl1k7ZfcPvb7OsC80fwqfDddV4Fit6-ADo9gDPGzIINGEZvPOVIB4kIF-PQsRZu0rBXBlvUEnP-J0ySG0BChLV0MhuC56mob4dIVzDGWqCJaUHPXfI_-M7jdvct6AuRgs4Bc0nnlx-zhwtt6zH8oMjop7yPuPoV0t_g=w360-h640" alt="Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda">
-                </a>
-                <div class="item-title"><a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda</a></div>
-                <div class="item-snippet">Ceritaku ini terjadi bermula ketika kedua ortuku sedang pergi keluar kota untuk menengok keluarga ay...</div>
             </li>
         
             </ul>

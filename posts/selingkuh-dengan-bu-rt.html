@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,43 +179,43 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
+                <a href="/posts/swinger-dengan-tetangga.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPi4Oy__f0WksqJXd8_soUMOCbPC7QJahDsAFai4U6EhAJQq9VdCjDtIe0r4oYTTIuMO6z3RUlOVDRtFFARn38fSlTzdV12348E2z57xdD-IjdG9q806X1CTB0wQV0kIcRBA4u1NCqm3YUil5xGr0uRxaDD9MdpkLXykW4YP2FSZa13moosWI-WW0qQU8/w360-h640/b04998ab6caaf49a8e14a7a5e4e728ad.jpg" alt="Swinger Dengan Tetangga">
                 </a>
-                <div class="item-title"><a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
-                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
+                <div class="item-title"><a href="/posts/swinger-dengan-tetangga.html">Swinger Dengan Tetangga</a></div>
+                <div class="item-snippet">Kurasa tidak perlu aku ceritakan tentang nama dan asalku, serta tempat dan alamatku sekarang. Usiaku...</div>
             </li>
         
             <li>
-                <a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSZwh5b-t9bh2idA9VyW2TNCMk0Pw9OBmwexZtH_bS6uVL8i80ipF9NjL7zKfOFZgYPKlV3B1tg7ZKVrqLGF6RJcbEj32ji4Uo9R-j-xUH0NquGq8VzHgI8b81DpWIV7RstNXvDSCKUUQf2vg6DMljV6FDiS_FWCI0BhY_iXoRp3COCn-FMyYvFZ166A=w512-h640" alt="Birahi Kakak Iparku Yang Sangat Liar">
+                <a href="/posts/nanik-tetanggaku-yang-manis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPNj6eh1SnSVyTnZdju7m3P48W5Xq4LUC4xx2qPPsp7ZdRWXsj3VNTGr_rkHiW-qNwDFUv1ydrONw9Ekn2-cVQEW8SZrKPv4cTGPV1IsrmPemMlfX02bJwBD3gbrcg0Du8MPjVSf8dx0aJaM6oBmeBn4JL6O5HpMVNouqyA6g0ThIGcb6WuphGBcYBIWk/w456-h640/280197779_1049339712605446_1369322801856887445_n.jpg" alt="Nanik Tetanggaku Yang Manis">
                 </a>
-                <div class="item-title"><a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">Birahi Kakak Iparku Yang Sangat Liar</a></div>
-                <div class="item-snippet">Memang benar kalau kata kaum hawa, lelaki itu memang buaya darat, dan tidak pernah puas dengan 1 pas...</div>
+                <div class="item-title"><a href="/posts/nanik-tetanggaku-yang-manis.html">Nanik Tetanggaku Yang Manis</a></div>
+                <div class="item-snippet">Kisah ini dimulai ketika aku memutuskan untuk pindah dari rumah orang tuaku dan mengontrak sebuah ru...</div>
             </li>
         
             <li>
-                <a href="/posts/skandal-perselingkuhan-lewat-hp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9gfcyWViRl0zYA-GGZRFOlk4RqLdHqhF8vZ2EJ1aawu1SiZ5npggJAzo3PmH8MLAatLaCyDjrv1y1-Ci6Sg9dLMy5wplRy-fi-DXeIDrtmVEm6hjbX9BJrfB7Mj4Z5kczGZbjhNBYWhleyJg3YrqG0uWbK0aa9Jq3bDiCByf_0iiQDaLhkrKFnFMHI_c/w426-h640/2c6abd0276aa12c7e20e42c44a193d9d.jpg" alt="Skandal Perselingkuhan Lewat Hp">
+                <a href="/posts/menikmati-gadis-pemandu-karoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZ7lDh8ujBMpYLweFBkgHWRQrAhiERWX8iGICNQNPfwp5TxYEr3fDE-fMvChMK2_d7RdFKIbI8Wkp1VWLSxXbDmnjaoxwo5uDEk_hQpBfIRG-lYCyHW8giXkTV4AUSqU-nFhz3_KOEMDcj2qcnf-EveEeCNy1kpGmzg6EODAH6rt87dC1VEqF3P5OOvg/w512-h640/cf99420d9e43026cf33448579b4cda84.jpg" alt="Menikmati Gadis Pemandu Karoke">
                 </a>
-                <div class="item-title"><a href="/posts/skandal-perselingkuhan-lewat-hp.html">Skandal Perselingkuhan Lewat Hp</a></div>
-                <div class="item-snippet">Malam dingin dan sedikit rintik2 hujan tapi aku tetap saja membawa motor ku ke jalan untuk menjemput...</div>
+                <div class="item-title"><a href="/posts/menikmati-gadis-pemandu-karoke.html">Menikmati Gadis Pemandu Karoke</a></div>
+                <div class="item-snippet">Keluargaku sudah terbilang bahagia karena saya merasa sudah cukup, sebab sudah punya rumah sendiri d...</div>
             </li>
         
             <li>
-                <a href="/posts/ttm-tetangga-tapi-mesra.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5YYyY0PNpYBWxVlAfCXRtIZt7jk0clVXpinzbySwlRppWBLZFQpX4DVFhA7AJ9hngy8sLg5SBsdPkSgGrDX2M5Y6YlLgE3affnPSH5RqjoCxhH74qu20KVi0SQqvhyphenhyphenI_sfraPz8ZEpUsnbq1SIRYoCjqFda0N8_ePq1zTWzw9tnBVk3OSdynvDU-x_1Q/w530-h640/402471024_122101596746114252_6436866729946603286_n.jpg" alt="TTM ( Tetangga Tapi Mesra )">
+                <a href="/posts/mbak-siska-karyawati-salon-kecantikan.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnIpc_CzrHbBrMbIlRs_bNK5bhQ7CJ01yhyphenhyphenlarHYwCm5XTLYU26LjFWphEZvFhgq3hg8ztJLe3TtW4yJJyQ53T9KuCth8uTNI2tJxZQPd_Xov0J4HnblKdtjUXY4YvFNra_4s3cwVRW6tASoeYPZEpjGHoeqE4XCaK1csqwk-kdvm8-uHoC30xiGk2O4s/w640-h640/1%20(1).jpg" alt="Mbak Siska Karyawati Salon Kecantikan">
                 </a>
-                <div class="item-title"><a href="/posts/ttm-tetangga-tapi-mesra.html">TTM ( Tetangga Tapi Mesra )</a></div>
-                <div class="item-snippet">Inti pertengkaran itu adalah kecurigaan dan kecemburuan Linda terhadap suaminya yang selalu pulang k...</div>
+                <div class="item-title"><a href="/posts/mbak-siska-karyawati-salon-kecantikan.html">Mbak Siska Karyawati Salon Kecantikan</a></div>
+                <div class="item-snippet">Sebenarnya sudah lumrah saat ini seorang cowok perawatan di dalam salon kecantikan, begitu juga aku ...</div>
             </li>
         
             <li>
-                <a href="/posts/rahasia-pribadi-ibu-kost-ku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgdIinP9pPpVAuUnSsKUSxhG6vq17Fs1K_jhQJ64vvWv2FRy9bHyK78cy5ONyp7Ru2q6TqSryIspw2vhAPapfJfwB9FUAUoo9sYq1PmSYejgr73fJjtpqegykmo1BofPgQhFrUQgOeiZEYRSnAFSUChLm6O02PEw4v4tosSse4lsqtnPnZQP1zXcurX=w432-h640" alt="Rahasia Pribadi Ibu Kost Ku">
+                <a href="/posts/nikmatnya-jadi-pasutri.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQYZ9rZ-x_0RMCedPF9Ttg8ptoY3uWYqQw7WclGGYCsI2ymOU_t_gc-tBzpu6nIAwgrY689TuiRxKtSvOFk3B-YEfoyAK9QMgjUNgtXq07V2FAui6WegZsEelI9jUtOP1X1OlbFVZzVRGviLjw5dzL3ZL0n9KvrF7Ow72deXh6ZbwrNnk_0NA4ETDedA/w640-h640/4739e31722cb783bd29379ba7f374e23.jpg" alt="Nikmatnya Jadi Pasutri">
                 </a>
-                <div class="item-title"><a href="/posts/rahasia-pribadi-ibu-kost-ku.html">Rahasia Pribadi Ibu Kost Ku</a></div>
-                <div class="item-snippet">Pagi itu aku tengah sibuk membenahi kamarku. Sebuah kamar kontrakan yang baru kutempati sejak sebula...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-jadi-pasutri.html">Nikmatnya Jadi Pasutri</a></div>
+                <div class="item-snippet">Setelah makan langsung saja aku melepas pakaian dalamku dan aku taruh ke tempat pakaian kotor mungki...</div>
             </li>
         
             </ul>

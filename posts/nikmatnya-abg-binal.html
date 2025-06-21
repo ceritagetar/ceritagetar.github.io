@@ -12,21 +12,21 @@
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -34,31 +34,83 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 
@@ -127,30 +179,6 @@ Otong Sinaga
             <ul>
                 
             <li>
-                <a href="/posts/susu-gede-diva.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhEA-yTsNflZgxn21qIYF2cYWht2vJKFbfEgmkv-t2VVJBmHL4H9Sb9vsUKHw56YNdHLpbw49hKDc9Pap8QObsU-kqDzxZLZwSmUfs4ae7b5XiXWJH2Kzh1oAFeR536FJlV-F4z2Zc84ZQZ4XwiX0dykAtTLIdGgzPQCOVrUzbvQejn8Lu4Bf2hL62AGA=w360-h640" alt="Susu Gede Diva">
-                </a>
-                <div class="item-title"><a href="/posts/susu-gede-diva.html">Susu Gede Diva</a></div>
-                <div class="item-snippet">Cewek yang bernama Diva di daerahku terkenal dengan buah dada yang besar, dengan pedenya dia selalu ...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/selingkuh-dengan-bu-rt.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
-                </a>
-                <div class="item-title"><a href="/posts/selingkuh-dengan-bu-rt.html">Selingkuh dengan Bu RT</a></div>
-                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
-                </a>
-                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
-                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
-            </li>
-        
-            <li>
                 <a href="/posts/mama-mertuaku-haus-akan-belaian.html">
                     <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKAVkY2MBPvfrahMb_ameGB6q_yLXlvxDDGX4V7zdVMsVVu7sm3EE8Lxo8XIlcaXNHhyphenhyphen34LdjanMv_JdKp7ki5M8bmF5qs8R0WjukgtcEljfOPC9vFOmY4dfSQVXM7lzCtbyIH5tLOymBJktB4IgEkiIc-tD_vAyMmsWrk00R2azvXNnp_aOmx-hH61vY/w494-h640/278564919_1840781442792210_1094798816856265520_n.jpg" alt="Mama Mertuaku Haus Akan Belaian">
                 </a>
@@ -159,11 +187,35 @@ Otong Sinaga
             </li>
         
             <li>
-                <a href="/posts/belenggu-rindu-yang-tertahan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZwduN7P8Moay3nkU2OxTM6rLsexjRLW9WdaynlK4DLu9ChAGT8DcUHze1kGHut-zFd1LvSUTEkzTyZFURi55-1JgNzXZqjuJdytLtzHmiv87TNzmPLEu3IsceU5Stvj9YQfSqXY0l6q4PyWFUMtNysu7sz7OFYfRX82AiTKYUpiPJFu96dmHF_TARCg/w512-h640/395484066_122135340620028015_337979339352738165_n.jpg" alt="Belenggu Rindu Yang Tertahan">
+                <a href="/posts/nanik-tetanggaku-yang-manis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPNj6eh1SnSVyTnZdju7m3P48W5Xq4LUC4xx2qPPsp7ZdRWXsj3VNTGr_rkHiW-qNwDFUv1ydrONw9Ekn2-cVQEW8SZrKPv4cTGPV1IsrmPemMlfX02bJwBD3gbrcg0Du8MPjVSf8dx0aJaM6oBmeBn4JL6O5HpMVNouqyA6g0ThIGcb6WuphGBcYBIWk/w456-h640/280197779_1049339712605446_1369322801856887445_n.jpg" alt="Nanik Tetanggaku Yang Manis">
                 </a>
-                <div class="item-title"><a href="/posts/belenggu-rindu-yang-tertahan.html">Belenggu Rindu Yang Tertahan</a></div>
-                <div class="item-snippet">Siang itu di sebuah rumah yang cukup asri, seorang gadis yang berambut panjang terurai dengan raut w...</div>
+                <div class="item-title"><a href="/posts/nanik-tetanggaku-yang-manis.html">Nanik Tetanggaku Yang Manis</a></div>
+                <div class="item-snippet">Kisah ini dimulai ketika aku memutuskan untuk pindah dari rumah orang tuaku dan mengontrak sebuah ru...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/adik-ipar-yang-nikmat.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZF04rz_SBp4K3zSva6UK5G5b-RLGFim0MZ6dUT7CjxN3lz-QvIDcOdIHbfdxVLc0lXKmGbMhlDXnUozSR4mg5O8ZthndHcgQZ1Da9XeyfchV7_3rqk7RY7jMXfMhiDcnqYPKD8We965-s4-1ZWfjYmGiMiMwXS8z8M97uVDtJruumkvPglqz6W2opuGs/w320-h640/76fb9f54e5bd54f021b0d82ff9f1887b.jpg" alt="Adik Ipar yang Nikmat">
+                </a>
+                <div class="item-title"><a href="/posts/adik-ipar-yang-nikmat.html">Adik Ipar yang Nikmat</a></div>
+                <div class="item-snippet">Perkenalkan namaku Bayu, aku mempunyai seorang istri yang lumayan cantik. Rambut hitam panjang dan l...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/kencani-mahasiswi-terbaru.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhtUea53SBAOfncQXfI_Zq7SRBYR57-N74FR09AswIjZPNHyFE4qkZLeNl1-wUoLWEPzx4rSZHBKGqDR9WNIPCqTBqbdpowuFMXrZlAaqxLU1ViTo4hbHQrkRAvZyFRK1pcCGgxkWq4R0PdJLTwbKN87_4_EHLa4Nbqb-5gRSrlfAZi5TSQg6al2PQ01A=w328-h640" alt="Kencani Mahasiswi Terbaru">
+                </a>
+                <div class="item-title"><a href="/posts/kencani-mahasiswi-terbaru.html">Kencani Mahasiswi Terbaru</a></div>
+                <div class="item-snippet">Kelebihan yang patut aku syukuri ini tidak membuat aku menjadi seorang yang haus akan pertualangan c...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/belajar-sama-tante-erni-yang-cantik.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIq9mu57bDmFR6L2VBsxGcRdmJJE0BRZMFC_R7ZOpANOaU47SXBUPZ__nCz52An5sHgq7_O_0h21--JpDyLnnaZIJN4l_-vGQCFAjbQKkHACJhqZ0YSzJB4ojzE8Zz1kULLrF4x3q32f3ZzEedoxTql2O9FPfMmqxHw-Zr0Z6msdxWO8U8RX_1jXkVOC0" alt="Belajar sama Tante Erni yang cantik">
+                </a>
+                <div class="item-title"><a href="/posts/belajar-sama-tante-erni-yang-cantik.html">Belajar sama Tante Erni yang cantik</a></div>
+                <div class="item-snippet">Insiden ini berlangsung saat saya kelas 3 SMA, yah saya prediksikan usia saya saat itu barusan 14 ta...</div>
             </li>
         
             </ul>
