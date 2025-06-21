@@ -186,10 +186,9 @@ def generate_index(posts):
             labels = render_labels(post.get('labels', []))
             items_html += f"""
 <article class="post">
+<div class='label-line'>
+      <span class='label-info-th'>{labels}</span></div>
   <div class="post-body">
-    <div class='label-line'>
-      <span class='label-info-th'>{labels}</span>
-    </div> 
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
     <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
