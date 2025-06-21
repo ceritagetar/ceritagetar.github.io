@@ -31,97 +31,6 @@
 }
 </style>
 
-<script type='text/javascript'>
-function initContentTruncation() {
-  const charsToDisplay = 4000;
-  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
-
-  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
-
-  function fixHtmlCut(htmlString, cutIndex) {
-    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
-    let match, currentOpenTags = [];
-    // Cegah pemotongan di tengah entitas HTML
-let safeCutIndex = cutIndex;
-while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
-  safeCutIndex--;
-}
-
-const cutHtml = htmlString.substring(0, safeCutIndex);
-const remainingHtml = htmlString.substring(safeCutIndex);
-
-while ((match = tagRegex.exec(cutHtml)) !== null) {
-      const tagName = match[1].toLowerCase();
-      if (match[0].startsWith(&#39;&lt;/&#39;)) {
-        const index = currentOpenTags.indexOf(tagName);
-        if (index &gt; -1) currentOpenTags.splice(index, 1);
-      } else if (!selfClosingTags.includes(tagName)) {
-        currentOpenTags.push(tagName);
-      }
-    }
-
-    let closeTags = &#39;&#39;;
-    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
-      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
-    }
-
-    return {
-      visible: cutHtml + closeTags,
-      hidden: remainingHtml
-    };
-  }
-
-  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
-postBodies.forEach((postBody) =&gt; {
-  if (!postBody) return;
-  if (postBody.innerHTML.length &lt; charsToDisplay) return;
-
-const originalContent = postBody.innerHTML;
-    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
-    const visibleContent = fixedParts.visible;
-    const hiddenContent = fixedParts.hidden;
-
-    const details = document.createElement(&#39;details&#39;);
-details.style.width = &#39;100%&#39;;
-
-const summary = document.createElement(&#39;summary&#39;);
-summary.style.display = &#39;none&#39;;
-details.appendChild(summary);
-
-const hiddenDiv = document.createElement(&#39;div&#39;);
-hiddenDiv.style.paddingTop = &#39;10px&#39;;
-hiddenDiv.innerHTML = hiddenContent;
-details.appendChild(hiddenDiv);
-
-
-    const button = document.createElement(&#39;button&#39;);
-    button.textContent = summaryText;
-    button.className = &#39;sticky-next-button&#39;;
-
-    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
-    postBody.innerHTML = visibleContent;
-    postBody.appendChild(button);
-    postBody.appendChild(details);
-
-button.addEventListener(&#39;click&#39;, () =&gt; {
-      details.open = true;
-      button.remove();
-    });
-
-    details.addEventListener(&#39;toggle&#39;, () =&gt; {
-      if (details.open &amp;&amp; postBody.contains(button)) {
-        button.remove();
-      }
-    });
-  });
-}
-
-if (&#39;requestIdleCallback&#39; in window) {
-  requestIdleCallback(initContentTruncation);
-} else {
-  window.addEventListener(&#39;load&#39;, initContentTruncation);
-}
-</script>
 <script src="/tema/anomali.js"></script>
 
 
@@ -380,43 +289,43 @@ if ('requestIdleCallback' in window) {
             <ul>
                 
             <li>
-                <a href="/posts/kakak-ku-yang-baik-hati.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiNZmyNO7T5MWyEtGrkLfitHhU9dL3vYkDvEy9e3OpvP2ktjdXyexexVGeG_Li2kW3OcI3GuCUawC1SkeP0KQbOapmBgdFVd2cj7wUyQZQw4810g1NY35A59R6csPwnqg082u7Kn8u_tnjuawvqKdpJB6oCcNQduqSYycpO3_gPMAvCq7n7EXyZRQpV3Q=w360-h640" alt="Kakak ku yang Baik Hati">
+                <a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBfepzvV2ep-iQRm_EmKBU325Y9kTG4FNIXYZsam26wyKtybuIPiBhSK7FEtQqlAccrZ4OvKCg2fYbwL0L3vuNQa1DEeUEksp_N0cV8YCFAf0-QSsZK3olEo4UnQpa0R17bUWrGccN0Q100DP_UqUvCROwgv3CL1yQL6JThexfkse0t3q48SDuR4jfhqk/w528-h640/1%20(92).jpg" alt="Keenakan Jahil Dengan Teman Sekelas">
                 </a>
-                <div class="item-title"><a href="/posts/kakak-ku-yang-baik-hati.html">Kakak ku yang Baik Hati</a></div>
-                <div class="item-snippet">Kenalkan, nama saya Boy, teman-teman biasa memanggilku Mas Boy. Saya seorang pemuda berusia 25 tahun...</div>
+                <div class="item-title"><a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">Keenakan Jahil Dengan Teman Sekelas</a></div>
+                <div class="item-snippet">Perkenalkan sobat semua, sebelumnya gw mau bilang nama-nama orang dibawah ini hanya samaran, kalau a...</div>
             </li>
         
             <li>
-                <a href="/posts/terlalu-polos-mengenal-seks.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5-8lPlH5Md7L8P_8L3suUrJvbFdCZGxslPyz_mIa3uP6ze9zGb9gF6qJpkTcUdHd6ZniNoVr7v1wJmVaj59vKgw0ts-80KyBlUgEZRS476MYiBzQ65D2kIHo-_1pKS_wpZNSDGVXHVA19RlVn0PW6E_NGPtL_1993lNsXBCShMsg_J-opXUkBhzpv9Q/w516-h640/fb7dc63dc311938bb6f01f0fe5d896f6.jpg" alt="Terlalu Polos Mengenal Seks">
+                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
                 </a>
-                <div class="item-title"><a href="/posts/terlalu-polos-mengenal-seks.html">Terlalu Polos Mengenal Seks</a></div>
-                <div class="item-snippet">Namaku adalah Andi (bukan nama yang sebenarnya), dan aku kuliah di salah satu universitas swasta di ...</div>
+                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
+                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
             </li>
         
             <li>
-                <a href="/posts/swinger-dengan-tetangga.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPi4Oy__f0WksqJXd8_soUMOCbPC7QJahDsAFai4U6EhAJQq9VdCjDtIe0r4oYTTIuMO6z3RUlOVDRtFFARn38fSlTzdV12348E2z57xdD-IjdG9q806X1CTB0wQV0kIcRBA4u1NCqm3YUil5xGr0uRxaDD9MdpkLXykW4YP2FSZa13moosWI-WW0qQU8/w360-h640/b04998ab6caaf49a8e14a7a5e4e728ad.jpg" alt="Swinger Dengan Tetangga">
+                <a href="/posts/menikmati-ratih-adikku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
                 </a>
-                <div class="item-title"><a href="/posts/swinger-dengan-tetangga.html">Swinger Dengan Tetangga</a></div>
-                <div class="item-snippet">Kurasa tidak perlu aku ceritakan tentang nama dan asalku, serta tempat dan alamatku sekarang. Usiaku...</div>
+                <div class="item-title"><a href="/posts/menikmati-ratih-adikku.html">Menikmati Ratih Adikku</a></div>
+                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
             </li>
         
             <li>
-                <a href="/posts/hadiah-perpisahan-dari-rina.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhUnGUK3aLjwLhe-Sr9EBs6taFICXJQ7h9kRLrZ2Ym7C6cgmf747gDsUauDWjPsTqZWDooFoltDHkamUtYLbcG-U8o0lcIXpqT4jA4jCkpDjx7QgKQSw-D8r1sqFyp522rd9liQ6_d8bowdzCOnfhNlauDaofWHTShxkU6YXA6nOVVyz5C7MAjIIGH0Vw/w432-h640/0254fbcd7ff386ecc1922e884bad72b7.jpg" alt="Hadiah Perpisahan Dari Rina">
+                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
                 </a>
-                <div class="item-title"><a href="/posts/hadiah-perpisahan-dari-rina.html">Hadiah Perpisahan Dari Rina</a></div>
-                <div class="item-snippet">Pеrріѕаhаn ѕеkоlаh sudah ѕеmаkіn dеkаt, аku dаn teman tеmаn berencana bеrlіbur di раntаі раngаndаrаn...</div>
+                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
+                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
             </li>
         
             <li>
-                <a href="/posts/di-perkosa-penjaga-kost.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIb1962lfdoP4dW6dmcMP9poALwqd3oxF-Ao2OR2Dg8ANyR-xO1925tbremoAL8c2eCYW7MRJMk59fgux7WbKbBRJtkynDMHYBQuF0sY-ohtfl4SwuGYJ5_lN9zGAuGCm5xcC0nA09utphJhkU-e_dP89u5EjohwOhOZDvKmat8BXvN9-BZx7XMd1P2Q=w360-h640" alt="Di Perkosa Penjaga Kost">
+                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
                 </a>
-                <div class="item-title"><a href="/posts/di-perkosa-penjaga-kost.html">Di Perkosa Penjaga Kost</a></div>
-                <div class="item-snippet">Cerita ini tentang penjaga kos yang memperkosa anak kos kosan, salah satu anak kos yang bernama Wind...</div>
+                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
+                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
             </li>
         
             </ul>

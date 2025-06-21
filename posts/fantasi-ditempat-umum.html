@@ -31,97 +31,6 @@
 }
 </style>
 
-<script type='text/javascript'>
-function initContentTruncation() {
-  const charsToDisplay = 4000;
-  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
-
-  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
-
-  function fixHtmlCut(htmlString, cutIndex) {
-    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
-    let match, currentOpenTags = [];
-    // Cegah pemotongan di tengah entitas HTML
-let safeCutIndex = cutIndex;
-while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
-  safeCutIndex--;
-}
-
-const cutHtml = htmlString.substring(0, safeCutIndex);
-const remainingHtml = htmlString.substring(safeCutIndex);
-
-while ((match = tagRegex.exec(cutHtml)) !== null) {
-      const tagName = match[1].toLowerCase();
-      if (match[0].startsWith(&#39;&lt;/&#39;)) {
-        const index = currentOpenTags.indexOf(tagName);
-        if (index &gt; -1) currentOpenTags.splice(index, 1);
-      } else if (!selfClosingTags.includes(tagName)) {
-        currentOpenTags.push(tagName);
-      }
-    }
-
-    let closeTags = &#39;&#39;;
-    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
-      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
-    }
-
-    return {
-      visible: cutHtml + closeTags,
-      hidden: remainingHtml
-    };
-  }
-
-  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
-postBodies.forEach((postBody) =&gt; {
-  if (!postBody) return;
-  if (postBody.innerHTML.length &lt; charsToDisplay) return;
-
-const originalContent = postBody.innerHTML;
-    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
-    const visibleContent = fixedParts.visible;
-    const hiddenContent = fixedParts.hidden;
-
-    const details = document.createElement(&#39;details&#39;);
-details.style.width = &#39;100%&#39;;
-
-const summary = document.createElement(&#39;summary&#39;);
-summary.style.display = &#39;none&#39;;
-details.appendChild(summary);
-
-const hiddenDiv = document.createElement(&#39;div&#39;);
-hiddenDiv.style.paddingTop = &#39;10px&#39;;
-hiddenDiv.innerHTML = hiddenContent;
-details.appendChild(hiddenDiv);
-
-
-    const button = document.createElement(&#39;button&#39;);
-    button.textContent = summaryText;
-    button.className = &#39;sticky-next-button&#39;;
-
-    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
-    postBody.innerHTML = visibleContent;
-    postBody.appendChild(button);
-    postBody.appendChild(details);
-
-button.addEventListener(&#39;click&#39;, () =&gt; {
-      details.open = true;
-      button.remove();
-    });
-
-    details.addEventListener(&#39;toggle&#39;, () =&gt; {
-      if (details.open &amp;&amp; postBody.contains(button)) {
-        button.remove();
-      }
-    });
-  });
-}
-
-if (&#39;requestIdleCallback&#39; in window) {
-  requestIdleCallback(initContentTruncation);
-} else {
-  window.addEventListener(&#39;load&#39;, initContentTruncation);
-}
-</script>
 <script src="/tema/anomali.js"></script>
 
 
@@ -380,43 +289,43 @@ if ('requestIdleCallback' in window) {
             <ul>
                 
             <li>
-                <a href="/posts/bersama-mahasiswi-cantik-anak-didik-ibuku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4Z29hqIKj0gPv70t5qZarJBhhnE8jCwL8d2Tx-woucWti3yaTLO_9QKp9xVHgIMFWQP0eXQ1wmCN4WxolfpIlXuXS83jp79Dkpxi5dW7NjmvF9E1o11CQjhvsd7WNIgRf3EyaOnpR4FnKzT5hiZQYeNHxTsklmQ77VjYtEpodpE87JLG7Sz4j9N3ttw/w546-h640/FsJ_MXlagAEe1hc.jpg" alt="Bersama Mahasiswi Cantik, Anak Didik Ibuku">
+                <a href="/posts/surga-dunia-dari-ibu.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjz21q6VwKLpLbh4HhTVC8dPpfOFF1LXNZUkWpZWGlMsSjmBLXBDUROqMxffpm8bv7pbWsTVGAdHy1j8DtECCQeKyk2bRJW9vRcAcuenbkqpGZEUgG7HxYPRMtTvJM_0s_u1pOa_SRsF7mCeUQEa6lNuCM-1HivYLCJYJzbYsFga9nVlNu8o_sXxKyaSg=w517-h640" alt="Surga dunia Dari Ibu">
                 </a>
-                <div class="item-title"><a href="/posts/bersama-mahasiswi-cantik-anak-didik-ibuku.html">Bersama Mahasiswi Cantik, Anak Didik Ibuku</a></div>
-                <div class="item-snippet">Cerita Seks Dewasa ini terjadi dikarenakan ibuku adalah salah seorang dosen di salah satu universita...</div>
+                <div class="item-title"><a href="/posts/surga-dunia-dari-ibu.html">Surga dunia Dari Ibu</a></div>
+                <div class="item-snippet">Namaku eri. Ayahku bowo berusia 60 tahun dan Ibuku sari berusia 35 tahun. Aku sendiri kini berusia 1...</div>
             </li>
         
             <li>
-                <a href="/posts/tante-lin.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhU-qclQZGVAvmJ-CQ6LMWZBS9brFqIX1zgrSV9Pz3qcooROOoJ6WHqxvBGbK5nIAzl0ywA4eAQJ-ZoFLWv4QNglf-lO0Zx2y09OVKt_1LC2m7CgMt00zHaT-iDQyuKK6k9UYQvrYe0ssq248bUttYnMy4iX84w_9HxiujrKtGhRN6_I39_fIxZjWAh2NY/w512-h640/33f64aadfc335c32b131f5129ad4b43e.jpg" alt="Tante Lin">
+                <a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSVw9GhyyvXusaOALaLNI2CpUZydm0xMj_0CsoBZJPij2c9J3yvfEKo_2IV0SN9I3xX_a3ELjWDl84VyjR0XFv8OGoM8RnOd_9Vm45redqTvlFA7_v0D7bWXIi5-sMHimLHxjojcfwLPrHgdZU7L_m-a7aHlarxGhQducTaAsH1fXwvSZAoo4z3yffBw=w360-h640" alt="Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal">
                 </a>
-                <div class="item-title"><a href="/posts/tante-lin.html">Tante Lin</a></div>
-                <div class="item-snippet">Dia sebenarnya sering sekali datang ke Jakarta, dan memang mempunyai sebuah rumah jakarta, serta mem...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal</a></div>
+                <div class="item-snippet">Fina di sekolahny termasuk gadis, cewek yang sangat populer karena kecantikan dan kemolekan tubuhnya...</div>
             </li>
         
             <li>
-                <a href="/posts/oleh-oleh-dugem.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGS1DE9ApsAle3rHIj9hwb6k028A3VXhDkGKO9NmehSukLjPqTrf56geWB2REB2a5FIIzuCrSj0gtSarqrRNcwIyIIXJ20ac5fBAxXy9O565y0yqRP9TTDk0jCtctre-hcE9SkPo5eLGdIBHBE3ueE1ckQyRNbGuF7o-JQIvwg8dNWvKqyxYW5Tpz3hmk/w512-h640/Fqnu34jaMAIFGjk.jpg" alt="Oleh-oleh Dugem">
+                <a href="/posts/adik-ipar-yang-nikmat.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZF04rz_SBp4K3zSva6UK5G5b-RLGFim0MZ6dUT7CjxN3lz-QvIDcOdIHbfdxVLc0lXKmGbMhlDXnUozSR4mg5O8ZthndHcgQZ1Da9XeyfchV7_3rqk7RY7jMXfMhiDcnqYPKD8We965-s4-1ZWfjYmGiMiMwXS8z8M97uVDtJruumkvPglqz6W2opuGs/w320-h640/76fb9f54e5bd54f021b0d82ff9f1887b.jpg" alt="Adik Ipar yang Nikmat">
                 </a>
-                <div class="item-title"><a href="/posts/oleh-oleh-dugem.html">Oleh-oleh Dugem</a></div>
-                <div class="item-snippet">Cerita kali ini bermula ketika aku sedang Dugem dan bertemu Cewek Mabuk di sebelahku tak berlangsung...</div>
+                <div class="item-title"><a href="/posts/adik-ipar-yang-nikmat.html">Adik Ipar yang Nikmat</a></div>
+                <div class="item-snippet">Perkenalkan namaku Bayu, aku mempunyai seorang istri yang lumayan cantik. Rambut hitam panjang dan l...</div>
             </li>
         
             <li>
-                <a href="/posts/nanik-tetanggaku-yang-manis.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPNj6eh1SnSVyTnZdju7m3P48W5Xq4LUC4xx2qPPsp7ZdRWXsj3VNTGr_rkHiW-qNwDFUv1ydrONw9Ekn2-cVQEW8SZrKPv4cTGPV1IsrmPemMlfX02bJwBD3gbrcg0Du8MPjVSf8dx0aJaM6oBmeBn4JL6O5HpMVNouqyA6g0ThIGcb6WuphGBcYBIWk/w456-h640/280197779_1049339712605446_1369322801856887445_n.jpg" alt="Nanik Tetanggaku Yang Manis">
+                <a href="/posts/kencani-mahasiswi-terbaru.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhtUea53SBAOfncQXfI_Zq7SRBYR57-N74FR09AswIjZPNHyFE4qkZLeNl1-wUoLWEPzx4rSZHBKGqDR9WNIPCqTBqbdpowuFMXrZlAaqxLU1ViTo4hbHQrkRAvZyFRK1pcCGgxkWq4R0PdJLTwbKN87_4_EHLa4Nbqb-5gRSrlfAZi5TSQg6al2PQ01A=w328-h640" alt="Kencani Mahasiswi Terbaru">
                 </a>
-                <div class="item-title"><a href="/posts/nanik-tetanggaku-yang-manis.html">Nanik Tetanggaku Yang Manis</a></div>
-                <div class="item-snippet">Kisah ini dimulai ketika aku memutuskan untuk pindah dari rumah orang tuaku dan mengontrak sebuah ru...</div>
+                <div class="item-title"><a href="/posts/kencani-mahasiswi-terbaru.html">Kencani Mahasiswi Terbaru</a></div>
+                <div class="item-snippet">Kelebihan yang patut aku syukuri ini tidak membuat aku menjadi seorang yang haus akan pertualangan c...</div>
             </li>
         
             <li>
-                <a href="/posts/diperkosa-mama-dan-tanteku-yang-binal.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJckoOwplhvpiNiRlOcSyaeskT3yy93YvIIPKaf1zX9bTiaDucFo7v9qFdaYDeubuCn3hQyn_ketW94UZKtKDzvkGpXjilr3q4EF3ReRXgD7DRekNw5UXCt2cqLGpxrNX15ziXIFpMg0i_YdimyNMRv9gTyAF3MUwbhG8GAL3HVoWkFLG6K6IFod0T1A/w524-h640/395570916_122115277142061873_1612121283651371407_n.jpg" alt="Diperkosa Mama Dan Tanteku Yang Binal">
+                <a href="/posts/tetangga-kontrakan-stw.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjDb5V6kdskwlZGDjCXT0P02b1CkgtUnRLVGhOthESwXswqV56NgWWA5nlCtsGGnCq8JbCF823Vr123_2Bmn81gkv5y7iCNOcnH_fmuDBcLuQXJk0jxJG51RKwR4nbNSLWRQO_Y7OWgB-VEX0BQPgBx7Zjx8qv2K6Aq08X7PNKzAdHpb3bGL-oPFIH7" alt="Tetangga Kontrakan STW">
                 </a>
-                <div class="item-title"><a href="/posts/diperkosa-mama-dan-tanteku-yang-binal.html">Diperkosa Mama Dan Tanteku Yang Binal</a></div>
-                <div class="item-snippet">Dia merasa sepi dan takut tinggal di rumahnya sendirian. bude ratna berumur 32 tahun. Penampilannya ...</div>
+                <div class="item-title"><a href="/posts/tetangga-kontrakan-stw.html">Tetangga Kontrakan STW</a></div>
+                <div class="item-snippet">Kejadian ini berlangsung di tahun 2011. saya baru saja kena PHK di tempat kerja saya yang berkantor ...</div>
             </li>
         
             </ul>

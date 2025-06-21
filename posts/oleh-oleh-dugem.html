@@ -31,97 +31,6 @@
 }
 </style>
 
-<script type='text/javascript'>
-function initContentTruncation() {
-  const charsToDisplay = 4000;
-  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
-
-  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
-
-  function fixHtmlCut(htmlString, cutIndex) {
-    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
-    let match, currentOpenTags = [];
-    // Cegah pemotongan di tengah entitas HTML
-let safeCutIndex = cutIndex;
-while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
-  safeCutIndex--;
-}
-
-const cutHtml = htmlString.substring(0, safeCutIndex);
-const remainingHtml = htmlString.substring(safeCutIndex);
-
-while ((match = tagRegex.exec(cutHtml)) !== null) {
-      const tagName = match[1].toLowerCase();
-      if (match[0].startsWith(&#39;&lt;/&#39;)) {
-        const index = currentOpenTags.indexOf(tagName);
-        if (index &gt; -1) currentOpenTags.splice(index, 1);
-      } else if (!selfClosingTags.includes(tagName)) {
-        currentOpenTags.push(tagName);
-      }
-    }
-
-    let closeTags = &#39;&#39;;
-    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
-      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
-    }
-
-    return {
-      visible: cutHtml + closeTags,
-      hidden: remainingHtml
-    };
-  }
-
-  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
-postBodies.forEach((postBody) =&gt; {
-  if (!postBody) return;
-  if (postBody.innerHTML.length &lt; charsToDisplay) return;
-
-const originalContent = postBody.innerHTML;
-    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
-    const visibleContent = fixedParts.visible;
-    const hiddenContent = fixedParts.hidden;
-
-    const details = document.createElement(&#39;details&#39;);
-details.style.width = &#39;100%&#39;;
-
-const summary = document.createElement(&#39;summary&#39;);
-summary.style.display = &#39;none&#39;;
-details.appendChild(summary);
-
-const hiddenDiv = document.createElement(&#39;div&#39;);
-hiddenDiv.style.paddingTop = &#39;10px&#39;;
-hiddenDiv.innerHTML = hiddenContent;
-details.appendChild(hiddenDiv);
-
-
-    const button = document.createElement(&#39;button&#39;);
-    button.textContent = summaryText;
-    button.className = &#39;sticky-next-button&#39;;
-
-    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
-    postBody.innerHTML = visibleContent;
-    postBody.appendChild(button);
-    postBody.appendChild(details);
-
-button.addEventListener(&#39;click&#39;, () =&gt; {
-      details.open = true;
-      button.remove();
-    });
-
-    details.addEventListener(&#39;toggle&#39;, () =&gt; {
-      if (details.open &amp;&amp; postBody.contains(button)) {
-        button.remove();
-      }
-    });
-  });
-}
-
-if (&#39;requestIdleCallback&#39; in window) {
-  requestIdleCallback(initContentTruncation);
-} else {
-  window.addEventListener(&#39;load&#39;, initContentTruncation);
-}
-</script>
 <script src="/tema/anomali.js"></script>
 
 
@@ -380,19 +289,35 @@ if ('requestIdleCallback' in window) {
             <ul>
                 
             <li>
-                <a href="/posts/tergoda-nafsu-istri-orang.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhgjIOH9mgNlbOZH114gRMeWYOHUf7J7d-nt_X9C_woVtBbRiFDMGh9NyhbXxmjfRA7qwQDI4r0LD4rbmKExUcqHzUwFyyWqTdiCfBrN-gOSzaWnv9J0-kC4GPgHzWpDid8nT9jIcapfU5O02p9uJ6OcGe6HR0-iCcQ1EJdf8y_23GhQthDRXe806v8=w323-h640" alt="Tergoda nafsu istri orang">
+                <a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBfepzvV2ep-iQRm_EmKBU325Y9kTG4FNIXYZsam26wyKtybuIPiBhSK7FEtQqlAccrZ4OvKCg2fYbwL0L3vuNQa1DEeUEksp_N0cV8YCFAf0-QSsZK3olEo4UnQpa0R17bUWrGccN0Q100DP_UqUvCROwgv3CL1yQL6JThexfkse0t3q48SDuR4jfhqk/w528-h640/1%20(92).jpg" alt="Keenakan Jahil Dengan Teman Sekelas">
                 </a>
-                <div class="item-title"><a href="/posts/tergoda-nafsu-istri-orang.html">Tergoda nafsu istri orang</a></div>
-                <div class="item-snippet">Mbak mar… Kupeluk ibu 2 anak itu, tak kusangka mbak mar mencoba melepaskan kedua tanganku, aku tak p...</div>
+                <div class="item-title"><a href="/posts/keenakan-jahil-dengan-teman-sekelas.html">Keenakan Jahil Dengan Teman Sekelas</a></div>
+                <div class="item-snippet">Perkenalkan sobat semua, sebelumnya gw mau bilang nama-nama orang dibawah ini hanya samaran, kalau a...</div>
             </li>
         
             <li>
-                <a href="/posts/selingkuh-sama-cewek-smp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgwF4eGujFrKGjTSxnwjOurQIuole_2mBtuMORBwhvVXHaGtibZo7vFyiGaxOUzj7p4moU3pX0_n5E8Gzb53dD-lLx-AO_BVB9bTdPsMv1nkrfT6I_nrCG3eUT3m1vQWWBjSpJqkfWAiQLCpb-oByRgnOSW0IJnjii78vC99ctWBcOzDJA1tKgAwa7lCw=w483-h640" alt="Selingkuh Sama Cewek SMP">
+                <a href="/posts/di-perkosa-penjaga-kost.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIb1962lfdoP4dW6dmcMP9poALwqd3oxF-Ao2OR2Dg8ANyR-xO1925tbremoAL8c2eCYW7MRJMk59fgux7WbKbBRJtkynDMHYBQuF0sY-ohtfl4SwuGYJ5_lN9zGAuGCm5xcC0nA09utphJhkU-e_dP89u5EjohwOhOZDvKmat8BXvN9-BZx7XMd1P2Q=w360-h640" alt="Di Perkosa Penjaga Kost">
                 </a>
-                <div class="item-title"><a href="/posts/selingkuh-sama-cewek-smp.html">Selingkuh Sama Cewek SMP</a></div>
-                <div class="item-snippet">Tanpa banyak tanya saya segera bergerak ke alamat yang dituju yang tidak berbeda jauh dari rumahku. ...</div>
+                <div class="item-title"><a href="/posts/di-perkosa-penjaga-kost.html">Di Perkosa Penjaga Kost</a></div>
+                <div class="item-snippet">Cerita ini tentang penjaga kos yang memperkosa anak kos kosan, salah satu anak kos yang bernama Wind...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/adik-ipar-yang-nikmat.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZF04rz_SBp4K3zSva6UK5G5b-RLGFim0MZ6dUT7CjxN3lz-QvIDcOdIHbfdxVLc0lXKmGbMhlDXnUozSR4mg5O8ZthndHcgQZ1Da9XeyfchV7_3rqk7RY7jMXfMhiDcnqYPKD8We965-s4-1ZWfjYmGiMiMwXS8z8M97uVDtJruumkvPglqz6W2opuGs/w320-h640/76fb9f54e5bd54f021b0d82ff9f1887b.jpg" alt="Adik Ipar yang Nikmat">
+                </a>
+                <div class="item-title"><a href="/posts/adik-ipar-yang-nikmat.html">Adik Ipar yang Nikmat</a></div>
+                <div class="item-snippet">Perkenalkan namaku Bayu, aku mempunyai seorang istri yang lumayan cantik. Rambut hitam panjang dan l...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
+                </a>
+                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
+                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
             </li>
         
             <li>
@@ -401,22 +326,6 @@ if ('requestIdleCallback' in window) {
                 </a>
                 <div class="item-title"><a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
                 <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiaADbPvJVQX-aD9RieZ3kvkOeiksid5J_A1WGUeQ-5FuBWgczwR_b592Ni7YncREC54pcsL-HT5YlQFM1ePz5Q2itw_MaoHYz_FwjvgE-kajmJnaUruIMznMdiDOotAGnBYGmMAfTWaeDqi2P9JkYndAO4z1cRkKwGewAxyvxJg73YeKB_PV0ir9bOQQ=w360-h640" alt="Kenalan SPG Mulus Langsung Ajak ML">
-                </a>
-                <div class="item-title"><a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">Kenalan SPG Mulus Langsung Ajak ML</a></div>
-                <div class="item-snippet">Panggil saja namaku Rezha, ini nama samaran di cerita, hhe. Statusku sekarang adalah sebagai mahasis...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/diperkosa-teman-sendiri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhmkvUSNe1xjbm9KCo1F_VHW9zbDAPM9ZBOuXxi9LQ2urRKFC--b_rOSHkMM5QDK2mq3SUv6aM1GeYTpK-yxypCqGKo4BSnpxKVC2GpDDwbfgDGGqgtfWqyG10zp58S5gEQmZne64NWdBLr923GQc4xelKY56ATC6UjsFg8-AzQ8-kh6HIgp4mtexYQGuE" alt="Diperkosa Teman Sendiri">
-                </a>
-                <div class="item-title"><a href="/posts/diperkosa-teman-sendiri.html">Diperkosa Teman Sendiri</a></div>
-                <div class="item-snippet">Novy ialah seseorang mahasiswi berumur 22 tahun dalam suatu perguruan tinggi swasta terkenal di Jaka...</div>
             </li>
         
             </ul>

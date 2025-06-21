@@ -31,97 +31,6 @@
 }
 </style>
 
-<script type='text/javascript'>
-function initContentTruncation() {
-  const charsToDisplay = 4000;
-  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
-
-  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
-
-  function fixHtmlCut(htmlString, cutIndex) {
-    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
-    let match, currentOpenTags = [];
-    // Cegah pemotongan di tengah entitas HTML
-let safeCutIndex = cutIndex;
-while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
-  safeCutIndex--;
-}
-
-const cutHtml = htmlString.substring(0, safeCutIndex);
-const remainingHtml = htmlString.substring(safeCutIndex);
-
-while ((match = tagRegex.exec(cutHtml)) !== null) {
-      const tagName = match[1].toLowerCase();
-      if (match[0].startsWith(&#39;&lt;/&#39;)) {
-        const index = currentOpenTags.indexOf(tagName);
-        if (index &gt; -1) currentOpenTags.splice(index, 1);
-      } else if (!selfClosingTags.includes(tagName)) {
-        currentOpenTags.push(tagName);
-      }
-    }
-
-    let closeTags = &#39;&#39;;
-    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
-      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
-    }
-
-    return {
-      visible: cutHtml + closeTags,
-      hidden: remainingHtml
-    };
-  }
-
-  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
-postBodies.forEach((postBody) =&gt; {
-  if (!postBody) return;
-  if (postBody.innerHTML.length &lt; charsToDisplay) return;
-
-const originalContent = postBody.innerHTML;
-    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
-    const visibleContent = fixedParts.visible;
-    const hiddenContent = fixedParts.hidden;
-
-    const details = document.createElement(&#39;details&#39;);
-details.style.width = &#39;100%&#39;;
-
-const summary = document.createElement(&#39;summary&#39;);
-summary.style.display = &#39;none&#39;;
-details.appendChild(summary);
-
-const hiddenDiv = document.createElement(&#39;div&#39;);
-hiddenDiv.style.paddingTop = &#39;10px&#39;;
-hiddenDiv.innerHTML = hiddenContent;
-details.appendChild(hiddenDiv);
-
-
-    const button = document.createElement(&#39;button&#39;);
-    button.textContent = summaryText;
-    button.className = &#39;sticky-next-button&#39;;
-
-    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
-    postBody.innerHTML = visibleContent;
-    postBody.appendChild(button);
-    postBody.appendChild(details);
-
-button.addEventListener(&#39;click&#39;, () =&gt; {
-      details.open = true;
-      button.remove();
-    });
-
-    details.addEventListener(&#39;toggle&#39;, () =&gt; {
-      if (details.open &amp;&amp; postBody.contains(button)) {
-        button.remove();
-      }
-    });
-  });
-}
-
-if (&#39;requestIdleCallback&#39; in window) {
-  requestIdleCallback(initContentTruncation);
-} else {
-  window.addEventListener(&#39;load&#39;, initContentTruncation);
-}
-</script>
 <script src="/tema/anomali.js"></script>
 
 
@@ -380,43 +289,43 @@ if ('requestIdleCallback' in window) {
             <ul>
                 
             <li>
-                <a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjul2G8W6KPpZ6WQ-axrOTN8KNT-t99V3Urk6lnnDUbLQ9ESsRp_dxLGxpS8wdePHN8tu56vp_HlV3Uj5CXpvjZze2rAUeWj2ANvJPJqoCsgkqO5CAl0U_WwYQpOfIKik8HIXcdkzYTYUSgmX9y0H7EK5RnrTDja7BNo-m3LmsIHDC5-7ZJDF2xO9QlrQ/w628-h640/5066035a5d11bc30cd099c922a4af2ca.jpg" alt="Rina Wanita Desa Yang Kecanduan Orgasme">
+                <a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSVw9GhyyvXusaOALaLNI2CpUZydm0xMj_0CsoBZJPij2c9J3yvfEKo_2IV0SN9I3xX_a3ELjWDl84VyjR0XFv8OGoM8RnOd_9Vm45redqTvlFA7_v0D7bWXIi5-sMHimLHxjojcfwLPrHgdZU7L_m-a7aHlarxGhQducTaAsH1fXwvSZAoo4z3yffBw=w360-h640" alt="Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal">
                 </a>
-                <div class="item-title"><a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">Rina Wanita Desa Yang Kecanduan Orgasme</a></div>
-                <div class="item-snippet">Berperawakan sedang ukuran rata-rata, tinggi tidak, pendek tidak, jelek nggak, cakeppun ngga, kulit ...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal</a></div>
+                <div class="item-snippet">Fina di sekolahny termasuk gadis, cewek yang sangat populer karena kecantikan dan kemolekan tubuhnya...</div>
             </li>
         
             <li>
-                <a href="/posts/keperawanan-kakak-kandung-ku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuhzZMRTvgm0K5y52731fw6BQUrp7cSaq7EWytHvAr8cn8eC6n-iFBEg23P322kDJ4WMj2rZ7vHEsZc7-xuqcpvUnWbKUNK0tC-t0Ob9bmpv5P68oIQwQJlGJwYv7e30d_3k7oNEQQ7rXmoQkFS6RvOxDsZ6Fn5vzVw3tx5gH63fXhKXmJMFQxUIRgqvI/s320/391623529_230687470015497_2341219323328554378_n.jpg" alt="Keperawanan kakak kandung ku">
+                <a href="/posts/menikmati-gadis-pemandu-karoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiZ7lDh8ujBMpYLweFBkgHWRQrAhiERWX8iGICNQNPfwp5TxYEr3fDE-fMvChMK2_d7RdFKIbI8Wkp1VWLSxXbDmnjaoxwo5uDEk_hQpBfIRG-lYCyHW8giXkTV4AUSqU-nFhz3_KOEMDcj2qcnf-EveEeCNy1kpGmzg6EODAH6rt87dC1VEqF3P5OOvg/w512-h640/cf99420d9e43026cf33448579b4cda84.jpg" alt="Menikmati Gadis Pemandu Karoke">
                 </a>
-                <div class="item-title"><a href="/posts/keperawanan-kakak-kandung-ku.html">Keperawanan kakak kandung ku</a></div>
-                <div class="item-snippet">Cerita ini berawal saat saya sedang di rumah, saya memiliki mbak yang sangak seksi serta semok membu...</div>
+                <div class="item-title"><a href="/posts/menikmati-gadis-pemandu-karoke.html">Menikmati Gadis Pemandu Karoke</a></div>
+                <div class="item-snippet">Keluargaku sudah terbilang bahagia karena saya merasa sudah cukup, sebab sudah punya rumah sendiri d...</div>
             </li>
         
             <li>
-                <a href="/posts/diperkosa-teman-sendiri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhmkvUSNe1xjbm9KCo1F_VHW9zbDAPM9ZBOuXxi9LQ2urRKFC--b_rOSHkMM5QDK2mq3SUv6aM1GeYTpK-yxypCqGKo4BSnpxKVC2GpDDwbfgDGGqgtfWqyG10zp58S5gEQmZne64NWdBLr923GQc4xelKY56ATC6UjsFg8-AzQ8-kh6HIgp4mtexYQGuE" alt="Diperkosa Teman Sendiri">
+                <a href="/posts/mama-mertuaku-haus-akan-belaian.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKAVkY2MBPvfrahMb_ameGB6q_yLXlvxDDGX4V7zdVMsVVu7sm3EE8Lxo8XIlcaXNHhyphenhyphen34LdjanMv_JdKp7ki5M8bmF5qs8R0WjukgtcEljfOPC9vFOmY4dfSQVXM7lzCtbyIH5tLOymBJktB4IgEkiIc-tD_vAyMmsWrk00R2azvXNnp_aOmx-hH61vY/w494-h640/278564919_1840781442792210_1094798816856265520_n.jpg" alt="Mama Mertuaku Haus Akan Belaian">
                 </a>
-                <div class="item-title"><a href="/posts/diperkosa-teman-sendiri.html">Diperkosa Teman Sendiri</a></div>
-                <div class="item-snippet">Novy ialah seseorang mahasiswi berumur 22 tahun dalam suatu perguruan tinggi swasta terkenal di Jaka...</div>
+                <div class="item-title"><a href="/posts/mama-mertuaku-haus-akan-belaian.html">Mama Mertuaku Haus Akan Belaian</a></div>
+                <div class="item-snippet">Sudah dua tahun ini aku menikah dengan Virni, dia seorang model iklan dan enam bulan lalu, dia menja...</div>
             </li>
         
             <li>
-                <a href="/posts/gadis-genit-itu-nikmat.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhvnjUad66WGmcLzs2TeUq7Uv3S1DY_6SwKMblXf1t_4aKzpElVhXeogvoWr8XzA1SW50mpFoRCjTiC14MhGfpuj5DzsxQBbeYXwrHUCUSOwaxPBnAs6cA8EmzOmWQT1A8Um-0-gw5h1NItgVxru_EcBDj-O07fFguAfHUnhfVfCxGfC5HaWhnxL2APA/w360-h640/d5faab2bc79c54ec54735296f198a3fd.jpg" alt="Gadis Genit Itu Nikmat">
+                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
                 </a>
-                <div class="item-title"><a href="/posts/gadis-genit-itu-nikmat.html">Gadis Genit Itu Nikmat</a></div>
-                <div class="item-snippet">Ironisnya, aku mempunyai hasrat seks yang tinggi, aku mudah terangsang bila melihat cewek yang bagik...</div>
+                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
+                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
             </li>
         
             <li>
-                <a href="/posts/bersama-mahasiswi-cantik-anak-didik-ibuku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4Z29hqIKj0gPv70t5qZarJBhhnE8jCwL8d2Tx-woucWti3yaTLO_9QKp9xVHgIMFWQP0eXQ1wmCN4WxolfpIlXuXS83jp79Dkpxi5dW7NjmvF9E1o11CQjhvsd7WNIgRf3EyaOnpR4FnKzT5hiZQYeNHxTsklmQ77VjYtEpodpE87JLG7Sz4j9N3ttw/w546-h640/FsJ_MXlagAEe1hc.jpg" alt="Bersama Mahasiswi Cantik, Anak Didik Ibuku">
+                <a href="/posts/gurihnya-calon-mertua.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCoMyeZ5sTyB6VeRCAmUXHIxKGuR7wJqIImVpm63OrHpv2FodZAGdeOL1Tl2eMAaJEukLRXjmF7I-GjJH1LAw6Tof0pEQTu-3R2O5hSvS7aTE5YlDPh5M801e3VOq9dlQo2flYlqTGgmD57Po7WxEmVrYcRtPvVzq4MWmFEgd8ehdEqJ3pkqhIT3Nl" alt="Gurihnya Calon Mertua">
                 </a>
-                <div class="item-title"><a href="/posts/bersama-mahasiswi-cantik-anak-didik-ibuku.html">Bersama Mahasiswi Cantik, Anak Didik Ibuku</a></div>
-                <div class="item-snippet">Cerita Seks Dewasa ini terjadi dikarenakan ibuku adalah salah seorang dosen di salah satu universita...</div>
+                <div class="item-title"><a href="/posts/gurihnya-calon-mertua.html">Gurihnya Calon Mertua</a></div>
+                <div class="item-snippet">Nama gua Beny Cerita ini asli kisah gua sama ibu pacar gua waktu dulu masih pacaran, waktu itu sekit...</div>
             </li>
         
             </ul>

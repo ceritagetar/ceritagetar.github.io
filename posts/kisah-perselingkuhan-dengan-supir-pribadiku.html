@@ -31,97 +31,6 @@
 }
 </style>
 
-<script type='text/javascript'>
-function initContentTruncation() {
-  const charsToDisplay = 4000;
-  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
-
-  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
-
-  function fixHtmlCut(htmlString, cutIndex) {
-    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
-    let match, currentOpenTags = [];
-    // Cegah pemotongan di tengah entitas HTML
-let safeCutIndex = cutIndex;
-while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
-  safeCutIndex--;
-}
-
-const cutHtml = htmlString.substring(0, safeCutIndex);
-const remainingHtml = htmlString.substring(safeCutIndex);
-
-while ((match = tagRegex.exec(cutHtml)) !== null) {
-      const tagName = match[1].toLowerCase();
-      if (match[0].startsWith(&#39;&lt;/&#39;)) {
-        const index = currentOpenTags.indexOf(tagName);
-        if (index &gt; -1) currentOpenTags.splice(index, 1);
-      } else if (!selfClosingTags.includes(tagName)) {
-        currentOpenTags.push(tagName);
-      }
-    }
-
-    let closeTags = &#39;&#39;;
-    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
-      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
-    }
-
-    return {
-      visible: cutHtml + closeTags,
-      hidden: remainingHtml
-    };
-  }
-
-  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
-postBodies.forEach((postBody) =&gt; {
-  if (!postBody) return;
-  if (postBody.innerHTML.length &lt; charsToDisplay) return;
-
-const originalContent = postBody.innerHTML;
-    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
-    const visibleContent = fixedParts.visible;
-    const hiddenContent = fixedParts.hidden;
-
-    const details = document.createElement(&#39;details&#39;);
-details.style.width = &#39;100%&#39;;
-
-const summary = document.createElement(&#39;summary&#39;);
-summary.style.display = &#39;none&#39;;
-details.appendChild(summary);
-
-const hiddenDiv = document.createElement(&#39;div&#39;);
-hiddenDiv.style.paddingTop = &#39;10px&#39;;
-hiddenDiv.innerHTML = hiddenContent;
-details.appendChild(hiddenDiv);
-
-
-    const button = document.createElement(&#39;button&#39;);
-    button.textContent = summaryText;
-    button.className = &#39;sticky-next-button&#39;;
-
-    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
-    postBody.innerHTML = visibleContent;
-    postBody.appendChild(button);
-    postBody.appendChild(details);
-
-button.addEventListener(&#39;click&#39;, () =&gt; {
-      details.open = true;
-      button.remove();
-    });
-
-    details.addEventListener(&#39;toggle&#39;, () =&gt; {
-      if (details.open &amp;&amp; postBody.contains(button)) {
-        button.remove();
-      }
-    });
-  });
-}
-
-if (&#39;requestIdleCallback&#39; in window) {
-  requestIdleCallback(initContentTruncation);
-} else {
-  window.addEventListener(&#39;load&#39;, initContentTruncation);
-}
-</script>
 <script src="/tema/anomali.js"></script>
 
 
@@ -380,19 +289,11 @@ if ('requestIdleCallback' in window) {
             <ul>
                 
             <li>
-                <a href="/posts/gadis-genit-itu-nikmat.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhvnjUad66WGmcLzs2TeUq7Uv3S1DY_6SwKMblXf1t_4aKzpElVhXeogvoWr8XzA1SW50mpFoRCjTiC14MhGfpuj5DzsxQBbeYXwrHUCUSOwaxPBnAs6cA8EmzOmWQT1A8Um-0-gw5h1NItgVxru_EcBDj-O07fFguAfHUnhfVfCxGfC5HaWhnxL2APA/w360-h640/d5faab2bc79c54ec54735296f198a3fd.jpg" alt="Gadis Genit Itu Nikmat">
+                <a href="/posts/menikmati-ratih-adikku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
                 </a>
-                <div class="item-title"><a href="/posts/gadis-genit-itu-nikmat.html">Gadis Genit Itu Nikmat</a></div>
-                <div class="item-snippet">Ironisnya, aku mempunyai hasrat seks yang tinggi, aku mudah terangsang bila melihat cewek yang bagik...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFEpPrmmvjduZfUygCf8E_9fPUZOFN7Rx0h7-LKv5C-ksl1jnfBLFhad3uTPttGe6Y9a7aTQWPmS6cevh8-Sfv1kHZkltdSFqLY1ZXCWtkh2sxicG-hU5aznjNL4-irl4S3wjK92BE8xYTg_28ygEephO2vzzBEcHZmBOdv0XZU5EH06AqfYkHb_zbdN8/w512-h640/c509ea9d93278f47c0aa1fc1af3d8fe2.jpg" alt="Awal Perselingkuhan Dengan Teman Istriku">
-                </a>
-                <div class="item-title"><a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">Awal Perselingkuhan Dengan Teman Istriku</a></div>
-                <div class="item-snippet">Peristiwa ini sebenarnya tak pernah kuduga sebelumnya, mengingat Bu Evi (teman istriku) tidak menamp...</div>
+                <div class="item-title"><a href="/posts/menikmati-ratih-adikku.html">Menikmati Ratih Adikku</a></div>
+                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
             </li>
         
             <li>
@@ -404,19 +305,27 @@ if ('requestIdleCallback' in window) {
             </li>
         
             <li>
-                <a href="/posts/permainan-terlarang.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjtrdysrmpVJtFTsamokdCzLGoZlGy5WshyphenhyphenQQuJL6A95-zY3EI6r70eCCX_pWH6or5ke-UP5phTzeyHFLw0jfNxo-zzBAKokjpGrpbVZCpfhjSp4WVOPa_s8PjnzHEPY7H_qcI3aCKTNy2rhquX-7ASSa2S0sIC3GXzj09clCcC9Gi8JyBlbMTnP84l/s320/F7vTRGna4AAYRti.jpg" alt="Permainan Terlarang">
+                <a href="/posts/ngerjain-mahasiswi-judes.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHQ0MVSSsoU19eZAgg9BgaUAr79pj_jGsnYMK_9NNXBuM1X2yZHTbN0_eGyjhI8ohwDB9dU2eIpz_WsZ2ksnpyjQrqJ7jUjE7kXGoJsODOYvk-UPPSCk2kdyIaiYxcDbgUtF2OGCKmhyrVPQKeLvsbJ-aUDmzBrDB-oyPHHy73PIB2jb4zRqt06EAc7YU/w476-h640/279350522_1028466134713886_4681879147281862870_n.jpg" alt="Ngerjain Mahasiswi Judes">
                 </a>
-                <div class="item-title"><a href="/posts/permainan-terlarang.html">Permainan Terlarang</a></div>
-                <div class="item-snippet">Ini pengalamanku sekitar 5 tahun yg lalu. Saat ini aku sudah berusia 38 tahun dan bekerja di salah s...</div>
+                <div class="item-title"><a href="/posts/ngerjain-mahasiswi-judes.html">Ngerjain Mahasiswi Judes</a></div>
+                <div class="item-snippet">Minggu siang itu udara Jakarta panas sekali, Sebuah metromini masih ngetem di depan sebuah gedung di...</div>
             </li>
         
             <li>
-                <a href="/posts/selingkuh-sama-cewek-smp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgwF4eGujFrKGjTSxnwjOurQIuole_2mBtuMORBwhvVXHaGtibZo7vFyiGaxOUzj7p4moU3pX0_n5E8Gzb53dD-lLx-AO_BVB9bTdPsMv1nkrfT6I_nrCG3eUT3m1vQWWBjSpJqkfWAiQLCpb-oByRgnOSW0IJnjii78vC99ctWBcOzDJA1tKgAwa7lCw=w483-h640" alt="Selingkuh Sama Cewek SMP">
+                <a href="/posts/dengan-janda-tetanggaku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghlHVYlLNiXuerK29SXe3bsnAOkEyirXQlX1YeJ3rZXAp-l7GceR0XsMOr32Nz10O9zh4fsqPnsWOMp108HbZaqfQm8vngf_aVnEpo0qGw-Y1YZupkyw2E0aaoiSpDqRhKr3cgAneaxHahLxJVlNsQBaBNVQuGl1uFOTEH1KyX6NT0fksba5tUOeiar_s/s320/GGHoKc0aAAAyrru.jpg" alt="Dengan Janda Tetanggaku">
                 </a>
-                <div class="item-title"><a href="/posts/selingkuh-sama-cewek-smp.html">Selingkuh Sama Cewek SMP</a></div>
-                <div class="item-snippet">Tanpa banyak tanya saya segera bergerak ke alamat yang dituju yang tidak berbeda jauh dari rumahku. ...</div>
+                <div class="item-title"><a href="/posts/dengan-janda-tetanggaku.html">Dengan Janda Tetanggaku</a></div>
+                <div class="item-snippet">Namaku rudi, usiaku 26 tahun, saya sudah berumah tangga, pas di deket rumahku tinggal seseorang wani...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiaADbPvJVQX-aD9RieZ3kvkOeiksid5J_A1WGUeQ-5FuBWgczwR_b592Ni7YncREC54pcsL-HT5YlQFM1ePz5Q2itw_MaoHYz_FwjvgE-kajmJnaUruIMznMdiDOotAGnBYGmMAfTWaeDqi2P9JkYndAO4z1cRkKwGewAxyvxJg73YeKB_PV0ir9bOQQ=w360-h640" alt="Kenalan SPG Mulus Langsung Ajak ML">
+                </a>
+                <div class="item-title"><a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">Kenalan SPG Mulus Langsung Ajak ML</a></div>
+                <div class="item-snippet">Panggil saja namaku Rezha, ini nama samaran di cerita, hhe. Statusku sekarang adalah sebagai mahasis...</div>
             </li>
         
             </ul>
