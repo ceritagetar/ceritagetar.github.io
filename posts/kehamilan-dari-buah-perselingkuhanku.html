@@ -232,6 +232,96 @@ transform: scale(1.05);
 
 
   {{ custom_js }}
+  <script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = 'Tampilkan Seluruh Cerita';
+
+  const selfClosingTags = ['img','br','hr','input','link','meta','area','base','col','embed','keygen','param','source','track','wbr'];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+    let safeCutIndex = cutIndex;
+    while (htmlString[safeCutIndex - 1] === '&' || /&[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+      safeCutIndex--;
+    }
+
+    const cutHtml = htmlString.substring(0, safeCutIndex);
+    const remainingHtml = htmlString.substring(safeCutIndex);
+
+    while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith('</')) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index > -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = '';
+    for (let i = currentOpenTags.length - 1; i >= 0; i--) {
+      closeTags += '</' + currentOpenTags[i] + '>';
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll('.post-body, .entry-content');
+  postBodies.forEach((postBody) => {
+    if (!postBody) return;
+    if (postBody.innerHTML.length < charsToDisplay) return;
+
+    const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement('details');
+    details.style.width = '100%';
+
+    const summary = document.createElement('summary');
+    summary.style.display = 'none';
+    details.appendChild(summary);
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.paddingTop = '10px';
+    hiddenDiv.innerHTML = hiddenContent;
+    details.appendChild(hiddenDiv);
+
+    const button = document.createElement('button');
+    button.textContent = summaryText;
+    button.className = 'sticky-next-button';
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+    button.addEventListener('click', () => {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener('toggle', () => {
+      if (details.open && postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener('load', initContentTruncation);
+}
+</script>
 </head>
 <body>
 <div class='garis-header'></div>
@@ -290,43 +380,43 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ6Tf9_H_tqDp9FyhnLk1B0IuL4KK6i3GwvItHSqNeIFuD8hn_TLGTpGEZi1uhGopH667pO91POij2OAyYnRu2YVCKA2PVtGuxHluNih0SYFv6Ul7VLdavuaqA8esgTDrkj-qcxOYx4BhdcBUcLKhv23fbhWYqjhyphenhyphenE74iXa8BCXHn3izX5jFHYmKVxyQ/w512-h640/Fpfaf5BaQAEodj2.jfif" alt="Merasakan Nikmatnya Tembem Milik Tante Medan">
+                <a href="/posts/swinger-dengan-tetangga.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPi4Oy__f0WksqJXd8_soUMOCbPC7QJahDsAFai4U6EhAJQq9VdCjDtIe0r4oYTTIuMO6z3RUlOVDRtFFARn38fSlTzdV12348E2z57xdD-IjdG9q806X1CTB0wQV0kIcRBA4u1NCqm3YUil5xGr0uRxaDD9MdpkLXykW4YP2FSZa13moosWI-WW0qQU8/w360-h640/b04998ab6caaf49a8e14a7a5e4e728ad.jpg" alt="Swinger Dengan Tetangga">
                 </a>
-                <div class="item-title"><a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></div>
-                <div class="item-snippet">Kisah ini terjadi ketika aku mash berumur delapanbelas tahun, murid kelas dua sekolah teknik setingk...</div>
+                <div class="item-title"><a href="/posts/swinger-dengan-tetangga.html">Swinger Dengan Tetangga</a></div>
+                <div class="item-snippet">Kurasa tidak perlu aku ceritakan tentang nama dan asalku, serta tempat dan alamatku sekarang. Usiaku...</div>
             </li>
         
             <li>
-                <a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgOD2KfR9TzX-ezPV8xk9GGUAoJ4zMgrS_SBkFNIrvvSY3T-sWTltJ-trGSlPoZAJOaE9-XA44YHY4-db8Rc_8JQ7JddYoW2iKia8oXI0c_rlc05qf5RO_FM7BqV1boL8dkA4GDoBpVkP5nLZ2BD2wNi0Ny_BJB9yfhZZkYB9hZlN17gfBHvLPDtuutwQ=w312-h640" alt="Atasan Cantik Mengerang Mendesah Meronta">
+                <a href="/posts/ttm-tetangga-tapi-mesra.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5YYyY0PNpYBWxVlAfCXRtIZt7jk0clVXpinzbySwlRppWBLZFQpX4DVFhA7AJ9hngy8sLg5SBsdPkSgGrDX2M5Y6YlLgE3affnPSH5RqjoCxhH74qu20KVi0SQqvhyphenhyphenI_sfraPz8ZEpUsnbq1SIRYoCjqFda0N8_ePq1zTWzw9tnBVk3OSdynvDU-x_1Q/w530-h640/402471024_122101596746114252_6436866729946603286_n.jpg" alt="TTM ( Tetangga Tapi Mesra )">
                 </a>
-                <div class="item-title"><a href="/posts/atasan-cantik-mengerang-mendesah-meronta.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
-                <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
+                <div class="item-title"><a href="/posts/ttm-tetangga-tapi-mesra.html">TTM ( Tetangga Tapi Mesra )</a></div>
+                <div class="item-snippet">Inti pertengkaran itu adalah kecurigaan dan kecemburuan Linda terhadap suaminya yang selalu pulang k...</div>
             </li>
         
             <li>
-                <a href="/posts/aku-dijadikan-selingkuhan-supir-pribadiku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghkhWFDQmHq6Q_4swCcjn3sBcnyQC4tvHAWMEN20Vj8y5FH3pYKpUaBEX9sBKBhkjkpdT85Xh1f4Z9c-oHdsIGc8jUQsXRrEujkcOjBnIUIYg2OWBLRyhIezserK2IrG_NvCGv5h7LyTZdVtc9SGaVwx_puDQaFmALxOU26BCl3ujDdAlPBaVDHRBQtw/w512-h640/3c2301d6b56d9d64e031ce5b9b92594b.jpg" alt="Aku Dijadikan Selingkuhan Supir Pribadiku">
+                <a href="/posts/terobsesi-dengan-mama-terpuaskan-oleh-kakak.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjMtpKQLtnCADr8-_yWaC39cplw2XQee717dA1gKOuJ1LGBr6L2SbRGdyGeuUZpn3hQw2ZaDb3Mrqk3sYsSGrDZ2O6Xgxn-ZlJemQOSo2AL8ynNm14zb9IizQCnDbKhGnHAha2v66VDSZJ5BBhEnigK-e39QUp4MeUVmmV4l8QTT44FIrQp6BPKlymP=w325-h400" alt="Terobsesi Dengan Mama Terpuaskan Oleh Kakak">
                 </a>
-                <div class="item-title"><a href="/posts/aku-dijadikan-selingkuhan-supir-pribadiku.html">Aku Dijadikan Selingkuhan Supir Pribadiku</a></div>
-                <div class="item-snippet">Kisah ini terjadi ketika aku masih SMU, ketika umurku masih 18 tahun, waktu itu rambutku masih panja...</div>
+                <div class="item-title"><a href="/posts/terobsesi-dengan-mama-terpuaskan-oleh-kakak.html">Terobsesi Dengan Mama Terpuaskan Oleh Kakak</a></div>
+                <div class="item-snippet">Cerita ini adalah cerita yang benar-benar terjadi. Tapi nama-nama dalam cerita ini terpaksa kusamark...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-kakak-kembar-kak-rina-dan-kak-rani.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW9jqxnUcpEStZsqj91LgU7tDCGypCNjLIySzUOnqFksyl8MS2ohO9Dq32nl8dCDOKP0H9e4aJH0CXsGSSDz9ATyTRnsvS429o6iCD9C09tQtsMZXTeT_9UpdW2eN7GCi9VtqZvtfbt0Lc2wVpnrt5IlUNplICPa3apPwwiPDoITvirz418xmfMgG4Tw/w328-h640/8a690c1d05dd20eead9a0603e0bb0118.jpg" alt="NIkmatnya Kakak Kembar Kak Rina dan Kak Rani">
+                <a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSVw9GhyyvXusaOALaLNI2CpUZydm0xMj_0CsoBZJPij2c9J3yvfEKo_2IV0SN9I3xX_a3ELjWDl84VyjR0XFv8OGoM8RnOd_9Vm45redqTvlFA7_v0D7bWXIi5-sMHimLHxjojcfwLPrHgdZU7L_m-a7aHlarxGhQducTaAsH1fXwvSZAoo4z3yffBw=w360-h640" alt="Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-kakak-kembar-kak-rina-dan-kak-rani.html">NIkmatnya Kakak Kembar Kak Rina dan Kak Rani</a></div>
-                <div class="item-snippet">Perpisahan yang sungguh berat, terutama bagiku; mungkin bagi tante U, hal itu sudah biasa karena hub...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal.html">Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal</a></div>
+                <div class="item-snippet">Fina di sekolahny termasuk gadis, cewek yang sangat populer karena kecantikan dan kemolekan tubuhnya...</div>
             </li>
         
             <li>
-                <a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
+                <a href="/posts/menikmati-bibiku-yang-sedang-tertidur.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjyuSi0SM9DyGJK0m0ZwblgPzgQ0NaIbG5gpqKMyX7QcpKPSVrJFYT6qR2w2wn1OkMTOD3cQdMa7as611xLOHt0w8YXYi5623ngz-cOnFmqY3yfQNFAQLW_TngYdPghhjIufT7INPkqTAf96sq--i9L4XBX50jzl0MppEvZs2516MlA4-8Sot7UVSdWYg=w512-h640" alt="Menikmati Bibiku yang Sedang Tertidur">
                 </a>
-                <div class="item-title"><a href="/posts/kisah-perselingkuhan-dengan-supir-pribadiku.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
-                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
+                <div class="item-title"><a href="/posts/menikmati-bibiku-yang-sedang-tertidur.html">Menikmati Bibiku yang Sedang Tertidur</a></div>
+                <div class="item-snippet">Kulihat bibi tidur tidak berselimut, karena biarpun kamar bibi memakai AC, tapi kelihatan AC-nya dia...</div>
             </li>
         
             </ul>

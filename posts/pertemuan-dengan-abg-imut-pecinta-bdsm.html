@@ -232,6 +232,96 @@ transform: scale(1.05);
 
 
   {{ custom_js }}
+  <script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = 'Tampilkan Seluruh Cerita';
+
+  const selfClosingTags = ['img','br','hr','input','link','meta','area','base','col','embed','keygen','param','source','track','wbr'];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+    let safeCutIndex = cutIndex;
+    while (htmlString[safeCutIndex - 1] === '&' || /&[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+      safeCutIndex--;
+    }
+
+    const cutHtml = htmlString.substring(0, safeCutIndex);
+    const remainingHtml = htmlString.substring(safeCutIndex);
+
+    while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith('</')) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index > -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = '';
+    for (let i = currentOpenTags.length - 1; i >= 0; i--) {
+      closeTags += '</' + currentOpenTags[i] + '>';
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll('.post-body, .entry-content');
+  postBodies.forEach((postBody) => {
+    if (!postBody) return;
+    if (postBody.innerHTML.length < charsToDisplay) return;
+
+    const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement('details');
+    details.style.width = '100%';
+
+    const summary = document.createElement('summary');
+    summary.style.display = 'none';
+    details.appendChild(summary);
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.paddingTop = '10px';
+    hiddenDiv.innerHTML = hiddenContent;
+    details.appendChild(hiddenDiv);
+
+    const button = document.createElement('button');
+    button.textContent = summaryText;
+    button.className = 'sticky-next-button';
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+    button.addEventListener('click', () => {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener('toggle', () => {
+      if (details.open && postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener('load', initContentTruncation);
+}
+</script>
 </head>
 <body>
 <div class='garis-header'></div>
@@ -290,43 +380,43 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/kehamilan-dari-buah-perselingkuhanku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjCaofiyGCsA_kfL-08vXMSQ2H0OvnfKpxgezcbEbrEnSQh7bjGbZn44xNNqHJlxTHpNQJr2w2VXIILqVoxc8ro1W7hADlWDfcuM2lmbnyOTkqgAhgJf-pNmQ5wJP2wpHUAooFdixlI1bZLuV2Vg6KBkDk0ZDYC4VmYCuMALvHsQ8ZvO9U2liNtXZFZ=w250-h400" alt="Kehamilan Dari Buah Perselingkuhanku">
+                <a href="/posts/perselingkuhan-yang-romantis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
                 </a>
-                <div class="item-title"><a href="/posts/kehamilan-dari-buah-perselingkuhanku.html">Kehamilan Dari Buah Perselingkuhanku</a></div>
-                <div class="item-snippet">Sebagai wanita muda saya merasa kesepian karena ditinggal oleh suami yang sering bertugas ke luar ko...</div>
+                <div class="item-title"><a href="/posts/perselingkuhan-yang-romantis.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
             </li>
         
             <li>
-                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
+                <a href="/posts/menikmati-ratih-adikku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
                 </a>
-                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
-                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
+                <div class="item-title"><a href="/posts/menikmati-ratih-adikku.html">Menikmati Ratih Adikku</a></div>
+                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-jadi-pasutri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQYZ9rZ-x_0RMCedPF9Ttg8ptoY3uWYqQw7WclGGYCsI2ymOU_t_gc-tBzpu6nIAwgrY689TuiRxKtSvOFk3B-YEfoyAK9QMgjUNgtXq07V2FAui6WegZsEelI9jUtOP1X1OlbFVZzVRGviLjw5dzL3ZL0n9KvrF7Ow72deXh6ZbwrNnk_0NA4ETDedA/w640-h640/4739e31722cb783bd29379ba7f374e23.jpg" alt="Nikmatnya Jadi Pasutri">
+                <a href="/posts/tante-lin.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhU-qclQZGVAvmJ-CQ6LMWZBS9brFqIX1zgrSV9Pz3qcooROOoJ6WHqxvBGbK5nIAzl0ywA4eAQJ-ZoFLWv4QNglf-lO0Zx2y09OVKt_1LC2m7CgMt00zHaT-iDQyuKK6k9UYQvrYe0ssq248bUttYnMy4iX84w_9HxiujrKtGhRN6_I39_fIxZjWAh2NY/w512-h640/33f64aadfc335c32b131f5129ad4b43e.jpg" alt="Tante Lin">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-jadi-pasutri.html">Nikmatnya Jadi Pasutri</a></div>
-                <div class="item-snippet">Setelah makan langsung saja aku melepas pakaian dalamku dan aku taruh ke tempat pakaian kotor mungki...</div>
+                <div class="item-title"><a href="/posts/tante-lin.html">Tante Lin</a></div>
+                <div class="item-snippet">Dia sebenarnya sering sekali datang ke Jakarta, dan memang mempunyai sebuah rumah jakarta, serta mem...</div>
             </li>
         
             <li>
-                <a href="/posts/terlalu-polos-mengenal-seks.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5-8lPlH5Md7L8P_8L3suUrJvbFdCZGxslPyz_mIa3uP6ze9zGb9gF6qJpkTcUdHd6ZniNoVr7v1wJmVaj59vKgw0ts-80KyBlUgEZRS476MYiBzQ65D2kIHo-_1pKS_wpZNSDGVXHVA19RlVn0PW6E_NGPtL_1993lNsXBCShMsg_J-opXUkBhzpv9Q/w516-h640/fb7dc63dc311938bb6f01f0fe5d896f6.jpg" alt="Terlalu Polos Mengenal Seks">
+                <a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhSZiVbxmvxVkLdrwHP1eHg-tpTi9LCQkaIG4RmrRYA05Z9QZXPHyFztBStNBB-nOetUPWAvcS7qZz5-x1ZjJTPdZBv6IpP2EZ-PmlJ1A6Q3shijFSB2ehG16uQVU9Cpdq8g2uVTuhxZd-VlnEa-kBWeFdW5XTKIN6CkllB3FXtrDJFswDE7CIdU-xt6eo/w636-h640/274872396_101414635835486_2310638241744908863_n.jpg" alt="Di Ajari Meraih Kenikmatan Dengan Tante Yosi">
                 </a>
-                <div class="item-title"><a href="/posts/terlalu-polos-mengenal-seks.html">Terlalu Polos Mengenal Seks</a></div>
-                <div class="item-snippet">Namaku adalah Andi (bukan nama yang sebenarnya), dan aku kuliah di salah satu universitas swasta di ...</div>
+                <div class="item-title"><a href="/posts/di-ajari-meraih-kenikmatan-dengan-tante-yosi.html">Di Ajari Meraih Kenikmatan Dengan Tante Yosi</a></div>
+                <div class="item-snippet">Cerita ini adalah sebuah pengalaman saya yang terjadi sekitar 1 tahun yang lalu. Ini adalah pengalam...</div>
             </li>
         
             <li>
-                <a href="/posts/selingkuh-sama-cewek-smp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgwF4eGujFrKGjTSxnwjOurQIuole_2mBtuMORBwhvVXHaGtibZo7vFyiGaxOUzj7p4moU3pX0_n5E8Gzb53dD-lLx-AO_BVB9bTdPsMv1nkrfT6I_nrCG3eUT3m1vQWWBjSpJqkfWAiQLCpb-oByRgnOSW0IJnjii78vC99ctWBcOzDJA1tKgAwa7lCw=w483-h640" alt="Selingkuh Sama Cewek SMP">
+                <a href="/posts/cewek-impianku-adalah-lontenya-papaku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhQQHXafH63ZIe_Z28dBvsE9nKQR_6aRPyMB9i_B6DVAcqkKgE18rCo94PVabyGIrUNkFXxHkq5e-lnf7oG7BEcwQgDVcIV_QzJR3LHi4iH8efatgymPM6V78jH_zrx6A5bb3GtIjQySmMb-cHdsxbbdcmt-Q5F8XRlVK-1REKWGzTyMIAg2rOhExJnTQ=w531-h640" alt="Cewek Impianku adalah Lontenya Papaku">
                 </a>
-                <div class="item-title"><a href="/posts/selingkuh-sama-cewek-smp.html">Selingkuh Sama Cewek SMP</a></div>
-                <div class="item-snippet">Tanpa banyak tanya saya segera bergerak ke alamat yang dituju yang tidak berbeda jauh dari rumahku. ...</div>
+                <div class="item-title"><a href="/posts/cewek-impianku-adalah-lontenya-papaku.html">Cewek Impianku adalah Lontenya Papaku</a></div>
+                <div class="item-snippet">Yang menarik adalah penghuni kostnya salah satunya adalah mbak marisa , dari semua penghuni kost dis...</div>
             </li>
         
             </ul>

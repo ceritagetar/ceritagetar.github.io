@@ -232,6 +232,96 @@ transform: scale(1.05);
 
 
   {{ custom_js }}
+  <script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = 'Tampilkan Seluruh Cerita';
+
+  const selfClosingTags = ['img','br','hr','input','link','meta','area','base','col','embed','keygen','param','source','track','wbr'];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+    let safeCutIndex = cutIndex;
+    while (htmlString[safeCutIndex - 1] === '&' || /&[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+      safeCutIndex--;
+    }
+
+    const cutHtml = htmlString.substring(0, safeCutIndex);
+    const remainingHtml = htmlString.substring(safeCutIndex);
+
+    while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith('</')) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index > -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = '';
+    for (let i = currentOpenTags.length - 1; i >= 0; i--) {
+      closeTags += '</' + currentOpenTags[i] + '>';
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll('.post-body, .entry-content');
+  postBodies.forEach((postBody) => {
+    if (!postBody) return;
+    if (postBody.innerHTML.length < charsToDisplay) return;
+
+    const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement('details');
+    details.style.width = '100%';
+
+    const summary = document.createElement('summary');
+    summary.style.display = 'none';
+    details.appendChild(summary);
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.paddingTop = '10px';
+    hiddenDiv.innerHTML = hiddenContent;
+    details.appendChild(hiddenDiv);
+
+    const button = document.createElement('button');
+    button.textContent = summaryText;
+    button.className = 'sticky-next-button';
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+    button.addEventListener('click', () => {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener('toggle', () => {
+      if (details.open && postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener('load', initContentTruncation);
+}
+</script>
 </head>
 <body>
 <div class='garis-header'></div>
@@ -290,43 +380,43 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/terlalu-polos-mengenal-seks.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5-8lPlH5Md7L8P_8L3suUrJvbFdCZGxslPyz_mIa3uP6ze9zGb9gF6qJpkTcUdHd6ZniNoVr7v1wJmVaj59vKgw0ts-80KyBlUgEZRS476MYiBzQ65D2kIHo-_1pKS_wpZNSDGVXHVA19RlVn0PW6E_NGPtL_1993lNsXBCShMsg_J-opXUkBhzpv9Q/w516-h640/fb7dc63dc311938bb6f01f0fe5d896f6.jpg" alt="Terlalu Polos Mengenal Seks">
+                <a href="/posts/perselingkuhan-yang-romantis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
                 </a>
-                <div class="item-title"><a href="/posts/terlalu-polos-mengenal-seks.html">Terlalu Polos Mengenal Seks</a></div>
-                <div class="item-snippet">Namaku adalah Andi (bukan nama yang sebenarnya), dan aku kuliah di salah satu universitas swasta di ...</div>
+                <div class="item-title"><a href="/posts/perselingkuhan-yang-romantis.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
             </li>
         
             <li>
-                <a href="/posts/belajar-sama-tante-erni-yang-cantik.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIq9mu57bDmFR6L2VBsxGcRdmJJE0BRZMFC_R7ZOpANOaU47SXBUPZ__nCz52An5sHgq7_O_0h21--JpDyLnnaZIJN4l_-vGQCFAjbQKkHACJhqZ0YSzJB4ojzE8Zz1kULLrF4x3q32f3ZzEedoxTql2O9FPfMmqxHw-Zr0Z6msdxWO8U8RX_1jXkVOC0" alt="Belajar sama Tante Erni yang cantik">
+                <a href="/posts/nikmatnya-abg-binal.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJvTVjh1QWv8Hb1vM1GkOsllZNQWD8znAQ7nMctuKr1Zwtv24ZdR9aEC2ecT4ivgaBg6Jz0qjVrB59dZXVacaVS-1wak6UwWGI3znqLuyVEO1xaFlwXkELOm5PdjOXbA3UFT30IaWoi2BTeW8JFOsejcwAYngWirPQJ91XmKdRX4fuTFu_0DagsE_ngUU/w448-h640/FtFR-m9aMAAkxOl.jpg" alt="Nikmatnya ABG Binal">
                 </a>
-                <div class="item-title"><a href="/posts/belajar-sama-tante-erni-yang-cantik.html">Belajar sama Tante Erni yang cantik</a></div>
-                <div class="item-snippet">Insiden ini berlangsung saat saya kelas 3 SMA, yah saya prediksikan usia saya saat itu barusan 14 ta...</div>
+                <div class="item-title"><a href="/posts/nikmatnya-abg-binal.html">Nikmatnya ABG Binal</a></div>
+                <div class="item-snippet">Aku biasa di panggil Gilang dan aku memang di kenal sebagai cowok yang tidak suka sama cewek bispak....</div>
             </li>
         
             <li>
-                <a href="/posts/belenggu-rindu-yang-tertahan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZwduN7P8Moay3nkU2OxTM6rLsexjRLW9WdaynlK4DLu9ChAGT8DcUHze1kGHut-zFd1LvSUTEkzTyZFURi55-1JgNzXZqjuJdytLtzHmiv87TNzmPLEu3IsceU5Stvj9YQfSqXY0l6q4PyWFUMtNysu7sz7OFYfRX82AiTKYUpiPJFu96dmHF_TARCg/w512-h640/395484066_122135340620028015_337979339352738165_n.jpg" alt="Belenggu Rindu Yang Tertahan">
+                <a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGA-5FAhErCLAdm1PrxtXwxjRcvjcpxddzqanZjChNxaC0Besvl7McU5bhwTnSV6UsQKKydJezx7esT-MHfizeTa5JfHbJiaYbasSiaECrx4X3RbtPVGq8QdNq6dltYdBzn3FP1LL9E7115c_axOH4uunoUbXuoh08jq3pDIqwTghJU3IAmEsmebUmxQ/w512-h640/ad52d218ce77f20f1b0f7dd75e5757ee.jpg" alt="Diperkosa Teman Suamiku Tapi Aku Menikmatinya">
                 </a>
-                <div class="item-title"><a href="/posts/belenggu-rindu-yang-tertahan.html">Belenggu Rindu Yang Tertahan</a></div>
-                <div class="item-snippet">Siang itu di sebuah rumah yang cukup asri, seorang gadis yang berambut panjang terurai dengan raut w...</div>
+                <div class="item-title"><a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">Diperkosa Teman Suamiku Tapi Aku Menikmatinya</a></div>
+                <div class="item-snippet">Dengan pendidikan yang dan nilai nilai selalu memuaskan dimana aku lulus dengan nilai IP yang bisa d...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEi8NUfX8BDGCuTsYTQWIddWLjTPuBtHiYsIJKKG1Ahpr-_3YuXGmMbZJPezcYMjIUsp5QKra6rK8PdfJigBAOYq6D5RHE6e0-cBbfg3mIEoHvZSaumblvpJF7ZMiPm0Mey6tkXKvF2_KWPrn_aEosGe2J_cH921g87PtHDqM_vGXpe4AXmkJTXywT1X_Q=w512-h640" alt="Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku">
+                <a href="/posts/bercinta-dengan-adik-kandung.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEigsT7nzY6VSPFGkFAvIgE7qATBQL7_VWBcxp5uG_w14c03ZXDwClgQNsBQWznHAvfx9_ib3oEtog4utBUb_PLyRAd-F-WEC6o6uDvXm89jbciTAd3OJjSdKjelw_v8lz-asMzmCNYiV9crM45KjcX3XprEtX37bpKTPNQRnwk1y4HqCQIzHl5bjULB" alt="Bercinta Dengan Adik Kandung">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku.html">Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku</a></div>
-                <div class="item-snippet">Om Toto, begitu aku memanggilnya, adalah seorang purnawirawan ABRI yang cukup berpengaruh, kini ia m...</div>
+                <div class="item-title"><a href="/posts/bercinta-dengan-adik-kandung.html">Bercinta Dengan Adik Kandung</a></div>
+                <div class="item-snippet">Namaku Ani, mahasiswi tingkat tiga di sebuah perguruan tinggi negeri di Bandung. Aku dan saudaraku e...</div>
             </li>
         
             <li>
-                <a href="/posts/teman-curhat-yang-nikmat.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRonnz-sNxxIYX3VMWrTxjMQB4ZNycbboOQvWHgkrkSJr0vnpiVymapv8f5QM8d2X8SU1N3f8YeKRqM2I1yJw8HiNdS_Q0HxQuUY0J7r1gpqu4BnlcnrQFCAcYq0GGkBJ3wJGGPR8qNUg-_hXWQ6D7XLNIhu-0BLFL2j3DrCJ0naQpK-JJdLs5za1aazA/w570-h640/35c16b43eca66effa8543a046df9d944.jpg" alt="Teman Curhat Yang Nikmat">
+                <a href="/posts/kakak-ku-yang-baik-hati.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiNZmyNO7T5MWyEtGrkLfitHhU9dL3vYkDvEy9e3OpvP2ktjdXyexexVGeG_Li2kW3OcI3GuCUawC1SkeP0KQbOapmBgdFVd2cj7wUyQZQw4810g1NY35A59R6csPwnqg082u7Kn8u_tnjuawvqKdpJB6oCcNQduqSYycpO3_gPMAvCq7n7EXyZRQpV3Q=w360-h640" alt="Kakak ku yang Baik Hati">
                 </a>
-                <div class="item-title"><a href="/posts/teman-curhat-yang-nikmat.html">Teman Curhat Yang Nikmat</a></div>
-                <div class="item-snippet">Pertemuan itu sendiri terjadi di internet cafe, yang kebetulan saat itu aku sedang mengetik beberapa...</div>
+                <div class="item-title"><a href="/posts/kakak-ku-yang-baik-hati.html">Kakak ku yang Baik Hati</a></div>
+                <div class="item-snippet">Kenalkan, nama saya Boy, teman-teman biasa memanggilku Mas Boy. Saya seorang pemuda berusia 25 tahun...</div>
             </li>
         
             </ul>

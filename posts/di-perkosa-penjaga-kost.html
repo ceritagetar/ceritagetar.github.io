@@ -232,6 +232,96 @@ transform: scale(1.05);
 
 
   {{ custom_js }}
+  <script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = 'Tampilkan Seluruh Cerita';
+
+  const selfClosingTags = ['img','br','hr','input','link','meta','area','base','col','embed','keygen','param','source','track','wbr'];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+    let safeCutIndex = cutIndex;
+    while (htmlString[safeCutIndex - 1] === '&' || /&[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+      safeCutIndex--;
+    }
+
+    const cutHtml = htmlString.substring(0, safeCutIndex);
+    const remainingHtml = htmlString.substring(safeCutIndex);
+
+    while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith('</')) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index > -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = '';
+    for (let i = currentOpenTags.length - 1; i >= 0; i--) {
+      closeTags += '</' + currentOpenTags[i] + '>';
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll('.post-body, .entry-content');
+  postBodies.forEach((postBody) => {
+    if (!postBody) return;
+    if (postBody.innerHTML.length < charsToDisplay) return;
+
+    const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement('details');
+    details.style.width = '100%';
+
+    const summary = document.createElement('summary');
+    summary.style.display = 'none';
+    details.appendChild(summary);
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.paddingTop = '10px';
+    hiddenDiv.innerHTML = hiddenContent;
+    details.appendChild(hiddenDiv);
+
+    const button = document.createElement('button');
+    button.textContent = summaryText;
+    button.className = 'sticky-next-button';
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+    button.addEventListener('click', () => {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener('toggle', () => {
+      if (details.open && postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener('load', initContentTruncation);
+}
+</script>
 </head>
 <body>
 <div class='garis-header'></div>
@@ -290,43 +380,43 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/liburan-nikmat-bersama-istri-teman.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEh_cnIt0irc16RyCtw1g1ZQkiNPFI_Z2MYU2vq0gLwjFt7sYOTIrJtvgT4JJm9PznA6GbQuxoU-H1v3rl-rAMi6DK-mxTTn0EtP51MmH5vEmbn5VJerq5Alt1SZe2-pOOU84ZU8hIsmGJql1LUb2Io_cw9j1eYwQhETAjvkFuFIHj2frUbosDzTpD5udg=w573-h640" alt="Liburan Nikmat Bersama Istri Teman">
+                <a href="/posts/nikmatnya-istri-legitnya-adik-ipar.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjWPGuUYS5Qy08_Sf3e-qJxjoUS78xwrkEWBM1Z1HLPvOnuUgAwH7_rD_m_EWIo-5fz3La5mMOY9bgL7ZT-FjB6DjFyjdGCKnLI_NftKzXuXTWdDaFyvxD8qc9dZML2xH7zjsmhIAn15Ijcpy-R5h5PEiZbW1mPbLygkHg7-Dd3hFeo-DE-kfgkKTy0=w515-h640" alt="Nikmatnya istri, legitnya adik ipar">
                 </a>
-                <div class="item-title"><a href="/posts/liburan-nikmat-bersama-istri-teman.html">Liburan Nikmat Bersama Istri Teman</a></div>
-                <div class="item-snippet">Keliatan bukan Ratih yang tadi malam aku temui. Aku tersenyum melihat penampilannya yang tomboy itu....</div>
+                <div class="item-title"><a href="/posts/nikmatnya-istri-legitnya-adik-ipar.html">Nikmatnya istri, legitnya adik ipar</a></div>
+                <div class="item-snippet">Panggil saja namaku Abi, aku berumur 27 tahun, aku adalah seorang direktur perusahaan swasta di Kend...</div>
             </li>
         
             <li>
-                <a href="/posts/tetangga-kontrakan-stw.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjDb5V6kdskwlZGDjCXT0P02b1CkgtUnRLVGhOthESwXswqV56NgWWA5nlCtsGGnCq8JbCF823Vr123_2Bmn81gkv5y7iCNOcnH_fmuDBcLuQXJk0jxJG51RKwR4nbNSLWRQO_Y7OWgB-VEX0BQPgBx7Zjx8qv2K6Aq08X7PNKzAdHpb3bGL-oPFIH7" alt="Tetangga Kontrakan STW">
+                <a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFEpPrmmvjduZfUygCf8E_9fPUZOFN7Rx0h7-LKv5C-ksl1jnfBLFhad3uTPttGe6Y9a7aTQWPmS6cevh8-Sfv1kHZkltdSFqLY1ZXCWtkh2sxicG-hU5aznjNL4-irl4S3wjK92BE8xYTg_28ygEephO2vzzBEcHZmBOdv0XZU5EH06AqfYkHb_zbdN8/w512-h640/c509ea9d93278f47c0aa1fc1af3d8fe2.jpg" alt="Awal Perselingkuhan Dengan Teman Istriku">
                 </a>
-                <div class="item-title"><a href="/posts/tetangga-kontrakan-stw.html">Tetangga Kontrakan STW</a></div>
-                <div class="item-snippet">Kejadian ini berlangsung di tahun 2011. saya baru saja kena PHK di tempat kerja saya yang berkantor ...</div>
+                <div class="item-title"><a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">Awal Perselingkuhan Dengan Teman Istriku</a></div>
+                <div class="item-snippet">Peristiwa ini sebenarnya tak pernah kuduga sebelumnya, mengingat Bu Evi (teman istriku) tidak menamp...</div>
             </li>
         
             <li>
-                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
+                <a href="/posts/bercinta-dengan-adik-kandung.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEigsT7nzY6VSPFGkFAvIgE7qATBQL7_VWBcxp5uG_w14c03ZXDwClgQNsBQWznHAvfx9_ib3oEtog4utBUb_PLyRAd-F-WEC6o6uDvXm89jbciTAd3OJjSdKjelw_v8lz-asMzmCNYiV9crM45KjcX3XprEtX37bpKTPNQRnwk1y4HqCQIzHl5bjULB" alt="Bercinta Dengan Adik Kandung">
                 </a>
-                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
-                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
+                <div class="item-title"><a href="/posts/bercinta-dengan-adik-kandung.html">Bercinta Dengan Adik Kandung</a></div>
+                <div class="item-snippet">Namaku Ani, mahasiswi tingkat tiga di sebuah perguruan tinggi negeri di Bandung. Aku dan saudaraku e...</div>
             </li>
         
             <li>
-                <a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiaADbPvJVQX-aD9RieZ3kvkOeiksid5J_A1WGUeQ-5FuBWgczwR_b592Ni7YncREC54pcsL-HT5YlQFM1ePz5Q2itw_MaoHYz_FwjvgE-kajmJnaUruIMznMdiDOotAGnBYGmMAfTWaeDqi2P9JkYndAO4z1cRkKwGewAxyvxJg73YeKB_PV0ir9bOQQ=w360-h640" alt="Kenalan SPG Mulus Langsung Ajak ML">
+                <a href="/posts/bersetubuh-dengan-adik-kandung-sendiri.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYH1uirVEH45pXyalLZGS_ekL5Nbt-GhdHs5M3i1MJZzi7vTwiXJK2g_D4ZXBLuYywK0SW0yTdX-kMWcbRIYdIQcZNLgnXUiu59KsA2KZjQNoT3tOP0UtyNpUPkVAGKRK_zgYDZheZMREzcsm4M8BJ-Q9M4mfyLxBbBzEP18PgS_VkPkhTfU_BKWUpYA/w480-h640/zzzz.png" alt="Bersetubuh Dengan Adik Kandung Sendiri">
                 </a>
-                <div class="item-title"><a href="/posts/kenalan-spg-mulus-langsung-ajak-ml.html">Kenalan SPG Mulus Langsung Ajak ML</a></div>
-                <div class="item-snippet">Panggil saja namaku Rezha, ini nama samaran di cerita, hhe. Statusku sekarang adalah sebagai mahasis...</div>
+                <div class="item-title"><a href="/posts/bersetubuh-dengan-adik-kandung-sendiri.html">Bersetubuh Dengan Adik Kandung Sendiri</a></div>
+                <div class="item-snippet">Namaku Mona, umurku 24 tahun, aku sudah menikah dan mempunyai satu anak lelaki. Berikut ini aku ingi...</div>
             </li>
         
             <li>
-                <a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSZwh5b-t9bh2idA9VyW2TNCMk0Pw9OBmwexZtH_bS6uVL8i80ipF9NjL7zKfOFZgYPKlV3B1tg7ZKVrqLGF6RJcbEj32ji4Uo9R-j-xUH0NquGq8VzHgI8b81DpWIV7RstNXvDSCKUUQf2vg6DMljV6FDiS_FWCI0BhY_iXoRp3COCn-FMyYvFZ166A=w512-h640" alt="Birahi Kakak Iparku Yang Sangat Liar">
+                <a href="/posts/gadis-genit-itu-nikmat.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhhvnjUad66WGmcLzs2TeUq7Uv3S1DY_6SwKMblXf1t_4aKzpElVhXeogvoWr8XzA1SW50mpFoRCjTiC14MhGfpuj5DzsxQBbeYXwrHUCUSOwaxPBnAs6cA8EmzOmWQT1A8Um-0-gw5h1NItgVxru_EcBDj-O07fFguAfHUnhfVfCxGfC5HaWhnxL2APA/w360-h640/d5faab2bc79c54ec54735296f198a3fd.jpg" alt="Gadis Genit Itu Nikmat">
                 </a>
-                <div class="item-title"><a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">Birahi Kakak Iparku Yang Sangat Liar</a></div>
-                <div class="item-snippet">Memang benar kalau kata kaum hawa, lelaki itu memang buaya darat, dan tidak pernah puas dengan 1 pas...</div>
+                <div class="item-title"><a href="/posts/gadis-genit-itu-nikmat.html">Gadis Genit Itu Nikmat</a></div>
+                <div class="item-snippet">Ironisnya, aku mempunyai hasrat seks yang tinggi, aku mudah terangsang bila melihat cewek yang bagik...</div>
             </li>
         
             </ul>

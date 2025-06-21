@@ -232,6 +232,96 @@ transform: scale(1.05);
 
 
   {{ custom_js }}
+  <script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = 'Tampilkan Seluruh Cerita';
+
+  const selfClosingTags = ['img','br','hr','input','link','meta','area','base','col','embed','keygen','param','source','track','wbr'];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /<\/?([a-z][a-z0-9]*)\b[^>]*>/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+    let safeCutIndex = cutIndex;
+    while (htmlString[safeCutIndex - 1] === '&' || /&[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+      safeCutIndex--;
+    }
+
+    const cutHtml = htmlString.substring(0, safeCutIndex);
+    const remainingHtml = htmlString.substring(safeCutIndex);
+
+    while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith('</')) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index > -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = '';
+    for (let i = currentOpenTags.length - 1; i >= 0; i--) {
+      closeTags += '</' + currentOpenTags[i] + '>';
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll('.post-body, .entry-content');
+  postBodies.forEach((postBody) => {
+    if (!postBody) return;
+    if (postBody.innerHTML.length < charsToDisplay) return;
+
+    const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement('details');
+    details.style.width = '100%';
+
+    const summary = document.createElement('summary');
+    summary.style.display = 'none';
+    details.appendChild(summary);
+
+    const hiddenDiv = document.createElement('div');
+    hiddenDiv.style.paddingTop = '10px';
+    hiddenDiv.innerHTML = hiddenContent;
+    details.appendChild(hiddenDiv);
+
+    const button = document.createElement('button');
+    button.textContent = summaryText;
+    button.className = 'sticky-next-button';
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+    button.addEventListener('click', () => {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener('toggle', () => {
+      if (details.open && postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener('load', initContentTruncation);
+}
+</script>
 </head>
 <body>
 <div class='garis-header'></div>
@@ -290,27 +380,19 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/skandal-perselingkuhan-lewat-hp.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9gfcyWViRl0zYA-GGZRFOlk4RqLdHqhF8vZ2EJ1aawu1SiZ5npggJAzo3PmH8MLAatLaCyDjrv1y1-Ci6Sg9dLMy5wplRy-fi-DXeIDrtmVEm6hjbX9BJrfB7Mj4Z5kczGZbjhNBYWhleyJg3YrqG0uWbK0aa9Jq3bDiCByf_0iiQDaLhkrKFnFMHI_c/w426-h640/2c6abd0276aa12c7e20e42c44a193d9d.jpg" alt="Skandal Perselingkuhan Lewat Hp">
+                <a href="/posts/perselingkuhan-yang-romantis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
                 </a>
-                <div class="item-title"><a href="/posts/skandal-perselingkuhan-lewat-hp.html">Skandal Perselingkuhan Lewat Hp</a></div>
-                <div class="item-snippet">Malam dingin dan sedikit rintik2 hujan tapi aku tetap saja membawa motor ku ke jalan untuk menjemput...</div>
+                <div class="item-title"><a href="/posts/perselingkuhan-yang-romantis.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
             </li>
         
             <li>
-                <a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGA-5FAhErCLAdm1PrxtXwxjRcvjcpxddzqanZjChNxaC0Besvl7McU5bhwTnSV6UsQKKydJezx7esT-MHfizeTa5JfHbJiaYbasSiaECrx4X3RbtPVGq8QdNq6dltYdBzn3FP1LL9E7115c_axOH4uunoUbXuoh08jq3pDIqwTghJU3IAmEsmebUmxQ/w512-h640/ad52d218ce77f20f1b0f7dd75e5757ee.jpg" alt="Diperkosa Teman Suamiku Tapi Aku Menikmatinya">
+                <a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiSZwh5b-t9bh2idA9VyW2TNCMk0Pw9OBmwexZtH_bS6uVL8i80ipF9NjL7zKfOFZgYPKlV3B1tg7ZKVrqLGF6RJcbEj32ji4Uo9R-j-xUH0NquGq8VzHgI8b81DpWIV7RstNXvDSCKUUQf2vg6DMljV6FDiS_FWCI0BhY_iXoRp3COCn-FMyYvFZ166A=w512-h640" alt="Birahi Kakak Iparku Yang Sangat Liar">
                 </a>
-                <div class="item-title"><a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">Diperkosa Teman Suamiku Tapi Aku Menikmatinya</a></div>
-                <div class="item-snippet">Dengan pendidikan yang dan nilai nilai selalu memuaskan dimana aku lulus dengan nilai IP yang bisa d...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/dipaksa-melayani-ayak-saat-sedang-hamil.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEju_jr1oIZBbivTbBOMlSUbS9b7rhxlhFrlsLov5UI8aX_zplj_IqySG1Qx4YwlFnkavCLpy5dG3f4A_LUzydU3KvytPnOvYigjxJcrFxnj9kZumcYBt-KBieX2KYpGpMiLNBMNfKSz82Wj-s93ZsI5yvLhMyWaKF4O9r3FQGz4tH938zxbFMuQumUN=w225-h400" alt="Dipaksa Melayani Ayak Saat Sedang Hamil">
-                </a>
-                <div class="item-title"><a href="/posts/dipaksa-melayani-ayak-saat-sedang-hamil.html">Dipaksa Melayani Ayak Saat Sedang Hamil</a></div>
-                <div class="item-snippet">Sebut saja saya Mar, wanita berumur 18 th., telah menikah serta tengah hamil 8 bln.. Saya berani ber...</div>
+                <div class="item-title"><a href="/posts/birahi-kakak-iparku-yang-sangat-liar.html">Birahi Kakak Iparku Yang Sangat Liar</a></div>
+                <div class="item-snippet">Memang benar kalau kata kaum hawa, lelaki itu memang buaya darat, dan tidak pernah puas dengan 1 pas...</div>
             </li>
         
             <li>
@@ -322,11 +404,19 @@ transform: scale(1.05);
             </li>
         
             <li>
-                <a href="/posts/bersetubuh-dengan-adik-kandung-sendiri.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYH1uirVEH45pXyalLZGS_ekL5Nbt-GhdHs5M3i1MJZzi7vTwiXJK2g_D4ZXBLuYywK0SW0yTdX-kMWcbRIYdIQcZNLgnXUiu59KsA2KZjQNoT3tOP0UtyNpUPkVAGKRK_zgYDZheZMREzcsm4M8BJ-Q9M4mfyLxBbBzEP18PgS_VkPkhTfU_BKWUpYA/w480-h640/zzzz.png" alt="Bersetubuh Dengan Adik Kandung Sendiri">
+                <a href="/posts/cari-menu-lain-di-tempat-karaoke.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMjA6vg4XvLhbKTKdsPIuhcXzz-tZ-HCkHxq18QzQ7FFDVYPeWCSUXUFI9cn16Vhr_MCW7OqROEXX5_EXLc14Im5N7_QkhQVtweTO3VIjASUJaRqg2DCBjnd7aAUHWc93_us3vX8foTLZvdYZb8iW7x1GNY3ty0YD1tEWMnCqhrJrgNUiwEH9tM4_IOko/w640-h640/278031198_681195196525478_2105182480253710242_n.jpg" alt="Cari Menu Lain Di Tempat Karaoke">
                 </a>
-                <div class="item-title"><a href="/posts/bersetubuh-dengan-adik-kandung-sendiri.html">Bersetubuh Dengan Adik Kandung Sendiri</a></div>
-                <div class="item-snippet">Namaku Mona, umurku 24 tahun, aku sudah menikah dan mempunyai satu anak lelaki. Berikut ini aku ingi...</div>
+                <div class="item-title"><a href="/posts/cari-menu-lain-di-tempat-karaoke.html">Cari Menu Lain Di Tempat Karaoke</a></div>
+                <div class="item-snippet">Istri sudah punya. Anak juga sudah sepasang. Rumah, meskipun cuma rumah BTN juga sudah punya. Mobil ...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhexsKiISkmgrh9FiUzDEDMDsTEkBbHWUNTI_osmE13TacOtQX_ylHNVDXJyx6IDzAahO942eaLbg_FjWrjHskBlsqedQuOxgVswsfJ7zXi8D7RqdJcjavngGrQ3-ExLXdL-69-fhb9Db-FCleb1Yq4XTD3OfOIE5I8B-5yQDQyciFKbtskpU3ISK4Qtg/w360-h640/0505b7052be18f44b8ea763cd3cf76d3.jpg" alt="Bercinta Dengan Pengantin Baru Yang Kesepian">
+                </a>
+                <div class="item-title"><a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">Bercinta Dengan Pengantin Baru Yang Kesepian</a></div>
+                <div class="item-snippet">Nama saya Andi, saat itu saya berumur 25 tahun, telah berkeluarga dengan istri bernama Sinta, serta ...</div>
             </li>
         
             </ul>
