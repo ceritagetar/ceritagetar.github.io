@@ -7,10 +7,18 @@
   {{ custom_js }}
 </head>
 {{ custom_header }}
+  <div id="wrapper">
+    <div id="post-wrapper">
+      <div class="post-container">
   <h1>{{ title }}</h1>
   {{ labels }}
   <div>{{ content }}</div>
+      </div></div>
+    <div class="sidebar">
   <h3>Related Posts</h3>
   {{ related }}
+    </div>
+      
+  </div>
   {{ custom_footer }}
 </html>
