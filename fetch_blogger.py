@@ -229,7 +229,7 @@ def generate_post_page(post, all_posts):
 
         related_items_html.append(f"""
             <li>
-                <a href="{post_link_html}">
+                <a href="/{post_link_html}">
                     <img class="item-thumbnail" src="{thumb}" alt="{p_related["title"]}">
                 </a>
                 <div class="item-title"><a href="{post_link_html}">{p_related["title"]}</a></div>
