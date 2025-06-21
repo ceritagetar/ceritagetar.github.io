@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="tergoda-nafsu-istri-orang-307467555204031757.html">Tergoda nafsu istri orang</a></li><li><a href="selingkuh-sama-cewek-smp-7428431348386548190.html">Selingkuh Sama Cewek SMP</a></li><li><a href="permainan-terlarang-8289388415232071248.html">Permainan Terlarang</a></li><li><a href="menikmati-bibiku-yang-sedang-tertidur-3779513502048408836.html">Menikmati Bibiku yang Sedang Tertidur</a></li><li><a href="nikmatnya-jadi-pasutri-237053040384708119.html">Nikmatnya Jadi Pasutri</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/liburan-nikmat-bersama-istri-teman-8716268870570398702.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEh_cnIt0irc16RyCtw1g1ZQkiNPFI_Z2MYU2vq0gLwjFt7sYOTIrJtvgT4JJm9PznA6GbQuxoU-H1v3rl-rAMi6DK-mxTTn0EtP51MmH5vEmbn5VJerq5Alt1SZe2-pOOU84ZU8hIsmGJql1LUb2Io_cw9j1eYwQhETAjvkFuFIHj2frUbosDzTpD5udg=w573-h640" alt="Liburan Nikmat Bersama Istri Teman">
+                </a>
+                <div class="item-title"><a href="posts/liburan-nikmat-bersama-istri-teman-8716268870570398702.html">Liburan Nikmat Bersama Istri Teman</a></div>
+                <div class="item-snippet">Keliatan bukan Ratih yang tadi malam aku temui. Aku tersenyum melihat penampilannya yang tomboy itu....</div>
+            </li>
+        
+            <li>
+                <a href="posts/fantasi-ditempat-umum-7183373296895438898.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEg2VPOXgsYGQS6CYxD4gFOV9DGWOammkFR-bK7apVG5ZKjERjFbAWykPRdnj5OpBjz25MZNSSMwsfqEihiX61hfbjOugGNXL5sLB_s6gYsrm2KSZb-BOTBMLgNkO699gqkJq8Zsy728HxFON8YP1AacURzULei_8CodEpq8uszYx2xWv14NV_B7t7CFVg=w541-h640" alt="Fantasi Ditempat Umum">
+                </a>
+                <div class="item-title"><a href="posts/fantasi-ditempat-umum-7183373296895438898.html">Fantasi Ditempat Umum</a></div>
+                <div class="item-snippet">Aku punya sebuah kebiasaan sejak lama. Aku suka sekali bila tubuhku dipandangi dengan bebas. Mungkin...</div>
+            </li>
+        
+            <li>
+                <a href="posts/dengan-janda-tetanggaku-4269532034148401173.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghlHVYlLNiXuerK29SXe3bsnAOkEyirXQlX1YeJ3rZXAp-l7GceR0XsMOr32Nz10O9zh4fsqPnsWOMp108HbZaqfQm8vngf_aVnEpo0qGw-Y1YZupkyw2E0aaoiSpDqRhKr3cgAneaxHahLxJVlNsQBaBNVQuGl1uFOTEH1KyX6NT0fksba5tUOeiar_s/s320/GGHoKc0aAAAyrru.jpg" alt="Dengan Janda Tetanggaku">
+                </a>
+                <div class="item-title"><a href="posts/dengan-janda-tetanggaku-4269532034148401173.html">Dengan Janda Tetanggaku</a></div>
+                <div class="item-snippet">Namaku rudi, usiaku 26 tahun, saya sudah berumah tangga, pas di deket rumahku tinggal seseorang wani...</div>
+            </li>
+        
+            <li>
+                <a href="posts/kisah-perselingkuhan-dengan-supir-pribadiku-1425704316034900430.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiA7sTcMWTIclRFpiFuBp2uhQ6BOlwPzOpVt_0O71GJoF6RUixmtUE9rnbLq3yxvr9ZEGDWm2UnF4qheZtifpL96HlzFTiE9iFKz-92W_3CPpnXCBdzmoMFgkFwqXY4acVb28OOxmiVwN6EDRG-dlpndk-3e278mA_uCgImvImk_SpvUBof2TRXNthRSJ8/w526-h640/278389852_381051110698454_984331327451384053_n.jpg" alt="KIsah Perselingkuhan Dengan Supir Pribadiku">
+                </a>
+                <div class="item-title"><a href="posts/kisah-perselingkuhan-dengan-supir-pribadiku-1425704316034900430.html">KIsah Perselingkuhan Dengan Supir Pribadiku</a></div>
+                <div class="item-snippet">Namaku Dita Putri ,usia saat ini 20 asli Bandung, dan saat ini kuliah sastra inggris semester 4 di s...</div>
+            </li>
+        
+            <li>
+                <a href="posts/keenakan-jahil-dengan-teman-sekelas-3303879401899329615.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBfepzvV2ep-iQRm_EmKBU325Y9kTG4FNIXYZsam26wyKtybuIPiBhSK7FEtQqlAccrZ4OvKCg2fYbwL0L3vuNQa1DEeUEksp_N0cV8YCFAf0-QSsZK3olEo4UnQpa0R17bUWrGccN0Q100DP_UqUvCROwgv3CL1yQL6JThexfkse0t3q48SDuR4jfhqk/w528-h640/1%20(92).jpg" alt="Keenakan Jahil Dengan Teman Sekelas">
+                </a>
+                <div class="item-title"><a href="posts/keenakan-jahil-dengan-teman-sekelas-3303879401899329615.html">Keenakan Jahil Dengan Teman Sekelas</a></div>
+                <div class="item-snippet">Perkenalkan sobat semua, sebelumnya gw mau bilang nama-nama orang dibawah ini hanya samaran, kalau a...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="selingkuh-dengan-bu-rt-9047612073808526395.html">Selingkuh dengan Bu RT</a></li><li><a href="bersama-mahasiswi-cantik-anak-didik-ibuku-8806061377479819839.html">Bersama Mahasiswi Cantik, Anak Didik Ibuku</a></li><li><a href="pertemuan-dengan-abg-imut-pecinta-bdsm-1126382585451494648.html">Pertemuan Dengan ABG Imut Pecinta BDSM</a></li><li><a href="sungguh-nikmatnya-tubuh-sepupu-istriku-7387225572150491404.html">Sungguh Nikmatnya Tubuh Sepupu Istriku</a></li><li><a href="cari-menu-lain-di-tempat-karaoke-4014093922105396748.html">Cari Menu Lain Di Tempat Karaoke</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/aku-dijadikan-selingkuhan-supir-pribadiku-4127544227542160218.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghkhWFDQmHq6Q_4swCcjn3sBcnyQC4tvHAWMEN20Vj8y5FH3pYKpUaBEX9sBKBhkjkpdT85Xh1f4Z9c-oHdsIGc8jUQsXRrEujkcOjBnIUIYg2OWBLRyhIezserK2IrG_NvCGv5h7LyTZdVtc9SGaVwx_puDQaFmALxOU26BCl3ujDdAlPBaVDHRBQtw/w512-h640/3c2301d6b56d9d64e031ce5b9b92594b.jpg" alt="Aku Dijadikan Selingkuhan Supir Pribadiku">
+                </a>
+                <div class="item-title"><a href="posts/aku-dijadikan-selingkuhan-supir-pribadiku-4127544227542160218.html">Aku Dijadikan Selingkuhan Supir Pribadiku</a></div>
+                <div class="item-snippet">Kisah ini terjadi ketika aku masih SMU, ketika umurku masih 18 tahun, waktu itu rambutku masih panja...</div>
+            </li>
+        
+            <li>
+                <a href="posts/oleh-oleh-dugem-4930500508303786900.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGS1DE9ApsAle3rHIj9hwb6k028A3VXhDkGKO9NmehSukLjPqTrf56geWB2REB2a5FIIzuCrSj0gtSarqrRNcwIyIIXJ20ac5fBAxXy9O565y0yqRP9TTDk0jCtctre-hcE9SkPo5eLGdIBHBE3ueE1ckQyRNbGuF7o-JQIvwg8dNWvKqyxYW5Tpz3hmk/w512-h640/Fqnu34jaMAIFGjk.jpg" alt="Oleh-oleh Dugem">
+                </a>
+                <div class="item-title"><a href="posts/oleh-oleh-dugem-4930500508303786900.html">Oleh-oleh Dugem</a></div>
+                <div class="item-snippet">Cerita kali ini bermula ketika aku sedang Dugem dan bertemu Cewek Mabuk di sebelahku tak berlangsung...</div>
+            </li>
+        
+            <li>
+                <a href="posts/menikmati-ratih-adikku-1872563834216276412.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi46P6M7BPm3neauXHFRnCkCGSIpb9tPy-UX36oYnMGaF4nunHQKftO_kMsNSCz2JWG8k2YJSsNQwQRz7rYknrK7PSru0kBBovrY3MJqACFm0T3q4ctE38NLmvys9TXtBiREAfbDefs7lGutGPOFT5ejc-LOQtn4DKT_E1x2U4wtlTXNxhpwtqRSXSmDP0/w640-h506/096c99ed7fa003f63f2d3bf28cb8379d.jpg" alt="Menikmati Ratih Adikku">
+                </a>
+                <div class="item-title"><a href="posts/menikmati-ratih-adikku-1872563834216276412.html">Menikmati Ratih Adikku</a></div>
+                <div class="item-snippet">Ini adalah kisah Nyata pengalamanku yang sengaja aku beberkan untuk pertama kalinya. Sebut saja nama...</div>
+            </li>
+        
+            <li>
+                <a href="posts/selingkuh-dengan-bu-rt-9047612073808526395.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
+                </a>
+                <div class="item-title"><a href="posts/selingkuh-dengan-bu-rt-9047612073808526395.html">Selingkuh dengan Bu RT</a></div>
+                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
+            </li>
+        
+            <li>
+                <a href="posts/gurihnya-calon-mertua-1565044899835221639.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCoMyeZ5sTyB6VeRCAmUXHIxKGuR7wJqIImVpm63OrHpv2FodZAGdeOL1Tl2eMAaJEukLRXjmF7I-GjJH1LAw6Tof0pEQTu-3R2O5hSvS7aTE5YlDPh5M801e3VOq9dlQo2flYlqTGgmD57Po7WxEmVrYcRtPvVzq4MWmFEgd8ehdEqJ3pkqhIT3Nl" alt="Gurihnya Calon Mertua">
+                </a>
+                <div class="item-title"><a href="posts/gurihnya-calon-mertua-1565044899835221639.html">Gurihnya Calon Mertua</a></div>
+                <div class="item-snippet">Nama gua Beny Cerita ini asli kisah gua sama ibu pacar gua waktu dulu masih pacaran, waktu itu sekit...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

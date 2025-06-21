@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="bercinta-dengan-adik-kandung-7412997927028563622.html">Bercinta Dengan Adik Kandung</a></li><li><a href="tante-lin-1013900957757876966.html">Tante Lin</a></li><li><a href="mbak-siska-karyawati-salon-kecantikan-6585456144858407715.html">Mbak Siska Karyawati Salon Kecantikan</a></li><li><a href="bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda-7918384243267877584.html">Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda</a></li><li><a href="perselingkuhan-yang-romantis-1789690108383713261.html">Perselingkuhan yang Romantis</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/atasan-cantik-mengerang-mendesah-meronta-9119274712892510047.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgOD2KfR9TzX-ezPV8xk9GGUAoJ4zMgrS_SBkFNIrvvSY3T-sWTltJ-trGSlPoZAJOaE9-XA44YHY4-db8Rc_8JQ7JddYoW2iKia8oXI0c_rlc05qf5RO_FM7BqV1boL8dkA4GDoBpVkP5nLZ2BD2wNi0Ny_BJB9yfhZZkYB9hZlN17gfBHvLPDtuutwQ=w312-h640" alt="Atasan Cantik Mengerang Mendesah Meronta">
+                </a>
+                <div class="item-title"><a href="posts/atasan-cantik-mengerang-mendesah-meronta-9119274712892510047.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
+                <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
+            </li>
+        
+            <li>
+                <a href="posts/selingkuh-dengan-bu-rt-9047612073808526395.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
+                </a>
+                <div class="item-title"><a href="posts/selingkuh-dengan-bu-rt-9047612073808526395.html">Selingkuh dengan Bu RT</a></div>
+                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
+            </li>
+        
+            <li>
+                <a href="posts/ngerjain-mahasiswi-judes-399568294276766166.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHQ0MVSSsoU19eZAgg9BgaUAr79pj_jGsnYMK_9NNXBuM1X2yZHTbN0_eGyjhI8ohwDB9dU2eIpz_WsZ2ksnpyjQrqJ7jUjE7kXGoJsODOYvk-UPPSCk2kdyIaiYxcDbgUtF2OGCKmhyrVPQKeLvsbJ-aUDmzBrDB-oyPHHy73PIB2jb4zRqt06EAc7YU/w476-h640/279350522_1028466134713886_4681879147281862870_n.jpg" alt="Ngerjain Mahasiswi Judes">
+                </a>
+                <div class="item-title"><a href="posts/ngerjain-mahasiswi-judes-399568294276766166.html">Ngerjain Mahasiswi Judes</a></div>
+                <div class="item-snippet">Minggu siang itu udara Jakarta panas sekali, Sebuah metromini masih ngetem di depan sebuah gedung di...</div>
+            </li>
+        
+            <li>
+                <a href="posts/berselingkuh-dengan-dua-teman-istriku-sekaligus-8988942788355400300.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWciGFFZX1iYyK98bRDXT7aZLEb0TedJE36xRu9UqAcF5uQLciEKcUSZoWkecWVUQdKoX4fAmGtftj4fnW7zSPd0dIFcJc8dOLdQL4I8PELo3CSt_h0Kjb5x9BTrTjZXMdAlO3DlG3qs682QN9hdXydEhK34opyVMsLUHbTozGlNCtcEfycw7ghCuHpHQ/w528-h640/Fq__LyPaQAMTcGF.jpg" alt="Berselingkuh Dengan Dua Teman Istriku Sekaligus">
+                </a>
+                <div class="item-title"><a href="posts/berselingkuh-dengan-dua-teman-istriku-sekaligus-8988942788355400300.html">Berselingkuh Dengan Dua Teman Istriku Sekaligus</a></div>
+                <div class="item-snippet">Yah, beginilah nasib auditor kalau lagi dikejar laporan audit. Untung saja, ada anggota timku yang b...</div>
+            </li>
+        
+            <li>
+                <a href="posts/belenggu-rindu-yang-tertahan-6877294451652709991.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhZwduN7P8Moay3nkU2OxTM6rLsexjRLW9WdaynlK4DLu9ChAGT8DcUHze1kGHut-zFd1LvSUTEkzTyZFURi55-1JgNzXZqjuJdytLtzHmiv87TNzmPLEu3IsceU5Stvj9YQfSqXY0l6q4PyWFUMtNysu7sz7OFYfRX82AiTKYUpiPJFu96dmHF_TARCg/w512-h640/395484066_122135340620028015_337979339352738165_n.jpg" alt="Belenggu Rindu Yang Tertahan">
+                </a>
+                <div class="item-title"><a href="posts/belenggu-rindu-yang-tertahan-6877294451652709991.html">Belenggu Rindu Yang Tertahan</a></div>
+                <div class="item-snippet">Siang itu di sebuah rumah yang cukup asri, seorang gadis yang berambut panjang terurai dengan raut w...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

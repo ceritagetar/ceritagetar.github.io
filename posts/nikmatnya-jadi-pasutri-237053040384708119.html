@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="menikmati-ratih-adikku-1872563834216276412.html">Menikmati Ratih Adikku</a></li><li><a href="perselingkuhan-yang-romantis-1789690108383713261.html">Perselingkuhan yang Romantis</a></li><li><a href="berselingkuh-dengan-dua-teman-istriku-sekaligus-8988942788355400300.html">Berselingkuh Dengan Dua Teman Istriku Sekaligus</a></li><li><a href="atasan-cantik-mengerang-mendesah-meronta-9119274712892510047.html">Atasan Cantik Mengerang Mendesah Meronta</a></li><li><a href="hadiah-perpisahan-dari-rina-7953375319365761299.html">Hadiah Perpisahan Dari Rina</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/pembantu-bohay-tetap-merayu-1868823305301299880.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikCI5BvqGD9d20l24U1ByE69PZdfYTpuutpAStzNwWvvNkrDEagnmFdEtS8iGv2FtB7rPScsXCkX4Pm1oxjE6OpaXGDS7mhy5LPusJ6sRq3RznWpORpoO8OuSfTGK4DmGo4TxSXp8ytktJIvUoWxHI9vJgIUYLwtqPnjD8FTvCxHwbcN9PLo_hCUI-sL0/s320/426359321_248607918289732_2666458156321746444_n.jpg" alt="Pembantu Bohay Tetap Merayu">
+                </a>
+                <div class="item-title"><a href="posts/pembantu-bohay-tetap-merayu-1868823305301299880.html">Pembantu Bohay Tetap Merayu</a></div>
+                <div class="item-snippet">Beberapa waktu lalu, sebab sudah berkali-kali di panggil oleh anaknya di kampung, karena itu pembant...</div>
+            </li>
+        
+            <li>
+                <a href="posts/sering-main-di-kosan-7763549715851697342.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCO6P-yGDbfMS7khgM5OBUhyCK8ABymkdBRGqjYHis8iZ4PMUIm-km0jH96b231QNUfLvbBGcyTLWn3je14xhMCDTtRknqaiKbgzir-3_Ht2KqxicndqACF4wmaJPCkMhseDxa7XsgbZdZKKIutaAZeoU4vWkCGO47lhcEOuCXWuKLChzBSrgT5CJHVA=w360-h640" alt="Sering Main Di Kosan">
+                </a>
+                <div class="item-title"><a href="posts/sering-main-di-kosan-7763549715851697342.html">Sering Main Di Kosan</a></div>
+                <div class="item-snippet">Setelah kejadian kеmаrіn уаng аku share kераdа pembaca dеwаѕа “mеѕum didalam mobil” ѕааt itu аku ѕеd...</div>
+            </li>
+        
+            <li>
+                <a href="posts/terlalu-polos-mengenal-seks-4069662626926992346.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5-8lPlH5Md7L8P_8L3suUrJvbFdCZGxslPyz_mIa3uP6ze9zGb9gF6qJpkTcUdHd6ZniNoVr7v1wJmVaj59vKgw0ts-80KyBlUgEZRS476MYiBzQ65D2kIHo-_1pKS_wpZNSDGVXHVA19RlVn0PW6E_NGPtL_1993lNsXBCShMsg_J-opXUkBhzpv9Q/w516-h640/fb7dc63dc311938bb6f01f0fe5d896f6.jpg" alt="Terlalu Polos Mengenal Seks">
+                </a>
+                <div class="item-title"><a href="posts/terlalu-polos-mengenal-seks-4069662626926992346.html">Terlalu Polos Mengenal Seks</a></div>
+                <div class="item-snippet">Namaku adalah Andi (bukan nama yang sebenarnya), dan aku kuliah di salah satu universitas swasta di ...</div>
+            </li>
+        
+            <li>
+                <a href="posts/nikmatnya-istri-legitnya-adik-ipar-6649015528932237458.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjWPGuUYS5Qy08_Sf3e-qJxjoUS78xwrkEWBM1Z1HLPvOnuUgAwH7_rD_m_EWIo-5fz3La5mMOY9bgL7ZT-FjB6DjFyjdGCKnLI_NftKzXuXTWdDaFyvxD8qc9dZML2xH7zjsmhIAn15Ijcpy-R5h5PEiZbW1mPbLygkHg7-Dd3hFeo-DE-kfgkKTy0=w515-h640" alt="Nikmatnya istri, legitnya adik ipar">
+                </a>
+                <div class="item-title"><a href="posts/nikmatnya-istri-legitnya-adik-ipar-6649015528932237458.html">Nikmatnya istri, legitnya adik ipar</a></div>
+                <div class="item-snippet">Panggil saja namaku Abi, aku berumur 27 tahun, aku adalah seorang direktur perusahaan swasta di Kend...</div>
+            </li>
+        
+            <li>
+                <a href="posts/atasan-cantik-mengerang-mendesah-meronta-9119274712892510047.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgOD2KfR9TzX-ezPV8xk9GGUAoJ4zMgrS_SBkFNIrvvSY3T-sWTltJ-trGSlPoZAJOaE9-XA44YHY4-db8Rc_8JQ7JddYoW2iKia8oXI0c_rlc05qf5RO_FM7BqV1boL8dkA4GDoBpVkP5nLZ2BD2wNi0Ny_BJB9yfhZZkYB9hZlN17gfBHvLPDtuutwQ=w312-h640" alt="Atasan Cantik Mengerang Mendesah Meronta">
+                </a>
+                <div class="item-title"><a href="posts/atasan-cantik-mengerang-mendesah-meronta-9119274712892510047.html">Atasan Cantik Mengerang Mendesah Meronta</a></div>
+                <div class="item-snippet">Siapa yang menolak coba mendapat tawaran untuk bercinta dengan dia , apalagi orangnya itu lohhh hmm ...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

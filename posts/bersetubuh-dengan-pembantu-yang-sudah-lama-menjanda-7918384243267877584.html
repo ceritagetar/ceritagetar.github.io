@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="merasakan-nikmatnya-tembem-milik-tante-medan-7247862167898565498.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></li><li><a href="gadis-genit-itu-nikmat-7932457272144089579.html">Gadis Genit Itu Nikmat</a></li><li><a href="di-ajari-meraih-kenikmatan-dengan-tante-yosi-3080734244012455535.html">Di Ajari Meraih Kenikmatan Dengan Tante Yosi</a></li><li><a href="hadiah-perpisahan-dari-rina-7953375319365761299.html">Hadiah Perpisahan Dari Rina</a></li><li><a href="tergoda-nafsu-istri-orang-3291448145130958724.html">Tergoda Nafsu Istri Orang</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/belajar-sama-tante-erni-yang-cantik-3556215674184137254.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIq9mu57bDmFR6L2VBsxGcRdmJJE0BRZMFC_R7ZOpANOaU47SXBUPZ__nCz52An5sHgq7_O_0h21--JpDyLnnaZIJN4l_-vGQCFAjbQKkHACJhqZ0YSzJB4ojzE8Zz1kULLrF4x3q32f3ZzEedoxTql2O9FPfMmqxHw-Zr0Z6msdxWO8U8RX_1jXkVOC0" alt="Belajar sama Tante Erni yang cantik">
+                </a>
+                <div class="item-title"><a href="posts/belajar-sama-tante-erni-yang-cantik-3556215674184137254.html">Belajar sama Tante Erni yang cantik</a></div>
+                <div class="item-snippet">Insiden ini berlangsung saat saya kelas 3 SMA, yah saya prediksikan usia saya saat itu barusan 14 ta...</div>
+            </li>
+        
+            <li>
+                <a href="posts/menikmati-bibiku-yang-sedang-tertidur-3779513502048408836.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjyuSi0SM9DyGJK0m0ZwblgPzgQ0NaIbG5gpqKMyX7QcpKPSVrJFYT6qR2w2wn1OkMTOD3cQdMa7as611xLOHt0w8YXYi5623ngz-cOnFmqY3yfQNFAQLW_TngYdPghhjIufT7INPkqTAf96sq--i9L4XBX50jzl0MppEvZs2516MlA4-8Sot7UVSdWYg=w512-h640" alt="Menikmati Bibiku yang Sedang Tertidur">
+                </a>
+                <div class="item-title"><a href="posts/menikmati-bibiku-yang-sedang-tertidur-3779513502048408836.html">Menikmati Bibiku yang Sedang Tertidur</a></div>
+                <div class="item-snippet">Kulihat bibi tidur tidak berselimut, karena biarpun kamar bibi memakai AC, tapi kelihatan AC-nya dia...</div>
+            </li>
+        
+            <li>
+                <a href="posts/kencani-mahasiswi-terbaru-6269524148601964777.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhtUea53SBAOfncQXfI_Zq7SRBYR57-N74FR09AswIjZPNHyFE4qkZLeNl1-wUoLWEPzx4rSZHBKGqDR9WNIPCqTBqbdpowuFMXrZlAaqxLU1ViTo4hbHQrkRAvZyFRK1pcCGgxkWq4R0PdJLTwbKN87_4_EHLa4Nbqb-5gRSrlfAZi5TSQg6al2PQ01A=w328-h640" alt="Kencani Mahasiswi Terbaru">
+                </a>
+                <div class="item-title"><a href="posts/kencani-mahasiswi-terbaru-6269524148601964777.html">Kencani Mahasiswi Terbaru</a></div>
+                <div class="item-snippet">Kelebihan yang patut aku syukuri ini tidak membuat aku menjadi seorang yang haus akan pertualangan c...</div>
+            </li>
+        
+            <li>
+                <a href="posts/keenakan-jahil-dengan-teman-sekelas-3303879401899329615.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBfepzvV2ep-iQRm_EmKBU325Y9kTG4FNIXYZsam26wyKtybuIPiBhSK7FEtQqlAccrZ4OvKCg2fYbwL0L3vuNQa1DEeUEksp_N0cV8YCFAf0-QSsZK3olEo4UnQpa0R17bUWrGccN0Q100DP_UqUvCROwgv3CL1yQL6JThexfkse0t3q48SDuR4jfhqk/w528-h640/1%20(92).jpg" alt="Keenakan Jahil Dengan Teman Sekelas">
+                </a>
+                <div class="item-title"><a href="posts/keenakan-jahil-dengan-teman-sekelas-3303879401899329615.html">Keenakan Jahil Dengan Teman Sekelas</a></div>
+                <div class="item-snippet">Perkenalkan sobat semua, sebelumnya gw mau bilang nama-nama orang dibawah ini hanya samaran, kalau a...</div>
+            </li>
+        
+            <li>
+                <a href="posts/surga-dunia-dari-ibu-3111588393610007580.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjz21q6VwKLpLbh4HhTVC8dPpfOFF1LXNZUkWpZWGlMsSjmBLXBDUROqMxffpm8bv7pbWsTVGAdHy1j8DtECCQeKyk2bRJW9vRcAcuenbkqpGZEUgG7HxYPRMtTvJM_0s_u1pOa_SRsF7mCeUQEa6lNuCM-1HivYLCJYJzbYsFga9nVlNu8o_sXxKyaSg=w517-h640" alt="Surga dunia Dari Ibu">
+                </a>
+                <div class="item-title"><a href="posts/surga-dunia-dari-ibu-3111588393610007580.html">Surga dunia Dari Ibu</a></div>
+                <div class="item-snippet">Namaku eri. Ayahku bowo berusia 60 tahun dan Ibuku sari berusia 35 tahun. Aku sendiri kini berusia 1...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

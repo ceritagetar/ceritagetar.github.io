@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="diperkosa-teman-sendiri-3981007056718315652.html">Diperkosa Teman Sendiri</a></li><li><a href="aku-dijadikan-selingkuhan-supir-pribadiku-4127544227542160218.html">Aku Dijadikan Selingkuhan Supir Pribadiku</a></li><li><a href="cewek-impianku-adalah-lontenya-papaku-7658646827275088498.html">Cewek Impianku adalah Lontenya Papaku</a></li><li><a href="diperkosa-mama-dan-tanteku-yang-binal-4773321942653745769.html">Diperkosa Mama Dan Tanteku Yang Binal</a></li><li><a href="rahasia-pribadi-ibu-kost-ku-4887423472140450258.html">Rahasia Pribadi Ibu Kost Ku</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/tergoda-nafsu-istri-orang-307467555204031757.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhgjIOH9mgNlbOZH114gRMeWYOHUf7J7d-nt_X9C_woVtBbRiFDMGh9NyhbXxmjfRA7qwQDI4r0LD4rbmKExUcqHzUwFyyWqTdiCfBrN-gOSzaWnv9J0-kC4GPgHzWpDid8nT9jIcapfU5O02p9uJ6OcGe6HR0-iCcQ1EJdf8y_23GhQthDRXe806v8=w323-h640" alt="Tergoda nafsu istri orang">
+                </a>
+                <div class="item-title"><a href="posts/tergoda-nafsu-istri-orang-307467555204031757.html">Tergoda nafsu istri orang</a></div>
+                <div class="item-snippet">Mbak mar… Kupeluk ibu 2 anak itu, tak kusangka mbak mar mencoba melepaskan kedua tanganku, aku tak p...</div>
+            </li>
+        
+            <li>
+                <a href="posts/tante-lin-1013900957757876966.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhU-qclQZGVAvmJ-CQ6LMWZBS9brFqIX1zgrSV9Pz3qcooROOoJ6WHqxvBGbK5nIAzl0ywA4eAQJ-ZoFLWv4QNglf-lO0Zx2y09OVKt_1LC2m7CgMt00zHaT-iDQyuKK6k9UYQvrYe0ssq248bUttYnMy4iX84w_9HxiujrKtGhRN6_I39_fIxZjWAh2NY/w512-h640/33f64aadfc335c32b131f5129ad4b43e.jpg" alt="Tante Lin">
+                </a>
+                <div class="item-title"><a href="posts/tante-lin-1013900957757876966.html">Tante Lin</a></div>
+                <div class="item-snippet">Dia sebenarnya sering sekali datang ke Jakarta, dan memang mempunyai sebuah rumah jakarta, serta mem...</div>
+            </li>
+        
+            <li>
+                <a href="posts/kakak-ku-yang-baik-hati-8087744507371833433.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiNZmyNO7T5MWyEtGrkLfitHhU9dL3vYkDvEy9e3OpvP2ktjdXyexexVGeG_Li2kW3OcI3GuCUawC1SkeP0KQbOapmBgdFVd2cj7wUyQZQw4810g1NY35A59R6csPwnqg082u7Kn8u_tnjuawvqKdpJB6oCcNQduqSYycpO3_gPMAvCq7n7EXyZRQpV3Q=w360-h640" alt="Kakak ku yang Baik Hati">
+                </a>
+                <div class="item-title"><a href="posts/kakak-ku-yang-baik-hati-8087744507371833433.html">Kakak ku yang Baik Hati</a></div>
+                <div class="item-snippet">Kenalkan, nama saya Boy, teman-teman biasa memanggilku Mas Boy. Saya seorang pemuda berusia 25 tahun...</div>
+            </li>
+        
+            <li>
+                <a href="posts/di-perkosa-penjaga-kost-3832488337291090115.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIb1962lfdoP4dW6dmcMP9poALwqd3oxF-Ao2OR2Dg8ANyR-xO1925tbremoAL8c2eCYW7MRJMk59fgux7WbKbBRJtkynDMHYBQuF0sY-ohtfl4SwuGYJ5_lN9zGAuGCm5xcC0nA09utphJhkU-e_dP89u5EjohwOhOZDvKmat8BXvN9-BZx7XMd1P2Q=w360-h640" alt="Di Perkosa Penjaga Kost">
+                </a>
+                <div class="item-title"><a href="posts/di-perkosa-penjaga-kost-3832488337291090115.html">Di Perkosa Penjaga Kost</a></div>
+                <div class="item-snippet">Cerita ini tentang penjaga kos yang memperkosa anak kos kosan, salah satu anak kos yang bernama Wind...</div>
+            </li>
+        
+            <li>
+                <a href="posts/adik-ipar-yang-nikmat-8699077262701957685.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZF04rz_SBp4K3zSva6UK5G5b-RLGFim0MZ6dUT7CjxN3lz-QvIDcOdIHbfdxVLc0lXKmGbMhlDXnUozSR4mg5O8ZthndHcgQZ1Da9XeyfchV7_3rqk7RY7jMXfMhiDcnqYPKD8We965-s4-1ZWfjYmGiMiMwXS8z8M97uVDtJruumkvPglqz6W2opuGs/w320-h640/76fb9f54e5bd54f021b0d82ff9f1887b.jpg" alt="Adik Ipar yang Nikmat">
+                </a>
+                <div class="item-title"><a href="posts/adik-ipar-yang-nikmat-8699077262701957685.html">Adik Ipar yang Nikmat</a></div>
+                <div class="item-snippet">Perkenalkan namaku Bayu, aku mempunyai seorang istri yang lumayan cantik. Rambut hitam panjang dan l...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

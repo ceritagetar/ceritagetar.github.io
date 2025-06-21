@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="surga-dunia-dari-ibu-3111588393610007580.html">Surga dunia Dari Ibu</a></li><li><a href="tergoda-nafsu-istri-orang-307467555204031757.html">Tergoda nafsu istri orang</a></li><li><a href="dengan-janda-tetanggaku-4269532034148401173.html">Dengan Janda Tetanggaku</a></li><li><a href="menikmati-ratih-adikku-1872563834216276412.html">Menikmati Ratih Adikku</a></li><li><a href="nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal-4667673610513349406.html">Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/terlalu-polos-mengenal-seks-4069662626926992346.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg5-8lPlH5Md7L8P_8L3suUrJvbFdCZGxslPyz_mIa3uP6ze9zGb9gF6qJpkTcUdHd6ZniNoVr7v1wJmVaj59vKgw0ts-80KyBlUgEZRS476MYiBzQ65D2kIHo-_1pKS_wpZNSDGVXHVA19RlVn0PW6E_NGPtL_1993lNsXBCShMsg_J-opXUkBhzpv9Q/w516-h640/fb7dc63dc311938bb6f01f0fe5d896f6.jpg" alt="Terlalu Polos Mengenal Seks">
+                </a>
+                <div class="item-title"><a href="posts/terlalu-polos-mengenal-seks-4069662626926992346.html">Terlalu Polos Mengenal Seks</a></div>
+                <div class="item-snippet">Namaku adalah Andi (bukan nama yang sebenarnya), dan aku kuliah di salah satu universitas swasta di ...</div>
+            </li>
+        
+            <li>
+                <a href="posts/nikmatnya-istri-legitnya-adik-ipar-6649015528932237458.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEjWPGuUYS5Qy08_Sf3e-qJxjoUS78xwrkEWBM1Z1HLPvOnuUgAwH7_rD_m_EWIo-5fz3La5mMOY9bgL7ZT-FjB6DjFyjdGCKnLI_NftKzXuXTWdDaFyvxD8qc9dZML2xH7zjsmhIAn15Ijcpy-R5h5PEiZbW1mPbLygkHg7-Dd3hFeo-DE-kfgkKTy0=w515-h640" alt="Nikmatnya istri, legitnya adik ipar">
+                </a>
+                <div class="item-title"><a href="posts/nikmatnya-istri-legitnya-adik-ipar-6649015528932237458.html">Nikmatnya istri, legitnya adik ipar</a></div>
+                <div class="item-snippet">Panggil saja namaku Abi, aku berumur 27 tahun, aku adalah seorang direktur perusahaan swasta di Kend...</div>
+            </li>
+        
+            <li>
+                <a href="posts/ttm-tetangga-tapi-mesra-7453769783391259747.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh5YYyY0PNpYBWxVlAfCXRtIZt7jk0clVXpinzbySwlRppWBLZFQpX4DVFhA7AJ9hngy8sLg5SBsdPkSgGrDX2M5Y6YlLgE3affnPSH5RqjoCxhH74qu20KVi0SQqvhyphenhyphenI_sfraPz8ZEpUsnbq1SIRYoCjqFda0N8_ePq1zTWzw9tnBVk3OSdynvDU-x_1Q/w530-h640/402471024_122101596746114252_6436866729946603286_n.jpg" alt="TTM ( Tetangga Tapi Mesra )">
+                </a>
+                <div class="item-title"><a href="posts/ttm-tetangga-tapi-mesra-7453769783391259747.html">TTM ( Tetangga Tapi Mesra )</a></div>
+                <div class="item-snippet">Inti pertengkaran itu adalah kecurigaan dan kecemburuan Linda terhadap suaminya yang selalu pulang k...</div>
+            </li>
+        
+            <li>
+                <a href="posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku-4837794696226695378.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEi8NUfX8BDGCuTsYTQWIddWLjTPuBtHiYsIJKKG1Ahpr-_3YuXGmMbZJPezcYMjIUsp5QKra6rK8PdfJigBAOYq6D5RHE6e0-cBbfg3mIEoHvZSaumblvpJF7ZMiPm0Mey6tkXKvF2_KWPrn_aEosGe2J_cH921g87PtHDqM_vGXpe4AXmkJTXywT1X_Q=w512-h640" alt="Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku">
+                </a>
+                <div class="item-title"><a href="posts/nikmatnya-bercinta-dengan-tante-marni-guru-seks-terbaiku-4837794696226695378.html">Nikmatnya Bercinta Dengan Tante Marni Guru Seks Terbaiku</a></div>
+                <div class="item-snippet">Om Toto, begitu aku memanggilnya, adalah seorang purnawirawan ABRI yang cukup berpengaruh, kini ia m...</div>
+            </li>
+        
+            <li>
+                <a href="posts/merasakan-nikmatnya-tembem-milik-tante-medan-7247862167898565498.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ6Tf9_H_tqDp9FyhnLk1B0IuL4KK6i3GwvItHSqNeIFuD8hn_TLGTpGEZi1uhGopH667pO91POij2OAyYnRu2YVCKA2PVtGuxHluNih0SYFv6Ul7VLdavuaqA8esgTDrkj-qcxOYx4BhdcBUcLKhv23fbhWYqjhyphenhyphenE74iXa8BCXHn3izX5jFHYmKVxyQ/w512-h640/Fpfaf5BaQAEodj2.jfif" alt="Merasakan Nikmatnya Tembem Milik Tante Medan">
+                </a>
+                <div class="item-title"><a href="posts/merasakan-nikmatnya-tembem-milik-tante-medan-7247862167898565498.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></div>
+                <div class="item-snippet">Kisah ini terjadi ketika aku mash berumur delapanbelas tahun, murid kelas dua sekolah teknik setingk...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

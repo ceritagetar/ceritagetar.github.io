@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="swinger-dengan-tetangga-3637094774663052762.html">Swinger Dengan Tetangga</a></li><li><a href="menyetubuhi-anak-ibu-kost-yang-masih-perawan-3119490320206925393.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></li><li><a href="kehamilan-dari-buah-perselingkuhanku-4931409111964249115.html">Kehamilan Dari Buah Perselingkuhanku</a></li><li><a href="menikmati-ratih-adikku-1872563834216276412.html">Menikmati Ratih Adikku</a></li><li><a href="hadiah-perpisahan-dari-rina-7953375319365761299.html">Hadiah Perpisahan Dari Rina</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/mbak-siska-karyawati-salon-kecantikan-6585456144858407715.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjnIpc_CzrHbBrMbIlRs_bNK5bhQ7CJ01yhyphenhyphenlarHYwCm5XTLYU26LjFWphEZvFhgq3hg8ztJLe3TtW4yJJyQ53T9KuCth8uTNI2tJxZQPd_Xov0J4HnblKdtjUXY4YvFNra_4s3cwVRW6tASoeYPZEpjGHoeqE4XCaK1csqwk-kdvm8-uHoC30xiGk2O4s/w640-h640/1%20(1).jpg" alt="Mbak Siska Karyawati Salon Kecantikan">
+                </a>
+                <div class="item-title"><a href="posts/mbak-siska-karyawati-salon-kecantikan-6585456144858407715.html">Mbak Siska Karyawati Salon Kecantikan</a></div>
+                <div class="item-snippet">Sebenarnya sudah lumrah saat ini seorang cowok perawatan di dalam salon kecantikan, begitu juga aku ...</div>
+            </li>
+        
+            <li>
+                <a href="posts/tergoda-nafsu-istri-orang-3291448145130958724.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhOlyv1j23x_YvAemsP5p3tERxAeAyzr2TvzEXO_lTu8ceBHmBjFkLQcNV-MKsN3gr4S8i82sm_qIVCh1HyNl__O4nHNpX5xn2xj0PuoavUEMPy6Bi0PFnHzN7i3hw2Q0SvoL6hE8rdZ9Ye9Bq6UMmXdzLErj2V6mRQzyJvWEU8Faj1mrlPptj5ulsi/s320/FYKl8ITaUAAXyGJ.jpg" alt="Tergoda Nafsu Istri Orang">
+                </a>
+                <div class="item-title"><a href="posts/tergoda-nafsu-istri-orang-3291448145130958724.html">Tergoda Nafsu Istri Orang</a></div>
+                <div class="item-snippet">Mbak mar… Kupeluk ibu 2 anak itu, tak kusangka mbak mar mencoba melepaskan kedua tanganku, aku tak p...</div>
+            </li>
+        
+            <li>
+                <a href="posts/aku-selingkuh-karena-ingin-punya-anak-8646610530645431888.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhocMOfyFZa7waze7zU1RLWPzr_RdQo1XQfEJFOUduTU13iWGKAvB33nA5KKwwzfYfb66kqqpjaZlu_rlKXPZddBnSyijOZkYNgowIRYPG7X-eRLGUS_1gZvpKnh0okq61Xz2Jjd2R5edtgpndhYRwMrS2vCIeynjspjk-q-raRwCPBPcpO2SX6DpAG4A=w392-h640" alt="Aku Selingkuh Karena Ingin Punya Anak">
+                </a>
+                <div class="item-title"><a href="posts/aku-selingkuh-karena-ingin-punya-anak-8646610530645431888.html">Aku Selingkuh Karena Ingin Punya Anak</a></div>
+                <div class="item-snippet">Sebagai pasangan suami istri muda yg baru setahun berumah tangga, kehidupan keluarga kami berjalan d...</div>
+            </li>
+        
+            <li>
+                <a href="posts/perselingkuhan-yang-romantis-1789690108383713261.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
+                </a>
+                <div class="item-title"><a href="posts/perselingkuhan-yang-romantis-1789690108383713261.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
+            </li>
+        
+            <li>
+                <a href="posts/tergoda-lekuk-tubuh-indah-istri-temanku-3178438839352094155.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
+                </a>
+                <div class="item-title"><a href="posts/tergoda-lekuk-tubuh-indah-istri-temanku-3178438839352094155.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
+                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>

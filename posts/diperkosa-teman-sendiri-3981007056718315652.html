@@ -9,6 +9,60 @@
 
 <script src="/tema/anomali.js"></script>
 
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+
 
   {{ custom_js }}
 </head>
@@ -68,7 +122,55 @@ Otong Sinaga
       
     <div class="sidebar">
   <h3>Related Posts</h3>
-  <ul><li><a href="nikmatnya-tubuh-mulus-adik-kandungku-yang-nakal-4667673610513349406.html">Nikmatnya Tubuh Mulus Adik Kandungku Yang Nakal</a></li><li><a href="tetangga-kontrakan-stw-7162372232684960735.html">Tetangga Kontrakan STW</a></li><li><a href="kencani-mahasiswi-terbaru-6269524148601964777.html">Kencani Mahasiswi Terbaru</a></li><li><a href="nikmatnya-jadi-pasutri-237053040384708119.html">Nikmatnya Jadi Pasutri</a></li><li><a href="sungguh-nikmatnya-tubuh-sepupu-istriku-7387225572150491404.html">Sungguh Nikmatnya Tubuh Sepupu Istriku</a></li></ul>
+  
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                
+            <li>
+                <a href="posts/kenalan-spg-mulus-langsung-ajak-ml-5965395307216197938.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiaADbPvJVQX-aD9RieZ3kvkOeiksid5J_A1WGUeQ-5FuBWgczwR_b592Ni7YncREC54pcsL-HT5YlQFM1ePz5Q2itw_MaoHYz_FwjvgE-kajmJnaUruIMznMdiDOotAGnBYGmMAfTWaeDqi2P9JkYndAO4z1cRkKwGewAxyvxJg73YeKB_PV0ir9bOQQ=w360-h640" alt="Kenalan SPG Mulus Langsung Ajak ML">
+                </a>
+                <div class="item-title"><a href="posts/kenalan-spg-mulus-langsung-ajak-ml-5965395307216197938.html">Kenalan SPG Mulus Langsung Ajak ML</a></div>
+                <div class="item-snippet">Panggil saja namaku Rezha, ini nama samaran di cerita, hhe. Statusku sekarang adalah sebagai mahasis...</div>
+            </li>
+        
+            <li>
+                <a href="posts/diperkosa-mama-dan-tanteku-yang-binal-4773321942653745769.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiJckoOwplhvpiNiRlOcSyaeskT3yy93YvIIPKaf1zX9bTiaDucFo7v9qFdaYDeubuCn3hQyn_ketW94UZKtKDzvkGpXjilr3q4EF3ReRXgD7DRekNw5UXCt2cqLGpxrNX15ziXIFpMg0i_YdimyNMRv9gTyAF3MUwbhG8GAL3HVoWkFLG6K6IFod0T1A/w524-h640/395570916_122115277142061873_1612121283651371407_n.jpg" alt="Diperkosa Mama Dan Tanteku Yang Binal">
+                </a>
+                <div class="item-title"><a href="posts/diperkosa-mama-dan-tanteku-yang-binal-4773321942653745769.html">Diperkosa Mama Dan Tanteku Yang Binal</a></div>
+                <div class="item-snippet">Dia merasa sepi dan takut tinggal di rumahnya sendirian. bude ratna berumur 32 tahun. Penampilannya ...</div>
+            </li>
+        
+            <li>
+                <a href="posts/adik-ipar-yang-nikmat-8699077262701957685.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZF04rz_SBp4K3zSva6UK5G5b-RLGFim0MZ6dUT7CjxN3lz-QvIDcOdIHbfdxVLc0lXKmGbMhlDXnUozSR4mg5O8ZthndHcgQZ1Da9XeyfchV7_3rqk7RY7jMXfMhiDcnqYPKD8We965-s4-1ZWfjYmGiMiMwXS8z8M97uVDtJruumkvPglqz6W2opuGs/w320-h640/76fb9f54e5bd54f021b0d82ff9f1887b.jpg" alt="Adik Ipar yang Nikmat">
+                </a>
+                <div class="item-title"><a href="posts/adik-ipar-yang-nikmat-8699077262701957685.html">Adik Ipar yang Nikmat</a></div>
+                <div class="item-snippet">Perkenalkan namaku Bayu, aku mempunyai seorang istri yang lumayan cantik. Rambut hitam panjang dan l...</div>
+            </li>
+        
+            <li>
+                <a href="posts/merasakan-nikmatnya-tembem-milik-tante-medan-7247862167898565498.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ6Tf9_H_tqDp9FyhnLk1B0IuL4KK6i3GwvItHSqNeIFuD8hn_TLGTpGEZi1uhGopH667pO91POij2OAyYnRu2YVCKA2PVtGuxHluNih0SYFv6Ul7VLdavuaqA8esgTDrkj-qcxOYx4BhdcBUcLKhv23fbhWYqjhyphenhyphenE74iXa8BCXHn3izX5jFHYmKVxyQ/w512-h640/Fpfaf5BaQAEodj2.jfif" alt="Merasakan Nikmatnya Tembem Milik Tante Medan">
+                </a>
+                <div class="item-title"><a href="posts/merasakan-nikmatnya-tembem-milik-tante-medan-7247862167898565498.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></div>
+                <div class="item-snippet">Kisah ini terjadi ketika aku mash berumur delapanbelas tahun, murid kelas dua sekolah teknik setingk...</div>
+            </li>
+        
+            <li>
+                <a href="posts/rina-wanita-desa-yang-kecanduan-orgasme-7279075969402254089.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjul2G8W6KPpZ6WQ-axrOTN8KNT-t99V3Urk6lnnDUbLQ9ESsRp_dxLGxpS8wdePHN8tu56vp_HlV3Uj5CXpvjZze2rAUeWj2ANvJPJqoCsgkqO5CAl0U_WwYQpOfIKik8HIXcdkzYTYUSgmX9y0H7EK5RnrTDja7BNo-m3LmsIHDC5-7ZJDF2xO9QlrQ/w628-h640/5066035a5d11bc30cd099c922a4af2ca.jpg" alt="Rina Wanita Desa Yang Kecanduan Orgasme">
+                </a>
+                <div class="item-title"><a href="posts/rina-wanita-desa-yang-kecanduan-orgasme-7279075969402254089.html">Rina Wanita Desa Yang Kecanduan Orgasme</a></div>
+                <div class="item-snippet">Berperawakan sedang ukuran rata-rata, tinggi tidak, pendek tidak, jelek nggak, cakeppun ngga, kulit ...</div>
+            </li>
+        
+            </ul>
+        </div>
+    </div>
+    
     </div>
       
   </div>
