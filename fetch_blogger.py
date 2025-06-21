@@ -36,7 +36,8 @@ class ImageExtractor(HTMLParser):
 def extract_thumbnail(html):
     parser = ImageExtractor()
     parser.feed(html)
-    return parser.thumbnail or 'https://via.placeholder.com/600x200?text=No+Image'
+    # Gunakan placeholder jika tidak ada thumbnail ditemukan
+    return parser.thumbnail or 'https://placehold.co/100x56.25/E0E0E0/333333?text=No+Image'
 
 def strip_html(html):
     # Fungsi ini digunakan untuk membuat snippet (menghapus semua tag)
@@ -107,14 +108,71 @@ def generate_pagination_links(base_url, current, total):
 def safe_load(path):
     return load_template(path) if os.path.exists(path) else ""
 
-CUSTOM_HEAD = safe_load("custom_head.html")
+# CSS baru untuk Popular Posts
+CSS_FOR_RELATED_POSTS = """
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+	margin:0 0;
+	padding:0 0;
+	list-style:none;
+	border:none;
+	outline:none;
+}
+.PopularPosts .widget-content ul {
+	margin: 0;
+	list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+	display: block;
+	width: 100px;
+	height: 56.25px;
+	float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+	margin: 10px 0px;
+	position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+	margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+	font-weight: 700;
+	text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+	color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+	margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+	margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+	float: left;
+    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
+}
+</style>
+"""
+
+CUSTOM_HEAD_CONTENT = safe_load("custom_head.html")
 CUSTOM_JS = safe_load("custom_js.html")
 CUSTOM_HEADER = safe_load("custom_header.html")
 CUSTOM_SIDEBAR = safe_load("custom_sidebar.html")
 CUSTOM_FOOTER = safe_load("custom_footer.html")
 
-# Gabungkan ke dalam satu blok <head>
-CUSTOM_HEAD_FULL = CUSTOM_HEAD + CUSTOM_JS
+# Gabungkan ke dalam satu blok <head>, tambahkan CSS baru
+CUSTOM_HEAD_FULL = CUSTOM_HEAD_CONTENT + CSS_FOR_RELATED_POSTS + CUSTOM_JS
 
 # === Ambil semua postingan dari Blogger ===
 
@@ -155,15 +213,44 @@ def generate_post_page(post, all_posts):
     filename = f"{sanitize_filename(post['title'])}-{post['id']}.html"
     filepath = os.path.join(POST_DIR, filename)
 
-    related = [p for p in all_posts if p['id'] != post['id']]
-    related_sample = random.sample(related, min(5, len(related)))
-    related_html = "<ul>" + "".join(
-        f'<li><a href="{sanitize_filename(p["title"])}-{p["id"]}.html">{p["title"]}</a></li>'
-        for p in related_sample
-    ) + "</ul>"
+    # Filter postingan yang memiliki konten sebelum sampling
+    eligible_related = [p for p in all_posts if p['id'] != post['id'] and 'content' in p]
+    related_sample = random.sample(eligible_related, min(5, len(eligible_related)))
+
+    # --- Modifikasi di sini untuk Related Posts ---
+    related_items_html = []
+    for p_related in related_sample:
+        post_link_html = f"posts/{sanitize_filename(p_related['title'])}-{p_related['id']}.html"
+        # Pastikan 'content' ada di p_related sebelum diekstrak
+        related_post_content = p_related.get('content', '')
+        thumb = extract_thumbnail(related_post_content)
+        snippet = strip_html(related_post_content)
+        snippet = snippet[:100] + "..." if len(snippet) > 100 else snippet # Batasi panjang snippet
+
+        related_items_html.append(f"""
+            <li>
+                <a href="{post_link_html}">
+                    <img class="item-thumbnail" src="{thumb}" alt="{p_related["title"]}">
+                </a>
+                <div class="item-title"><a href="{post_link_html}">{p_related["title"]}</a></div>
+                <div class="item-snippet">{snippet}</div>
+            </li>
+        """)
+    
+    # Bungkus dalam struktur PopularPosts dan widget-content
+    related_html = f"""
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                {"".join(related_items_html)}
+            </ul>
+        </div>
+    </div>
+    """
+    # --- Akhir Modifikasi ---
 
     # --- PENTING: Terapkan fungsi remove_anchor_tags di sini ---
-    processed_content = remove_anchor_tags(post['content'])
+    processed_content = remove_anchor_tags(post.get('content', '')) # Tambahkan .get('content', '') untuk keamanan
     # --- Akhir perubahan ---
 
     html = render_template(POST_TEMPLATE,
@@ -194,8 +281,8 @@ def generate_index(posts):
         for post in items:
             filename = generate_post_page(post, posts)
             # snippet tetap menggunakan strip_html untuk menghilangkan semua tag
-            snippet = strip_html(post['content'])[:100]
-            thumb = extract_thumbnail(post['content'])
+            snippet = strip_html(post.get('content', ''))[:100]
+            thumb = extract_thumbnail(post.get('content', ''))
 
             # --- Perubahan di sini untuk menampilkan satu label saja ---
             first_label_html = ""
@@ -218,12 +305,12 @@ def generate_index(posts):
 """
         pagination = generate_pagination_links("index", page, total_pages)
         html = render_template(INDEX_TEMPLATE,
-            items=items_html,
-            pagination=pagination,
-            custom_head=CUSTOM_HEAD_FULL,
-            custom_header=CUSTOM_HEADER,
-            custom_sidebar=CUSTOM_SIDEBAR,
-            custom_footer=CUSTOM_FOOTER
+                items=items_html,
+                pagination=pagination,
+                custom_head=CUSTOM_HEAD_FULL,
+                custom_header=CUSTOM_HEADER,
+                custom_sidebar=CUSTOM_SIDEBAR,
+                custom_footer=CUSTOM_FOOTER
         )
         output_file = f"index.html" if page == 1 else f"index-{page}.html"
         with open(output_file, 'w', encoding='utf-8') as f:
@@ -248,8 +335,8 @@ def generate_label_pages(posts):
             for post in items:
                 filename = generate_post_page(post, posts)
                 # snippet di sini juga tetap menggunakan strip_html
-                snippet = strip_html(post['content'])[:150]
-                thumb = extract_thumbnail(post['content'])
+                snippet = strip_html(post.get('content', ''))[:150]
+                thumb = extract_thumbnail(post.get('content', ''))
                 items_html += f"""
 <article id="post-wrapper">
   <a href="../posts/{filename}">
@@ -263,13 +350,13 @@ def generate_label_pages(posts):
                 f"{sanitize_filename(label)}", page, total_pages
             )
             html = render_template(LABEL_TEMPLATE,
-                label=label,
-                items=items_html,
-                pagination=pagination,
-                custom_head=CUSTOM_HEAD_FULL,
-                custom_header=CUSTOM_HEADER,
-                custom_sidebar=CUSTOM_SIDEBAR,
-                custom_footer=CUSTOM_FOOTER
+                    label=label,
+                    items=items_html,
+                    pagination=pagination,
+                    custom_head=CUSTOM_HEAD_FULL,
+                    custom_header=CUSTOM_HEADER,
+                    custom_sidebar=CUSTOM_SIDEBAR,
+                    custom_footer=CUSTOM_FOOTER
             )
             output_file = os.path.join(LABEL_DIR, f"{sanitize_filename(label)}-{page}.html")
             with open(output_file, 'w', encoding='utf-8') as f:
