@@ -51,6 +51,7 @@ def remove_anchor_tags(html_content):
     return re.sub(r'<a[^>]*>(.*?)<\/a>', r'\1', html_content)
 
 def sanitize_filename(title):
+    # Membersihkan judul untuk digunakan sebagai nama file, menghilangkan ID
     return re.sub(r'\W+', '-', title.lower()).strip('-')
 
 def render_labels(labels):
@@ -69,6 +70,7 @@ def load_template(path):
 
 def render_template(template, **context):
     for key, value in context.items():
+        # Pastikan nilai diganti hanya jika kunci ditemukan. Gunakan replace.
         template = template.replace(f'{{{{ {key} }}}}', str(value))
     return template
 
@@ -82,6 +84,7 @@ def generate_pagination_links(base_url, current, total):
     def page_link(page):
         cls = 'active' if page == current else ''
         suffix = "" if page == 1 and "index" in base_url else f"-{page}"
+        # Pastikan link pagination mengarah ke .html
         return f'<a class="{cls}" href="{base_url}{suffix}.html">{page}</a>'
 
     if total <= 10:
@@ -210,7 +213,8 @@ LABEL_TEMPLATE = load_template("label_template.html")
 # === Halaman per postingan ===
 
 def generate_post_page(post, all_posts):
-    filename = f"{sanitize_filename(post['title'])}-{post['id']}.html"
+    # MODIFIKASI: Menghilangkan post['id'] dari nama file
+    filename = f"{sanitize_filename(post['title'])}.html"
     filepath = os.path.join(POST_DIR, filename)
 
     # Filter postingan yang memiliki konten sebelum sampling
@@ -220,7 +224,8 @@ def generate_post_page(post, all_posts):
     # --- Modifikasi di sini untuk Related Posts ---
     related_items_html = []
     for p_related in related_sample:
-        post_link_html = f"posts/{sanitize_filename(p_related['title'])}-{p_related['id']}.html"
+        # MODIFIKASI: Mengubah struktur permalink untuk related posts
+        post_link_html = f"posts/{sanitize_filename(p_related['title'])}.html"
         # Pastikan 'content' ada di p_related sebelum diekstrak
         related_post_content = p_related.get('content', '')
         thumb = extract_thumbnail(related_post_content)
@@ -229,7 +234,7 @@ def generate_post_page(post, all_posts):
 
         related_items_html.append(f"""
             <li>
-                <a href="/{post_link_html}">
+                <a href="{post_link_html}">
                     <img class="item-thumbnail" src="{thumb}" alt="{p_related["title"]}">
                 </a>
                 <div class="item-title"><a href="{post_link_html}">{p_related["title"]}</a></div>
@@ -279,7 +284,8 @@ def generate_index(posts):
         items = posts[start:end]
         items_html = ""
         for post in items:
-            filename = generate_post_page(post, posts)
+            # MODIFIKASI: generate_post_page akan menghasilkan nama file tanpa ID
+            filename = generate_post_page(post, posts) 
             # snippet tetap menggunakan strip_html untuk menghilangkan semua tag
             snippet = strip_html(post.get('content', ''))[:100]
             thumb = extract_thumbnail(post.get('content', ''))
@@ -333,6 +339,7 @@ def generate_label_pages(posts):
             items = label_posts[start:end]
             items_html = ""
             for post in items:
+                # MODIFIKASI: generate_post_page akan menghasilkan nama file tanpa ID
                 filename = generate_post_page(post, posts)
                 # snippet di sini juga tetap menggunakan strip_html
                 snippet = strip_html(post.get('content', ''))[:150]
