@@ -181,14 +181,14 @@ def generate_index(posts):
         items_html = ""
         for post in items:
             filename = generate_post_page(post, posts)
-            snippet = strip_html(post['content'])[:150]
+            snippet = strip_html(post['content'])[:100]
             thumb = extract_thumbnail(post['content'])
             labels = render_labels(post.get('labels', []))
             items_html += f"""
 <article class="post">
   <div class="post-body">
     <div class='label-line'>
-      <span class='label-info-th'>{{ labels }}</span>
+      <span class='label-info-th'>{ label }</span>
     </div> 
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
