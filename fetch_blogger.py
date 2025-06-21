@@ -39,7 +39,15 @@ def extract_thumbnail(html):
     return parser.thumbnail or 'https://via.placeholder.com/600x200?text=No+Image'
 
 def strip_html(html):
+    # Fungsi ini digunakan untuk membuat snippet (menghapus semua tag)
     return re.sub('<[^<]+?>', '', html)
+
+def remove_anchor_tags(html_content):
+    """
+    Menghapus semua tag <a href> dari konten HTML, namun mempertahankan teks di dalamnya.
+    Contoh: <a href="link.com">Teks Ini</a> akan menjadi Teks Ini
+    """
+    return re.sub(r'<a[^>]*>(.*?)<\/a>', r'\1', html_content)
 
 def sanitize_filename(title):
     return re.sub(r'\W+', '-', title.lower()).strip('-')
@@ -154,9 +162,13 @@ def generate_post_page(post, all_posts):
         for p in related_sample
     ) + "</ul>"
 
+    # --- PENTING: Terapkan fungsi remove_anchor_tags di sini ---
+    processed_content = remove_anchor_tags(post['content'])
+    # --- Akhir perubahan ---
+
     html = render_template(POST_TEMPLATE,
         title=post['title'],
-        content=post['content'],
+        content=processed_content, # Gunakan konten yang sudah diproses di sini
         labels=render_labels(post.get("labels", [])),
         related=related_html,
         custom_head=CUSTOM_HEAD_FULL,
@@ -181,6 +193,7 @@ def generate_index(posts):
         items_html = ""
         for post in items:
             filename = generate_post_page(post, posts)
+            # snippet tetap menggunakan strip_html untuk menghilangkan semua tag
             snippet = strip_html(post['content'])[:100]
             thumb = extract_thumbnail(post['content'])
 
@@ -234,6 +247,7 @@ def generate_label_pages(posts):
             items_html = ""
             for post in items:
                 filename = generate_post_page(post, posts)
+                # snippet di sini juga tetap menggunakan strip_html
                 snippet = strip_html(post['content'])[:150]
                 thumb = extract_thumbnail(post['content'])
                 items_html += f"""
