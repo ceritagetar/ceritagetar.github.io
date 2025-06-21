@@ -11,7 +11,7 @@ API_KEY = os.environ.get('BLOGGER_API_KEY')
 BLOG_ID = os.environ.get('BLOG_ID')
 
 DATA_DIR = 'data'
-POST_DIR = 'posts'
+POST_DIR = 'posts' # Ini adalah folder tempat artikel akan disimpan
 LABEL_DIR = 'labels'
 POSTS_JSON = os.path.join(DATA_DIR, 'posts.json')
 POSTS_PER_PAGE = 10
@@ -36,22 +36,16 @@ class ImageExtractor(HTMLParser):
 def extract_thumbnail(html):
     parser = ImageExtractor()
     parser.feed(html)
-    # Gunakan placeholder jika tidak ada thumbnail ditemukan
     return parser.thumbnail or 'https://placehold.co/100x56.25/E0E0E0/333333?text=No+Image'
 
 def strip_html(html):
-    # Fungsi ini digunakan untuk membuat snippet (menghapus semua tag)
     return re.sub('<[^<]+?>', '', html)
 
 def remove_anchor_tags(html_content):
-    """
-    Menghapus semua tag <a href> dari konten HTML, namun mempertahankan teks di dalamnya.
-    Contoh: <a href="link.com">Teks Ini</a> akan menjadi Teks Ini
-    """
     return re.sub(r'<a[^>]*>(.*?)<\/a>', r'\1', html_content)
 
 def sanitize_filename(title):
-    # Membersihkan judul untuk digunakan sebagai nama file, menghilangkan ID
+    # Membersihkan judul untuk digunakan sebagai nama file
     return re.sub(r'\W+', '-', title.lower()).strip('-')
 
 def render_labels(labels):
@@ -60,6 +54,7 @@ def render_labels(labels):
     html = '<div class="labels">'
     for label in labels:
         filename = sanitize_filename(label)
+        # Link label juga perlu diperbaiki jika ingin absolut
         html += f'<span class="label"><a href="/labels/{filename}-1.html">{label}</a></span> '
     html += "</div>"
     return html
@@ -70,7 +65,6 @@ def load_template(path):
 
 def render_template(template, **context):
     for key, value in context.items():
-        # Pastikan nilai diganti hanya jika kunci ditemukan. Gunakan replace.
         template = template.replace(f'{{{{ {key} }}}}', str(value))
     return template
 
@@ -85,7 +79,10 @@ def generate_pagination_links(base_url, current, total):
         cls = 'active' if page == current else ''
         suffix = "" if page == 1 and "index" in base_url else f"-{page}"
         # Pastikan link pagination mengarah ke .html
-        return f'<a class="{cls}" href="{base_url}{suffix}.html">{page}</a>'
+        # Jika base_url adalah "index", maka linknya "/index.html" atau "/index-page.html"
+        # Jika base_url adalah "labels/kategori", maka linknya "/labels/kategori.html" atau "/labels/kategori-page.html"
+        full_url = f"/{base_url}{suffix}.html" # Tambahkan '/' di depan untuk path absolut
+        return f'<a class="{cls}" href="{full_url}">{page}</a>'
 
     if total <= 10:
         for i in range(1, total + 1):
@@ -111,7 +108,6 @@ def generate_pagination_links(base_url, current, total):
 def safe_load(path):
     return load_template(path) if os.path.exists(path) else ""
 
-# CSS baru untuk Popular Posts
 CSS_FOR_RELATED_POSTS = """
 <style>
 /* Popular Posts */
@@ -163,7 +159,6 @@ transform: scale(1.05);
 }
 .PopularPosts .item-thumbnail {
 	float: left;
-    /* margin: 10px 0px; - Ini sudah diatur oleh .PopularPosts .widget-content ul li img, jadi ini bisa redundant atau menyebabkan konflik jika diterapkan pada wrapper. Jika diterapkan pada img, ini akan menambahkan margin vertikal. Dibiarkan seperti ini karena ada di CSS asli Anda. */
 }
 </style>
 """
@@ -174,7 +169,6 @@ CUSTOM_HEADER = safe_load("custom_header.html")
 CUSTOM_SIDEBAR = safe_load("custom_sidebar.html")
 CUSTOM_FOOTER = safe_load("custom_footer.html")
 
-# Gabungkan ke dalam satu blok <head>, tambahkan CSS baru
 CUSTOM_HEAD_FULL = CUSTOM_HEAD_CONTENT + CSS_FOR_RELATED_POSTS + CUSTOM_JS
 
 # === Ambil semua postingan dari Blogger ===
@@ -213,36 +207,35 @@ LABEL_TEMPLATE = load_template("label_template.html")
 # === Halaman per postingan ===
 
 def generate_post_page(post, all_posts):
-    # MODIFIKASI: Menghilangkan post['id'] dari nama file
-    filename = f"{sanitize_filename(post['title'])}.html"
-    filepath = os.path.join(POST_DIR, filename)
+    # Nama file artikel yang akan disimpan di dalam folder POST_DIR ('posts/')
+    filename_without_path = f"{sanitize_filename(post['title'])}.html"
+    filepath = os.path.join(POST_DIR, filename_without_path) # Path lengkap untuk menyimpan file
 
     # Filter postingan yang memiliki konten sebelum sampling
     eligible_related = [p for p in all_posts if p['id'] != post['id'] and 'content' in p]
     related_sample = random.sample(eligible_related, min(5, len(eligible_related)))
 
-    # --- Modifikasi di sini untuk Related Posts ---
     related_items_html = []
     for p_related in related_sample:
-        # MODIFIKASI: Mengubah struktur permalink untuk related posts
-        post_link_html = f"posts/{sanitize_filename(p_related['title'])}.html"
-        # Pastikan 'content' ada di p_related sebelum diekstrak
+        # Link untuk artikel terkait, gunakan path absolut dari root situs
+        # Contoh: /posts/judul-artikel-terkait.html
+        related_post_absolute_link = f"/posts/{sanitize_filename(p_related['title'])}.html"
+        
         related_post_content = p_related.get('content', '')
         thumb = extract_thumbnail(related_post_content)
         snippet = strip_html(related_post_content)
-        snippet = snippet[:100] + "..." if len(snippet) > 100 else snippet # Batasi panjang snippet
+        snippet = snippet[:100] + "..." if len(snippet) > 100 else snippet
 
         related_items_html.append(f"""
             <li>
-                <a href="{post_link_html}">
+                <a href="{related_post_absolute_link}">
                     <img class="item-thumbnail" src="{thumb}" alt="{p_related["title"]}">
                 </a>
-                <div class="item-title"><a href="{post_link_html}">{p_related["title"]}</a></div>
+                <div class="item-title"><a href="{related_post_absolute_link}">{p_related["title"]}</a></div>
                 <div class="item-snippet">{snippet}</div>
             </li>
         """)
     
-    # Bungkus dalam struktur PopularPosts dan widget-content
     related_html = f"""
     <div class="PopularPosts">
         <div class="widget-content">
@@ -252,15 +245,12 @@ def generate_post_page(post, all_posts):
         </div>
     </div>
     """
-    # --- Akhir Modifikasi ---
 
-    # --- PENTING: Terapkan fungsi remove_anchor_tags di sini ---
-    processed_content = remove_anchor_tags(post.get('content', '')) # Tambahkan .get('content', '') untuk keamanan
-    # --- Akhir perubahan ---
+    processed_content = remove_anchor_tags(post.get('content', ''))
 
     html = render_template(POST_TEMPLATE,
         title=post['title'],
-        content=processed_content, # Gunakan konten yang sudah diproses di sini
+        content=processed_content,
         labels=render_labels(post.get("labels", [])),
         related=related_html,
         custom_head=CUSTOM_HEAD_FULL,
@@ -272,7 +262,9 @@ def generate_post_page(post, all_posts):
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(html)
 
-    return filename
+    # Mengembalikan hanya nama file untuk digunakan di tempat lain (misalnya index dan label pages)
+    # Ini akan digabungkan dengan /posts/ di fungsi pemanggil
+    return filename_without_path
 
 # === Halaman index beranda ===
 
@@ -284,19 +276,20 @@ def generate_index(posts):
         items = posts[start:end]
         items_html = ""
         for post in items:
-            # MODIFIKASI: generate_post_page akan menghasilkan nama file tanpa ID
-            filename = generate_post_page(post, posts) 
-            # snippet tetap menggunakan strip_html untuk menghilangkan semua tag
+            # generate_post_page sekarang mengembalikan hanya nama file (tanpa path 'posts/')
+            # Kita perlu tambahkan '/posts/' di depannya untuk link di index
+            post_filename = generate_post_page(post, posts)
+            post_absolute_link = f"/posts/{post_filename}" # Link absolut ke artikel
+
             snippet = strip_html(post.get('content', ''))[:100]
             thumb = extract_thumbnail(post.get('content', ''))
 
-            # --- Perubahan di sini untuk menampilkan satu label saja ---
             first_label_html = ""
             if post.get('labels'):
                 label_name = post['labels'][0]
                 sanitized_label_name = sanitize_filename(label_name)
+                # Link label juga perlu absolut
                 first_label_html = f'<span class="label"><a href="/labels/{sanitized_label_name}-1.html">{label_name}</a></span>'
-            # --- Akhir perubahan ---
 
             items_html += f"""
 <div class="post">
@@ -304,8 +297,8 @@ def generate_index(posts):
 <div class='label-line'>
       <span class='label-info-th'>{first_label_html}</span></div>
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
-    <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
-    <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
+    <h2 class="post-title"><a href="{post_absolute_link}">{post['title']}</a></h2>
+    <p class="post-snippet">{snippet}... <a href="{post_absolute_link}">Baca selengkapnya</a></p>
     </div>
     </div>
 """
@@ -339,22 +332,24 @@ def generate_label_pages(posts):
             items = label_posts[start:end]
             items_html = ""
             for post in items:
-                # MODIFIKASI: generate_post_page akan menghasilkan nama file tanpa ID
-                filename = generate_post_page(post, posts)
-                # snippet di sini juga tetap menggunakan strip_html
+                # generate_post_page mengembalikan nama file saja
+                # Kita perlu tambahkan '/posts/' di depannya untuk link di halaman label
+                post_filename = generate_post_page(post, posts)
+                post_absolute_link = f"/posts/{post_filename}" # Link absolut ke artikel
+
                 snippet = strip_html(post.get('content', ''))[:150]
                 thumb = extract_thumbnail(post.get('content', ''))
                 items_html += f"""
 <article id="post-wrapper">
-  <a href="../posts/{filename}">
+  <a href="{post_absolute_link}">
     <img class="thumbnail" src="{thumb}" alt="">
     <h2>{post['title']}</h2>
   </a>
-  <p>{snippet}... <a href="../posts/{filename}">Baca selengkapnya</a></p>
+  <p>{snippet}... <a href="{post_absolute_link}">Baca selengkapnya</a></p>
 </article>
 """
             pagination = generate_pagination_links(
-                f"{sanitize_filename(label)}", page, total_pages
+                f"labels/{sanitize_filename(label)}", page, total_pages
             )
             html = render_template(LABEL_TEMPLATE,
                     label=label,
