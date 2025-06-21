@@ -9,8 +9,121 @@
 <style>
   #blog-pager-newer-link, #blog-pager-older-link {display:none}
 </style>
+<style>
+/* Tombol non-fixed, tampil setelah potongan konten */
+      
+.sticky-next-button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
+.sticky-next-button:hover {
+  background-color: #0056b3;
+}
+</style>
 
+<script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
+
+  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+let safeCutIndex = cutIndex;
+while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+  safeCutIndex--;
+}
+
+const cutHtml = htmlString.substring(0, safeCutIndex);
+const remainingHtml = htmlString.substring(safeCutIndex);
+
+while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith(&#39;&lt;/&#39;)) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index &gt; -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = &#39;&#39;;
+    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
+      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
+postBodies.forEach((postBody) =&gt; {
+  if (!postBody) return;
+  if (postBody.innerHTML.length &lt; charsToDisplay) return;
+
+const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement(&#39;details&#39;);
+details.style.width = &#39;100%&#39;;
+
+const summary = document.createElement(&#39;summary&#39;);
+summary.style.display = &#39;none&#39;;
+details.appendChild(summary);
+
+const hiddenDiv = document.createElement(&#39;div&#39;);
+hiddenDiv.style.paddingTop = &#39;10px&#39;;
+hiddenDiv.innerHTML = hiddenContent;
+details.appendChild(hiddenDiv);
+
+
+    const button = document.createElement(&#39;button&#39;);
+    button.textContent = summaryText;
+    button.className = &#39;sticky-next-button&#39;;
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+button.addEventListener(&#39;click&#39;, () =&gt; {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener(&#39;toggle&#39;, () =&gt; {
+      if (details.open &amp;&amp; postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if (&#39;requestIdleCallback&#39; in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener(&#39;load&#39;, initContentTruncation);
+}
+</script>
 <script src="/tema/anomali.js"></script>
+
 
 <style>
 /* Popular Posts */
@@ -177,19 +290,19 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiGA-5FAhErCLAdm1PrxtXwxjRcvjcpxddzqanZjChNxaC0Besvl7McU5bhwTnSV6UsQKKydJezx7esT-MHfizeTa5JfHbJiaYbasSiaECrx4X3RbtPVGq8QdNq6dltYdBzn3FP1LL9E7115c_axOH4uunoUbXuoh08jq3pDIqwTghJU3IAmEsmebUmxQ/w512-h640/ad52d218ce77f20f1b0f7dd75e5757ee.jpg" alt="Diperkosa Teman Suamiku Tapi Aku Menikmatinya">
+                <a href="/posts/rahasia-pribadi-ibu-kost-ku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgdIinP9pPpVAuUnSsKUSxhG6vq17Fs1K_jhQJ64vvWv2FRy9bHyK78cy5ONyp7Ru2q6TqSryIspw2vhAPapfJfwB9FUAUoo9sYq1PmSYejgr73fJjtpqegykmo1BofPgQhFrUQgOeiZEYRSnAFSUChLm6O02PEw4v4tosSse4lsqtnPnZQP1zXcurX=w432-h640" alt="Rahasia Pribadi Ibu Kost Ku">
                 </a>
-                <div class="item-title"><a href="/posts/diperkosa-teman-suamiku-tapi-aku-menikmatinya.html">Diperkosa Teman Suamiku Tapi Aku Menikmatinya</a></div>
-                <div class="item-snippet">Dengan pendidikan yang dan nilai nilai selalu memuaskan dimana aku lulus dengan nilai IP yang bisa d...</div>
+                <div class="item-title"><a href="/posts/rahasia-pribadi-ibu-kost-ku.html">Rahasia Pribadi Ibu Kost Ku</a></div>
+                <div class="item-snippet">Pagi itu aku tengah sibuk membenahi kamarku. Sebuah kamar kontrakan yang baru kutempati sejak sebula...</div>
             </li>
         
             <li>
-                <a href="/posts/mama-mertuaku-haus-akan-belaian.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKAVkY2MBPvfrahMb_ameGB6q_yLXlvxDDGX4V7zdVMsVVu7sm3EE8Lxo8XIlcaXNHhyphenhyphen34LdjanMv_JdKp7ki5M8bmF5qs8R0WjukgtcEljfOPC9vFOmY4dfSQVXM7lzCtbyIH5tLOymBJktB4IgEkiIc-tD_vAyMmsWrk00R2azvXNnp_aOmx-hH61vY/w494-h640/278564919_1840781442792210_1094798816856265520_n.jpg" alt="Mama Mertuaku Haus Akan Belaian">
+                <a href="/posts/belajar-sama-tante-erni-yang-cantik.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgIq9mu57bDmFR6L2VBsxGcRdmJJE0BRZMFC_R7ZOpANOaU47SXBUPZ__nCz52An5sHgq7_O_0h21--JpDyLnnaZIJN4l_-vGQCFAjbQKkHACJhqZ0YSzJB4ojzE8Zz1kULLrF4x3q32f3ZzEedoxTql2O9FPfMmqxHw-Zr0Z6msdxWO8U8RX_1jXkVOC0" alt="Belajar sama Tante Erni yang cantik">
                 </a>
-                <div class="item-title"><a href="/posts/mama-mertuaku-haus-akan-belaian.html">Mama Mertuaku Haus Akan Belaian</a></div>
-                <div class="item-snippet">Sudah dua tahun ini aku menikah dengan Virni, dia seorang model iklan dan enam bulan lalu, dia menja...</div>
+                <div class="item-title"><a href="/posts/belajar-sama-tante-erni-yang-cantik.html">Belajar sama Tante Erni yang cantik</a></div>
+                <div class="item-snippet">Insiden ini berlangsung saat saya kelas 3 SMA, yah saya prediksikan usia saya saat itu barusan 14 ta...</div>
             </li>
         
             <li>
@@ -201,19 +314,19 @@ transform: scale(1.05);
             </li>
         
             <li>
-                <a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQ6Tf9_H_tqDp9FyhnLk1B0IuL4KK6i3GwvItHSqNeIFuD8hn_TLGTpGEZi1uhGopH667pO91POij2OAyYnRu2YVCKA2PVtGuxHluNih0SYFv6Ul7VLdavuaqA8esgTDrkj-qcxOYx4BhdcBUcLKhv23fbhWYqjhyphenhyphenE74iXa8BCXHn3izX5jFHYmKVxyQ/w512-h640/Fpfaf5BaQAEodj2.jfif" alt="Merasakan Nikmatnya Tembem Milik Tante Medan">
+                <a href="/posts/oleh-oleh-dugem.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhGS1DE9ApsAle3rHIj9hwb6k028A3VXhDkGKO9NmehSukLjPqTrf56geWB2REB2a5FIIzuCrSj0gtSarqrRNcwIyIIXJ20ac5fBAxXy9O565y0yqRP9TTDk0jCtctre-hcE9SkPo5eLGdIBHBE3ueE1ckQyRNbGuF7o-JQIvwg8dNWvKqyxYW5Tpz3hmk/w512-h640/Fqnu34jaMAIFGjk.jpg" alt="Oleh-oleh Dugem">
                 </a>
-                <div class="item-title"><a href="/posts/merasakan-nikmatnya-tembem-milik-tante-medan.html">Merasakan Nikmatnya Tembem Milik Tante Medan</a></div>
-                <div class="item-snippet">Kisah ini terjadi ketika aku mash berumur delapanbelas tahun, murid kelas dua sekolah teknik setingk...</div>
+                <div class="item-title"><a href="/posts/oleh-oleh-dugem.html">Oleh-oleh Dugem</a></div>
+                <div class="item-snippet">Cerita kali ini bermula ketika aku sedang Dugem dan bertemu Cewek Mabuk di sebelahku tak berlangsung...</div>
             </li>
         
             <li>
-                <a href="/posts/nikmatnya-abg-binal.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgJvTVjh1QWv8Hb1vM1GkOsllZNQWD8znAQ7nMctuKr1Zwtv24ZdR9aEC2ecT4ivgaBg6Jz0qjVrB59dZXVacaVS-1wak6UwWGI3znqLuyVEO1xaFlwXkELOm5PdjOXbA3UFT30IaWoi2BTeW8JFOsejcwAYngWirPQJ91XmKdRX4fuTFu_0DagsE_ngUU/w448-h640/FtFR-m9aMAAkxOl.jpg" alt="Nikmatnya ABG Binal">
+                <a href="/posts/teman-curhat-yang-nikmat.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRonnz-sNxxIYX3VMWrTxjMQB4ZNycbboOQvWHgkrkSJr0vnpiVymapv8f5QM8d2X8SU1N3f8YeKRqM2I1yJw8HiNdS_Q0HxQuUY0J7r1gpqu4BnlcnrQFCAcYq0GGkBJ3wJGGPR8qNUg-_hXWQ6D7XLNIhu-0BLFL2j3DrCJ0naQpK-JJdLs5za1aazA/w570-h640/35c16b43eca66effa8543a046df9d944.jpg" alt="Teman Curhat Yang Nikmat">
                 </a>
-                <div class="item-title"><a href="/posts/nikmatnya-abg-binal.html">Nikmatnya ABG Binal</a></div>
-                <div class="item-snippet">Aku biasa di panggil Gilang dan aku memang di kenal sebagai cowok yang tidak suka sama cewek bispak....</div>
+                <div class="item-title"><a href="/posts/teman-curhat-yang-nikmat.html">Teman Curhat Yang Nikmat</a></div>
+                <div class="item-snippet">Pertemuan itu sendiri terjadi di internet cafe, yang kebetulan saat itu aku sedang mengetik beberapa...</div>
             </li>
         
             </ul>

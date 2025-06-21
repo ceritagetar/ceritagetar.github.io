@@ -9,8 +9,121 @@
 <style>
   #blog-pager-newer-link, #blog-pager-older-link {display:none}
 </style>
+<style>
+/* Tombol non-fixed, tampil setelah potongan konten */
+      
+.sticky-next-button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
+.sticky-next-button:hover {
+  background-color: #0056b3;
+}
+</style>
 
+<script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
+
+  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+let safeCutIndex = cutIndex;
+while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+  safeCutIndex--;
+}
+
+const cutHtml = htmlString.substring(0, safeCutIndex);
+const remainingHtml = htmlString.substring(safeCutIndex);
+
+while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith(&#39;&lt;/&#39;)) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index &gt; -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = &#39;&#39;;
+    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
+      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
+postBodies.forEach((postBody) =&gt; {
+  if (!postBody) return;
+  if (postBody.innerHTML.length &lt; charsToDisplay) return;
+
+const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement(&#39;details&#39;);
+details.style.width = &#39;100%&#39;;
+
+const summary = document.createElement(&#39;summary&#39;);
+summary.style.display = &#39;none&#39;;
+details.appendChild(summary);
+
+const hiddenDiv = document.createElement(&#39;div&#39;);
+hiddenDiv.style.paddingTop = &#39;10px&#39;;
+hiddenDiv.innerHTML = hiddenContent;
+details.appendChild(hiddenDiv);
+
+
+    const button = document.createElement(&#39;button&#39;);
+    button.textContent = summaryText;
+    button.className = &#39;sticky-next-button&#39;;
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+button.addEventListener(&#39;click&#39;, () =&gt; {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener(&#39;toggle&#39;, () =&gt; {
+      if (details.open &amp;&amp; postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if (&#39;requestIdleCallback&#39; in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener(&#39;load&#39;, initContentTruncation);
+}
+</script>
 <script src="/tema/anomali.js"></script>
+
 
 <style>
 /* Popular Posts */
@@ -177,35 +290,11 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjul2G8W6KPpZ6WQ-axrOTN8KNT-t99V3Urk6lnnDUbLQ9ESsRp_dxLGxpS8wdePHN8tu56vp_HlV3Uj5CXpvjZze2rAUeWj2ANvJPJqoCsgkqO5CAl0U_WwYQpOfIKik8HIXcdkzYTYUSgmX9y0H7EK5RnrTDja7BNo-m3LmsIHDC5-7ZJDF2xO9QlrQ/w628-h640/5066035a5d11bc30cd099c922a4af2ca.jpg" alt="Rina Wanita Desa Yang Kecanduan Orgasme">
+                <a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhrarVmUQ6Q8Z2RjLqZeb3tVa4M6MqJLXLbxRFgXJlry2i0kclWVFRVwIP1lEY7W_QakUDcfSqofrnDFFoEhmFOqfBeOpZrnfctLuUhOWb0t0E6Q5bh78HudIHo76jYKyhdwA4OZ8vYGASHsqUP5fVevbcgv5giVxNMiqZPduPh4r_gdc9Tz-QoMrxphg=w360-h640" alt="Tergoda Lekuk Tubuh Indah Istri Temanku">
                 </a>
-                <div class="item-title"><a href="/posts/rina-wanita-desa-yang-kecanduan-orgasme.html">Rina Wanita Desa Yang Kecanduan Orgasme</a></div>
-                <div class="item-snippet">Berperawakan sedang ukuran rata-rata, tinggi tidak, pendek tidak, jelek nggak, cakeppun ngga, kulit ...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhexsKiISkmgrh9FiUzDEDMDsTEkBbHWUNTI_osmE13TacOtQX_ylHNVDXJyx6IDzAahO942eaLbg_FjWrjHskBlsqedQuOxgVswsfJ7zXi8D7RqdJcjavngGrQ3-ExLXdL-69-fhb9Db-FCleb1Yq4XTD3OfOIE5I8B-5yQDQyciFKbtskpU3ISK4Qtg/w360-h640/0505b7052be18f44b8ea763cd3cf76d3.jpg" alt="Bercinta Dengan Pengantin Baru Yang Kesepian">
-                </a>
-                <div class="item-title"><a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">Bercinta Dengan Pengantin Baru Yang Kesepian</a></div>
-                <div class="item-snippet">Nama saya Andi, saat itu saya berumur 25 tahun, telah berkeluarga dengan istri bernama Sinta, serta ...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh-SFYphxqdfWvap5FQ_iiu7uYenVHeFMRdVRkW1mOC4JOLp6nsRsBPmhpb-9wCMjtImYd6iINF_s2rNcZaqFHXAkVFRXslSTl93stSHwuMg44tOLATW4Yb3PbPLi6N8Xv3ZEz2NmMOY8SVMqlg47usonmDAC8m-CEuNmV73EwpdZhoOcTprmyX0sa_dA/w512-h640/1b602023b6fcd6aacc9c6c12b5eb4978.jpg" alt="Menyetubuhi Anak Ibu Kost Yang Masih Perawan">
-                </a>
-                <div class="item-title"><a href="/posts/menyetubuhi-anak-ibu-kost-yang-masih-perawan.html">Menyetubuhi Anak Ibu Kost Yang Masih Perawan</a></div>
-                <div class="item-snippet">Cerita ini bermula saat saya mendapatkan tempat kossan yang baru. Dari kemarin-kemarin saya muter-mu...</div>
-            </li>
-        
-            <li>
-                <a href="/posts/dengan-janda-tetanggaku.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEghlHVYlLNiXuerK29SXe3bsnAOkEyirXQlX1YeJ3rZXAp-l7GceR0XsMOr32Nz10O9zh4fsqPnsWOMp108HbZaqfQm8vngf_aVnEpo0qGw-Y1YZupkyw2E0aaoiSpDqRhKr3cgAneaxHahLxJVlNsQBaBNVQuGl1uFOTEH1KyX6NT0fksba5tUOeiar_s/s320/GGHoKc0aAAAyrru.jpg" alt="Dengan Janda Tetanggaku">
-                </a>
-                <div class="item-title"><a href="/posts/dengan-janda-tetanggaku.html">Dengan Janda Tetanggaku</a></div>
-                <div class="item-snippet">Namaku rudi, usiaku 26 tahun, saya sudah berumah tangga, pas di deket rumahku tinggal seseorang wani...</div>
+                <div class="item-title"><a href="/posts/tergoda-lekuk-tubuh-indah-istri-temanku.html">Tergoda Lekuk Tubuh Indah Istri Temanku</a></div>
+                <div class="item-snippet">Kami coba mengadu nasib di kota Kabupatenku dgn mengontrak rumah yg sangat sederhana. Beberapa bi&am...</div>
             </li>
         
             <li>
@@ -214,6 +303,30 @@ transform: scale(1.05);
                 </a>
                 <div class="item-title"><a href="/posts/cewek-impianku-adalah-lontenya-papaku.html">Cewek Impianku adalah Lontenya Papaku</a></div>
                 <div class="item-snippet">Yang menarik adalah penghuni kostnya salah satunya adalah mbak marisa , dari semua penghuni kost dis...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/liburan-nikmat-bersama-istri-teman.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEh_cnIt0irc16RyCtw1g1ZQkiNPFI_Z2MYU2vq0gLwjFt7sYOTIrJtvgT4JJm9PznA6GbQuxoU-H1v3rl-rAMi6DK-mxTTn0EtP51MmH5vEmbn5VJerq5Alt1SZe2-pOOU84ZU8hIsmGJql1LUb2Io_cw9j1eYwQhETAjvkFuFIHj2frUbosDzTpD5udg=w573-h640" alt="Liburan Nikmat Bersama Istri Teman">
+                </a>
+                <div class="item-title"><a href="/posts/liburan-nikmat-bersama-istri-teman.html">Liburan Nikmat Bersama Istri Teman</a></div>
+                <div class="item-snippet">Keliatan bukan Ratih yang tadi malam aku temui. Aku tersenyum melihat penampilannya yang tomboy itu....</div>
+            </li>
+        
+            <li>
+                <a href="/posts/rahasia-pribadi-ibu-kost-ku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgdIinP9pPpVAuUnSsKUSxhG6vq17Fs1K_jhQJ64vvWv2FRy9bHyK78cy5ONyp7Ru2q6TqSryIspw2vhAPapfJfwB9FUAUoo9sYq1PmSYejgr73fJjtpqegykmo1BofPgQhFrUQgOeiZEYRSnAFSUChLm6O02PEw4v4tosSse4lsqtnPnZQP1zXcurX=w432-h640" alt="Rahasia Pribadi Ibu Kost Ku">
+                </a>
+                <div class="item-title"><a href="/posts/rahasia-pribadi-ibu-kost-ku.html">Rahasia Pribadi Ibu Kost Ku</a></div>
+                <div class="item-snippet">Pagi itu aku tengah sibuk membenahi kamarku. Sebuah kamar kontrakan yang baru kutempati sejak sebula...</div>
+            </li>
+        
+            <li>
+                <a href="/posts/selingkuh-dengan-bu-rt.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
+                </a>
+                <div class="item-title"><a href="/posts/selingkuh-dengan-bu-rt.html">Selingkuh dengan Bu RT</a></div>
+                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
             </li>
         
             </ul>

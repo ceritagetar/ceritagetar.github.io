@@ -9,8 +9,121 @@
 <style>
   #blog-pager-newer-link, #blog-pager-older-link {display:none}
 </style>
+<style>
+/* Tombol non-fixed, tampil setelah potongan konten */
+      
+.sticky-next-button {
+  display: block;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 20px;
+}
+.sticky-next-button:hover {
+  background-color: #0056b3;
+}
+</style>
 
+<script type='text/javascript'>
+function initContentTruncation() {
+  const charsToDisplay = 4000;
+  const summaryText = &#39;Tampilkan Seluruh Cerita&#39;;
+
+  const selfClosingTags = [&#39;img&#39;,&#39;br&#39;,&#39;hr&#39;,&#39;input&#39;,&#39;link&#39;,&#39;meta&#39;,&#39;area&#39;,&#39;base&#39;,&#39;col&#39;,&#39;embed&#39;,&#39;keygen&#39;,&#39;param&#39;,&#39;source&#39;,&#39;track&#39;,&#39;wbr&#39;];
+
+  function fixHtmlCut(htmlString, cutIndex) {
+    const tagRegex = /&lt;\/?([a-z][a-z0-9]*)\b[^&gt;]*&gt;/gi;
+    let match, currentOpenTags = [];
+    // Cegah pemotongan di tengah entitas HTML
+let safeCutIndex = cutIndex;
+while (htmlString[safeCutIndex - 1] === &#39;&amp;&#39; || /&amp;[a-zA-Z0-9#]{0,5}$/.test(htmlString.substring(safeCutIndex - 6, safeCutIndex))) {
+  safeCutIndex--;
+}
+
+const cutHtml = htmlString.substring(0, safeCutIndex);
+const remainingHtml = htmlString.substring(safeCutIndex);
+
+while ((match = tagRegex.exec(cutHtml)) !== null) {
+      const tagName = match[1].toLowerCase();
+      if (match[0].startsWith(&#39;&lt;/&#39;)) {
+        const index = currentOpenTags.indexOf(tagName);
+        if (index &gt; -1) currentOpenTags.splice(index, 1);
+      } else if (!selfClosingTags.includes(tagName)) {
+        currentOpenTags.push(tagName);
+      }
+    }
+
+    let closeTags = &#39;&#39;;
+    for (let i = currentOpenTags.length - 1; i &gt;= 0; i--) {
+      closeTags += &#39;&lt;/&#39; + currentOpenTags[i] + &#39;&gt;&#39;;
+    }
+
+    return {
+      visible: cutHtml + closeTags,
+      hidden: remainingHtml
+    };
+  }
+
+  const postBodies = document.querySelectorAll(&#39;.post-body, .entry-content&#39;);
+postBodies.forEach((postBody) =&gt; {
+  if (!postBody) return;
+  if (postBody.innerHTML.length &lt; charsToDisplay) return;
+
+const originalContent = postBody.innerHTML;
+    const fixedParts = fixHtmlCut(originalContent, charsToDisplay);
+    const visibleContent = fixedParts.visible;
+    const hiddenContent = fixedParts.hidden;
+
+    const details = document.createElement(&#39;details&#39;);
+details.style.width = &#39;100%&#39;;
+
+const summary = document.createElement(&#39;summary&#39;);
+summary.style.display = &#39;none&#39;;
+details.appendChild(summary);
+
+const hiddenDiv = document.createElement(&#39;div&#39;);
+hiddenDiv.style.paddingTop = &#39;10px&#39;;
+hiddenDiv.innerHTML = hiddenContent;
+details.appendChild(hiddenDiv);
+
+
+    const button = document.createElement(&#39;button&#39;);
+    button.textContent = summaryText;
+    button.className = &#39;sticky-next-button&#39;;
+
+    // Tambahkan konten yang terlihat, lalu tombol, lalu tag details
+    postBody.innerHTML = visibleContent;
+    postBody.appendChild(button);
+    postBody.appendChild(details);
+
+button.addEventListener(&#39;click&#39;, () =&gt; {
+      details.open = true;
+      button.remove();
+    });
+
+    details.addEventListener(&#39;toggle&#39;, () =&gt; {
+      if (details.open &amp;&amp; postBody.contains(button)) {
+        button.remove();
+      }
+    });
+  });
+}
+
+if (&#39;requestIdleCallback&#39; in window) {
+  requestIdleCallback(initContentTruncation);
+} else {
+  window.addEventListener(&#39;load&#39;, initContentTruncation);
+}
+</script>
 <script src="/tema/anomali.js"></script>
+
 
 <style>
 /* Popular Posts */
@@ -177,43 +290,43 @@ transform: scale(1.05);
             <ul>
                 
             <li>
-                <a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhexsKiISkmgrh9FiUzDEDMDsTEkBbHWUNTI_osmE13TacOtQX_ylHNVDXJyx6IDzAahO942eaLbg_FjWrjHskBlsqedQuOxgVswsfJ7zXi8D7RqdJcjavngGrQ3-ExLXdL-69-fhb9Db-FCleb1Yq4XTD3OfOIE5I8B-5yQDQyciFKbtskpU3ISK4Qtg/w360-h640/0505b7052be18f44b8ea763cd3cf76d3.jpg" alt="Bercinta Dengan Pengantin Baru Yang Kesepian">
+                <a href="/posts/rahasia-ku-dengan-tetanggaku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh53buk3U7ogeW-BRjA7QuXvDntMjbuR9PjEPMGd6dB9gi8k9GVReObsmB1aFwYdE-Tk0ra6KMgXoDVT5TQyVGGuwYg-8QlHnPadE9ZjY4kJN7T9NLCZv3WpqeDuHI376WCYQPDaOCVZEC4dIK1H4iU-Siwb3nvQMkIaXecyieqONVpGgBvbexKQ99DcPs/w640-h640/12279218_114526145581758_4752466125938272219_n.jpg" alt="Rahasia Ku Dengan Tetanggaku">
                 </a>
-                <div class="item-title"><a href="/posts/bercinta-dengan-pengantin-baru-yang-kesepian.html">Bercinta Dengan Pengantin Baru Yang Kesepian</a></div>
-                <div class="item-snippet">Nama saya Andi, saat itu saya berumur 25 tahun, telah berkeluarga dengan istri bernama Sinta, serta ...</div>
+                <div class="item-title"><a href="/posts/rahasia-ku-dengan-tetanggaku.html">Rahasia Ku Dengan Tetanggaku</a></div>
+                <div class="item-snippet">Awal Kisah ini Di mulai saat baru saja terima rapor cawu I, Kelas 2 SMA. Rumah Yang Tepat Berhadapan...</div>
             </li>
         
             <li>
-                <a href="/posts/bercinta-dengan-adik-kandung.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEigsT7nzY6VSPFGkFAvIgE7qATBQL7_VWBcxp5uG_w14c03ZXDwClgQNsBQWznHAvfx9_ib3oEtog4utBUb_PLyRAd-F-WEC6o6uDvXm89jbciTAd3OJjSdKjelw_v8lz-asMzmCNYiV9crM45KjcX3XprEtX37bpKTPNQRnwk1y4HqCQIzHl5bjULB" alt="Bercinta Dengan Adik Kandung">
+                <a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFEpPrmmvjduZfUygCf8E_9fPUZOFN7Rx0h7-LKv5C-ksl1jnfBLFhad3uTPttGe6Y9a7aTQWPmS6cevh8-Sfv1kHZkltdSFqLY1ZXCWtkh2sxicG-hU5aznjNL4-irl4S3wjK92BE8xYTg_28ygEephO2vzzBEcHZmBOdv0XZU5EH06AqfYkHb_zbdN8/w512-h640/c509ea9d93278f47c0aa1fc1af3d8fe2.jpg" alt="Awal Perselingkuhan Dengan Teman Istriku">
                 </a>
-                <div class="item-title"><a href="/posts/bercinta-dengan-adik-kandung.html">Bercinta Dengan Adik Kandung</a></div>
-                <div class="item-snippet">Namaku Ani, mahasiswi tingkat tiga di sebuah perguruan tinggi negeri di Bandung. Aku dan saudaraku e...</div>
+                <div class="item-title"><a href="/posts/awal-perselingkuhan-dengan-teman-istriku.html">Awal Perselingkuhan Dengan Teman Istriku</a></div>
+                <div class="item-snippet">Peristiwa ini sebenarnya tak pernah kuduga sebelumnya, mengingat Bu Evi (teman istriku) tidak menamp...</div>
             </li>
         
             <li>
-                <a href="/posts/berselingkuh-dengan-dua-teman-istriku-sekaligus.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWciGFFZX1iYyK98bRDXT7aZLEb0TedJE36xRu9UqAcF5uQLciEKcUSZoWkecWVUQdKoX4fAmGtftj4fnW7zSPd0dIFcJc8dOLdQL4I8PELo3CSt_h0Kjb5x9BTrTjZXMdAlO3DlG3qs682QN9hdXydEhK34opyVMsLUHbTozGlNCtcEfycw7ghCuHpHQ/w528-h640/Fq__LyPaQAMTcGF.jpg" alt="Berselingkuh Dengan Dua Teman Istriku Sekaligus">
+                <a href="/posts/selingkuh-dengan-bu-rt.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgN0j1uyjEFBPaRbMxb3R5E443zKh3yPvY7Ol4NIvO3RfkiP_FvG2vD6xi8MAMn5unplOXcZcVD4cCoY__bisvWwNB2mCYQwCcJu26jgHexy-0fn3TdVfGzEjbKCE3_KGahNuZLuWL3A-EfpxsXm4cSbN5FLJHb9_0XiNaI3WUJagOW36gzxXOM12NzDQ=w640-h569" alt="Selingkuh dengan Bu RT">
                 </a>
-                <div class="item-title"><a href="/posts/berselingkuh-dengan-dua-teman-istriku-sekaligus.html">Berselingkuh Dengan Dua Teman Istriku Sekaligus</a></div>
-                <div class="item-snippet">Yah, beginilah nasib auditor kalau lagi dikejar laporan audit. Untung saja, ada anggota timku yang b...</div>
+                <div class="item-title"><a href="/posts/selingkuh-dengan-bu-rt.html">Selingkuh dengan Bu RT</a></div>
+                <div class="item-snippet">Sebagai bu RT yang mendampingi Pak RT, walau umur sudah cukup matang penampilan tetap harus enak dil...</div>
             </li>
         
             <li>
-                <a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEgAO-h1gtBOotst8AW_rSzNReANl1k7ZfcPvb7OsC80fwqfDddV4Fit6-ADo9gDPGzIINGEZvPOVIB4kIF-PQsRZu0rBXBlvUEnP-J0ySG0BChLV0MhuC56mob4dIVzDGWqCJaUHPXfI_-M7jdvct6AuRgs4Bc0nnlx-zhwtt6zH8oMjop7yPuPoV0t_g=w360-h640" alt="Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda">
+                <a href="/posts/perselingkuhan-yang-romantis.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEiS7vKCmupIu7c_4ytfMntKWeneuEDuRpeo13vKOtI36660X2yKGL65BzZi5GfleqRRv6G5Od-0JNYuhn_IvWyzB9cAsxm8T19TVWC-CnUiqWS3fyjGXmfQXQZAIcAPOH-6kLFgMdgywOapazKTweHGhS4a6goFFYGF_-w_sjsE_4GXh41bMpwCBjba=w320-h400" alt="Perselingkuhan yang Romantis">
                 </a>
-                <div class="item-title"><a href="/posts/bersetubuh-dengan-pembantu-yang-sudah-lama-menjanda.html">Bersetubuh Dengan Pembantu Yang Sudah lama Menjanda</a></div>
-                <div class="item-snippet">Ceritaku ini terjadi bermula ketika kedua ortuku sedang pergi keluar kota untuk menengok keluarga ay...</div>
+                <div class="item-title"><a href="/posts/perselingkuhan-yang-romantis.html">Perselingkuhan yang Romantis</a></div>
+                <div class="item-snippet">&nbsp;Cerita yang aku paparkan berikut ini terjadi hari Senin. Hari itu aku berangkat kerja naik bis...</div>
             </li>
         
             <li>
-                <a href="/posts/sering-main-di-kosan.html">
-                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhCO6P-yGDbfMS7khgM5OBUhyCK8ABymkdBRGqjYHis8iZ4PMUIm-km0jH96b231QNUfLvbBGcyTLWn3je14xhMCDTtRknqaiKbgzir-3_Ht2KqxicndqACF4wmaJPCkMhseDxa7XsgbZdZKKIutaAZeoU4vWkCGO47lhcEOuCXWuKLChzBSrgT5CJHVA=w360-h640" alt="Sering Main Di Kosan">
+                <a href="/posts/susu-gede-diva.html">
+                    <img class="item-thumbnail" src="https://blogger.googleusercontent.com/img/a/AVvXsEhEA-yTsNflZgxn21qIYF2cYWht2vJKFbfEgmkv-t2VVJBmHL4H9Sb9vsUKHw56YNdHLpbw49hKDc9Pap8QObsU-kqDzxZLZwSmUfs4ae7b5XiXWJH2Kzh1oAFeR536FJlV-F4z2Zc84ZQZ4XwiX0dykAtTLIdGgzPQCOVrUzbvQejn8Lu4Bf2hL62AGA=w360-h640" alt="Susu Gede Diva">
                 </a>
-                <div class="item-title"><a href="/posts/sering-main-di-kosan.html">Sering Main Di Kosan</a></div>
-                <div class="item-snippet">Setelah kejadian kеmаrіn уаng аku share kераdа pembaca dеwаѕа “mеѕum didalam mobil” ѕааt itu аku ѕеd...</div>
+                <div class="item-title"><a href="/posts/susu-gede-diva.html">Susu Gede Diva</a></div>
+                <div class="item-snippet">Cewek yang bernama Diva di daerahku terkenal dengan buah dada yang besar, dengan pedenya dia selalu ...</div>
             </li>
         
             </ul>
