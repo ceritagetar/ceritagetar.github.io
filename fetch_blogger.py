@@ -193,7 +193,6 @@ def generate_index(posts):
             # --- Akhir perubahan ---
 
             items_html += f"""
-<article class="post">
 <div class="post-body">
 <div class='label-line'>
       <span class='label-info-th'>{first_label_html}</span></div>
@@ -201,7 +200,6 @@ def generate_index(posts):
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
     <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
     </div>
-</article>
 """
         pagination = generate_pagination_links("index", page, total_pages)
         html = render_template(INDEX_TEMPLATE,
