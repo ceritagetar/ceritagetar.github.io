@@ -73,34 +73,74 @@ def paginate(total_items, per_page):
     return total_pages
 
 def generate_pagination_links(base_url, current, total):
-    html = '<nav class="pagination">'
+    # Start the main pagination container with the #blog-pager ID
+    html = '<div id="blog-pager">'
 
-    def page_link(page):
-        cls = 'active' if page == current else ''
-        suffix = "" if page == 1 and "index" in base_url else f"-{page}"
-        # Pastikan link pagination mengarah ke .html
-        # Jika base_url adalah "index", maka linknya "/index.html" atau "/index-page.html"
-        # Jika base_url adalah "labels/kategori", maka linknya "/labels/kategori.html" atau "/labels/kategori-page.html"
-        full_url = f"/{base_url}{suffix}.html" # Tambahkan '/' di depan untuk path absolut
-        return f'<a class="{cls}" href="{full_url}">{page}</a>'
+    # Newer Post Link (Previous Page)
+    if current > 1:
+        prev_page_suffix = "" if current - 1 == 1 and "index" in base_url else f"-{current - 1}"
+        prev_page_full_url = f"/{base_url}{prev_page_suffix}.html"
+        html += f'<div id="blog-pager-newer-link"><a href="{prev_page_full_url}">Newer Post</a></div>'
 
+    # Generate numbered page links
+    # This section needs to align with the CSS's .displaypageNum a and .pagecurrent
+    html += '<span class="pages">' # Container for page numbers
+
+    def page_link_html(page_num, is_current):
+        suffix = "" if page_num == 1 and "index" in base_url else f"-{page_num}"
+        full_url = f"/{base_url}{suffix}.html"
+        if is_current:
+            # Apply pagecurrent class to the span for the current page
+            return f'<span class="pagecurrent"><a href="{full_url}">{page_num}</a></span>'
+        else:
+            # Apply displaypageNum to other pages, which will target the <a> inside
+            return f'<span class="displaypageNum"><a href="{full_url}">{page_num}</a></span>'
+
+
+    # Logic for displaying a range of pages (simplified for brevity, can be expanded)
+    # The original logic for `total <= 10` and `else` (with ellipsis) is maintained
+    # but the `page_link` function is replaced by `page_link_html` which applies correct classes.
     if total <= 10:
         for i in range(1, total + 1):
-            html += page_link(i)
+            html += page_link_html(i, i == current)
     else:
-        for i in range(1, 4):
-            html += page_link(i)
-        if current > 5:
-            html += '<span>...</span>'
-        if 4 <= current <= total - 3:
-            html += page_link(current)
-        if current < total - 4:
-            html += '<span>...</span>'
-        for i in range(total - 1, total + 1):
-            if i > 3:
-                html += page_link(i)
+        # First few pages
+        for i in range(1, min(total + 1, 4)): # Up to page 3
+            html += page_link_html(i, i == current)
 
-    html += '</nav>'
+        # Ellipsis if current page is far from the beginning
+        if current > 5 and total > 6:
+            html += '<span>...</span>'
+
+        # Current page and its immediate neighbors
+        start_middle = max(4, current - 1)
+        end_middle = min(total - 2, current + 1)
+        if current >= 4 and current <= total - 3:
+             for i in range(start_middle, end_middle + 1):
+                 if i > 3 and i < total - 1: # Avoid re-printing pages already covered or last few
+                     html += page_link_html(i, i == current)
+
+        # Ellipsis if current page is far from the end
+        if current < total - 4 and total > 6:
+            html += '<span>...</span>'
+        
+        # Last few pages
+        for i in range(max(total - 1, 4), total + 1): # From page (total-1) to total
+            if i > 3: # Ensure we don't duplicate pages already covered by initial range
+                html += page_link_html(i, i == current)
+
+    html += '</span>' # Close span class="pages"
+
+
+    # Older Post Link (Next Page)
+    if current < total:
+        next_page_suffix = f"-{current + 1}"
+        next_page_full_url = f"/{base_url}{next_page_suffix}.html"
+        html += f'<div id="blog-pager-older-link"><a href="{next_page_full_url}">Older Post</a></div>'
+    
+    # Close the main pagination container
+    html += '<div style="clear:both;"></div>' # Clear floats within blog-pager, though CSS has clear:both !important on #blog-pager itself
+    html += '</div>'
     return html
 
 # === Komponen Custom (Head, Header, Sidebar, Footer) ===
@@ -112,21 +152,21 @@ CSS_FOR_RELATED_POSTS = """
 <style>
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
-	margin:0 0;
-	padding:0 0;
-	list-style:none;
-	border:none;
-	outline:none;
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
 }
 .PopularPosts .widget-content ul {
-	margin: 0;
-	list-style:none;
+    margin: 0;
+    list-style:none;
 }
 .PopularPosts .widget-content ul li img {
-	display: block;
-	width: 100px;
-	height: 56.25px;
-	float: left;
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
     border-radius: 3px;
 }
 .PopularPosts .widget-content ul li img:hover { opacity: 0.8;
@@ -134,31 +174,86 @@ transform: scale(1.05);
 }
 
 .PopularPosts .widget-content ul li {
-	margin: 10px 0px;
-	position: relative;
+    margin: 10px 0px;
+    position: relative;
     overflow: hidden; /* Untuk membersihkan float di dalam li */
 }
 .PopularPosts ul li:last-child {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 .PopularPosts ul li .item-title a, .PopularPosts ul li a {
-	font-weight: 700;
-	text-decoration: none;
+    font-weight: 700;
+    text-decoration: none;
     font-size: 14px;
 }
 .PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
-	color: #595959;
+    color: #595959;
 }
 
 .PopularPosts .item-title, .PopularPosts .item-snippet {
-	margin-left: 110px; /* Jarak dari gambar thumbnail */
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
 }
 .PopularPosts .item-title {
     line-height: 1.6;
-	margin-right: 8px;
+    margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
-	float: left;
+    float: left;
+}
+</style>
+"""
+
+# New CSS for Page Navigation
+CSS_FOR_PAGE_NAVIGATION = """
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+    /* Note: $(link.hover.color) is a Blogger variable, replaced with a placeholder */
+}
+.showpageOf { 
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
 }
 </style>
 """
@@ -169,7 +264,7 @@ CUSTOM_HEADER = safe_load("custom_header.html")
 CUSTOM_SIDEBAR = safe_load("custom_sidebar.html")
 CUSTOM_FOOTER = safe_load("custom_footer.html")
 
-CUSTOM_HEAD_FULL = CUSTOM_HEAD_CONTENT + CSS_FOR_RELATED_POSTS + CUSTOM_JS
+CUSTOM_HEAD_FULL = CUSTOM_HEAD_CONTENT + CSS_FOR_RELATED_POSTS + CSS_FOR_PAGE_NAVIGATION + CUSTOM_JS
 
 # === Ambil semua postingan dari Blogger ===
 
