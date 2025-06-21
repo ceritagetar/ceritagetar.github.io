@@ -8,12 +8,18 @@
 </head>
   {{ custom_header }}
   <div id="wrapper">
-    <main id="post-wrapper">
-    {{ items }}
-  </main>
+    <div id="post-container">
+    <div class="post-wrapper">
+      <main class="post">
+    {{ items }}  
+      </main>
+  </div>
+    </div>
+    {{ pagination }}
+    <div class="sidebar">
     {{ custom_sidebar }}
+    </div>
   
-  {{ pagination }}
   </div>
   {{ custom_footer }}
 </html>
