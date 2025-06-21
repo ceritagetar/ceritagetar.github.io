@@ -183,11 +183,19 @@ def generate_index(posts):
             filename = generate_post_page(post, posts)
             snippet = strip_html(post['content'])[:100]
             thumb = extract_thumbnail(post['content'])
-            labels = render_labels(post.get('labels', []))
+
+            # --- Perubahan di sini untuk menampilkan satu label saja ---
+            first_label_html = ""
+            if post.get('labels'):
+                label_name = post['labels'][0]
+                sanitized_label_name = sanitize_filename(label_name)
+                first_label_html = f'<span class="label"><a href="/labels/{sanitized_label_name}-1.html">{label_name}</a></span>'
+            # --- Akhir perubahan ---
+
             items_html += f"""
 <article class="post-body">
 <div class='label-line'>
-      <span class='label-info-th'>{labels}</span></div>
+      <span class='label-info-th'><a href="#">{first_label_html}</a></span></div>
     <div class="img-thumbnail"><img src="{thumb}" alt=""></div>
     <h2 class="post-title"><a href="posts/{filename}">{post['title']}</a></h2>
     <p class="post-snippet">{snippet}... <a href="posts/{filename}">Baca selengkapnya</a></p>
