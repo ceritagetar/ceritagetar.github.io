@@ -1,31 +1,21 @@
 /*
-* Eric Meyer's Reset CSS v2.0 http://meyerweb.com/eric/tools/css/reset/
-* http://cssreset.com
+ * Eric Meyer's Reset CSS v2.0 http://meyerweb.com/eric/tools/css/reset/
+ * http://cssreset.com
 */
-
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;/*font-size:100%;*/font:inherit;vertical-align:baseline;}
 
 /* HTML5 display-role reset for older browsers */
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
-body{line-height:1;display:block;}
-*{margin:0;padding:0;}
-html{display:block;}
-blockquote,q{quotes:none;}
-blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}
-table{border-collapse:collapse;border-spacing:0;}
-
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}body{line-height:1;display:block;}*{margin:0;padding:0;}html{display:block;}blockquote,q{quotes:none;}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none;}table{border-collapse:collapse;border-spacing:0;}
 /* Blogger CSS Reset */
 .section,.widget{margin:0 0 0 0;padding:0 0 0 0;}
 .navbar,.blog-feeds,.feed-links,#backlinks-container,a.home-link,.blog-mobile-link{display:none;}
 .post-body .separator > a, .post-body .separator > span {margin-left: 0 !important;}
 .quickedit,.thread-toggle,.edit-post,.item-control{display:none;}
-
 /* disable font boosting on mobile browsers */
 body * {
-  max-height: 9999999em; /* Chrome for Android */
-  -moz-text-size-adjust: none; /* Firefox Mobile */
+  max-height: 9999999em; /* Chrome for Android */
+  -moz-text-size-adjust: none; /* Firefox Mobile */
 }
-
 /* FRAMEWORK */
 strong,b{font-weight:bold;}
 cite,em,i{font-style:italic;}
@@ -35,49 +25,42 @@ a:hover{color:#005f99;text-decoration:none;}
 a img{border:none;border-width:0;outline:none;}
 abbr,acronym{border-bottom:1px dotted;cursor:help;}
 sup,sub{vertical-align:baseline;position:relative;top:-.4em;font-size:86%;}
-sub{top:.4em;}
-small{font-size:86%;}
+sub{top:.4em;}small{font-size:86%;}
 kbd{font-size:80%;border:1px solid #777;padding:2px 5px;border-bottom-width:2px;border-radius:3px;}
 mark{background-color:#ffce00;color:black;}
 p,blockquote,pre,table,figure,hr,form,ol,ul,dl{margin:1.5em 0;}
 hr{height:1px;border:none;background-color:#666;}
-
 h1{font-size:1.8rem}
 h2{font-size:1.6rem}
 h3{font-size:1.4rem}
 h4{font-size:1.2rem}
 h5{font-size:1rem}
 h6{font-size:0.9rem}
-
 /* heading */
 h1,h2,h3,h4,h5,h6 {
 	margin: 0 0 0.6em;
 }
-
 /* list */
 ol,ul,dl{margin: .5em 0em .5em 3em}
 li{margin: .5em 0}
 dt{font-weight: 500}
 dd{margin: 0 0 .5em 2em}
-
 /* form */
 input,button,select,textarea{font:inherit;font-size:100%;line-height:normal;vertical-align:baseline;}
 textarea{display:block;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
-
 /* code & blockquote */
 pre,code{font-family:"Courier New",Courier,Monospace;color:inherit;}
 pre{white-space:pre;word-wrap:normal;overflow:auto;}
 blockquote{background:#f6f6f6;margin-left:2em;margin-right:2em;padding:1em 1em;font-style:italic;font-size:105%;}
 blockquote:before {
-  content: "\f10d";
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: inherit;
-  padding-right:4px;
-  color:#666;
+    content: "\f10d";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    padding-right:4px;
+	color:#666;
 }
-
 /* table */
 table[border="1"] td, table[border="1"] th {
 	vertical-align: top;
@@ -110,7 +93,6 @@ td.tr-caption {
 	clear: both;
 	height: 0;
 }
-
 /* TRANSISI */
 a:link, .label-count, #cssmenu ul ul li, #cssmenu > ul > li.has-sub > a:before, #cssmenu ul ul li.has-sub > a:before, .button:before, .button.menu-opened:after, .berlangganan-box input.submit-email[type="submit"], .berlangganan-box input.email-address[type="text"] {
 	transition: all 0.2s;
@@ -120,14 +102,18 @@ a:link, .label-count, #cssmenu ul ul li, #cssmenu > ul > li.has-sub > a:before, 
 .related-post-style-3 .related-post-item {
 	transition: opacity 0.2s linear;
 }
-/* Memperbaiki transisi agar lebih spesifik dan tidak mengganggu performa berlebihan */
-.img-thumbnail, .img-thumbnail img, .label-info-th a, h2.post-title, .post-snippet, .sidebar-sticky {
-	transition: all .2s ease-in-out; /* Menggunakan ease-in-out untuk transisi yang lebih halus */
+.img-thumbnail, .img-thumbnail img, .label-info-th a, .info-1, .info-2, h2.post-title, .post-snippet, .sidebar-sticky {
+	transition: all .2s linear;
+	-o-transition: all .2s linear;
+	-moz-transition: all .2s linear;
+	-webkit-transition: all .2s linear;
 }
 #searchfs input[type="search"], h1,h2,h3,h4,h5,h6 {
-	transition: font-size .2s ease-in-out;
+	transition: font-size .2s linear;
+	-o-transition: font-size .2s linear;
+	-moz-transition: font-size .2s linear;
+	-webkit-transition: font-size .2s linear;
 }
-
 .img-thumbnail, .img-thumbnail img, .FeaturedPost .post-summary, .FeaturedPost .image, .PopularPosts .item-thumbnail, .PopularPosts .widget-content ul li img, .Profile .widget-content, .PopularPosts .widget-content ul, .list-label-widget-content ul, .label-info-th a, .displaypageNum a, .showpage a, .pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a, .Profile .profile-link, .label-size, .berlangganan-box, #baca-juga, #baca-juga h2, .related-post-item-thumbnail, #baca-juga ul, .PopularPosts ul li .item-thumbnail-only:before, .PopularPosts ul li .item-content:before {
 	border-radius: 3px;
 }
@@ -137,25 +123,22 @@ a:link, .label-count, #cssmenu ul ul li, #cssmenu > ul > li.has-sub > a:before, 
 #share a:last-child {
 	border-radius: 0 3px 3px 0;
 }
-
 body {
 	background: #f5f5f5;
-	margin: 0; /* Hapus padding yang tidak perlu di sini */
-	padding: 0;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
 	color: #1e1e2f;
 	font: 400 16px/1.6 'Segoe UI', Roboto, sans-serif;
 	text-align: left;
 }
-
 /* WRAPPER */
 #wrapper {
 	background: #fff;
 	max-width: 1000px;
-    margin: 0 auto;
-    padding: 70px 30px 30px;
-    overflow: hidden; /* Penting untuk menampung float atau flex children */
+    margin: 0 auto;
+    padding: 70px 30px 30px;
+    overflow: hidden;
 }
-
 /* HEADER */
 #header-container {
 	background: #1e1e2f;
@@ -176,11 +159,11 @@ body {
 }
 .header {
 	max-width: 400px;
-	float: left; /* Biarkan float untuk header logo/title */
+	float: left;
 	margin-right: 28px;
 	overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .header h1.title, .header p.title {
 	font: 700 20px 'Segoe UI', sans-serif;
@@ -191,141 +174,91 @@ body {
 }
 .header .description {
 	color: #ffffff;
-    margin: -10px 0 4px 0;
-    padding: 0;
-    font-size: 0.7em;
+    margin: -10px 0 4px 0;
+    padding: 0;
+    font-size: 0.7em;
 	display: none;
 }
-.header a, .header a:hover {
+.header a, .header a:hover  {
 	color: #ffffff;
 }
 .header img {
 	display: block;
 	width: auto;
-    margin: 11px 0;
-    max-height: 24px;
+    margin: 11px 0;
+    max-height: 24px;
 }
 .label-info-th {
-    background: #fff; /* Ini ada di sini juga, pertimbangkan untuk menyatukannya */
+background: #fff;
 }
-
-/* POST WRAPPER DAN PERBAIKAN ARTIKEL INDEX */
+/* POST WRAPPER */
 .post-container {
-	padding-right: 25px; /* Ini mungkin perlu disesuaikan jika sidebar berubah */
+	padding-right: 25px;
 }
-
-#post-wrapper { /* Ini mungkin untuk halaman single post atau container utama artikel */
+#post-wrapper {
 	background:transparent;
 	float:left;
 	width:70%;
 	max-width:700px;
 	margin:0 0 10px;
 }
-
 .breadcrumbs a {
 	color: #1e1e2f;
 }
 
-.post { /* Kelas .post sepertinya untuk single post, bukan item di indeks */
-	margin-bottom: 20px;
+/* --- Start of UX-friendly Post Layout Changes --- */
+.post {
+    margin-bottom: 20px;
+    display: flex; /* Use flexbox for main post content layout */
+    flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+    align-items: flex-start; /* Aligns items to the start of the cross axis */
 }
 
-/* --- PERBAIKAN UTAMA UNTUK ARTIKEL DI HALAMAN INDEKS --- */
-.post-body {
-    /* Hapus properti float dan margin-left yang sudah tidak relevan */
-    /* font:400 16px 'Segoe UI', sans-serif; */ /* Font sudah diatur di body */
-    color:#1e1e2f;
-    line-height: 1.6em;
-    text-align: left;
-    word-wrap: break-word;
-    margin-bottom: 25px; /* Jarak antar artikel */
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    /* display: block; -- default, tapi bisa ditambahkan untuk kejelasan */
-    overflow: hidden; /* Membersihkan float internal jika masih ada */
-}
-
-.label-line {
-    position: relative;
-    margin-bottom: 15px;
-    /* Pastikan label selalu berada di barisnya sendiri, di atas konten flex */
-    clear: both; /* Jika ada float di atasnya */
-    width: 100%; /* Pastikan mengambil lebar penuh jika berada di dalam flex container */
-    padding-bottom: 15px; /* Jarak antara label dan kontainer flex */
-}
-.label-line::before{
-    background:rgba(195,195,195,0.15);
-    z-index:1;
-    content:"";
-    width:100%;
-    height:2px;
-    position:absolute;
-    top:50%;
-    left:0;
-}
-.label-info-th{
+/* Label line (atas thumbnail) */
+.label-line{
     position:relative;
-    z-index:2;
-    display:inline-block;
-    height:30px;
-    padding-right:3px;
-    background: #fff; /* Mengatasi background ganda jika ada */
+    margin-bottom:15px;
+    width:100%; /* Ensure it takes full width */
+    order:1; /* Place it first in the flex order */
 }
-.label-info-th a{
-    background:rgba(195,195,195,0.15);
-    border-radius:4px;
-    display:inline-block;
-    padding:6px 12px;
-    margin:2px 0;
-    font-size:13px;
-    font-size:.8125rem;
-    font-weight:500;
-    text-decoration: none;
-}
+.label-line::before{background:rgba(195,195,195,0.15);z-index:1;content:"";width:100%;height:2px;position:absolute;top:50%;left:0}
+.label-info-th{position:relative;z-index:2;display:inline-block;height:30px;padding-right:3px}
+.label-info-th a{background:rgba(195,195,195,0.15);border-radius:4px;display:inline-block;padding:6px 12px;margin:2px 0;font-size:13px;font-size:.8125rem;font-weight:500;text-decoration: none}
 
-/* Kontainer Flexbox untuk Gambar dan Teks */
-.content-flex-container {
-    display: flex; /* Aktifkan Flexbox */
-    flex-direction: row; /* Elemen akan berjejer horizontal */
-    align-items: flex-start; /* Sejajarkan item ke atas */
-    gap: 20px; /* Jarak antara gambar dan teks (pengganti margin-right pada .img-thumbnail) */
-    width: 100%; /* Pastikan mengisi lebar parent */
-}
-
+/* post-thumbnail (float left) */
 .img-thumbnail {
-    /* Hapus float: left; */
-    flex-shrink: 0; /* Penting: mencegah gambar mengecil */
-    width: 255px; /* Lebar tetap untuk gambar */
-    height: 170px; /* Tinggi tetap untuk gambar */
-    /* margin-right: 20px; */ /* Diganti oleh gap di .content-flex-container */
-    border-radius: 4px; /* Sudut membulat pada kontainer thumbnail */
-    overflow: hidden; /* Memastikan gambar tidak keluar dari batasnya */
+	position: relative;
+	float: left; /* Keep float left for existing structure */
+	width: 255px; /* Your existing width */
+	height: 170px; /* Your existing height */
+	margin-right: 20px; /* Add some right margin for spacing */
+    order: 2; /* Place it second in the flex order */
 }
 .img-thumbnail img {
-    width: 100%; /* Gambar mengisi lebar container */
-    height: 100%; /* Gambar mengisi tinggi container */
-    display: block;
-    object-fit: cover; /* Penting: menjaga rasio aspek dan mengisi area */
-    border-radius: 4px; /* Sudut membulat pada gambar */
+	width: 255px;
+	height: 170px;
+	display: block;
 }
 
-.post-text-content { /* Kelas baru untuk membungkus judul dan snippet */
-    flex-grow: 1; /* Biarkan elemen ini mengisi sisa ruang yang tersedia */
+/* New container for title and snippet */
+.post-content-right {
+    flex-grow: 1; /* Allows it to take up remaining space */
+    order: 3; /* Place it third in the flex order */
+    overflow: hidden; /* Contains floated content if any, or content within */
 }
 
 h2.post-title, h1.post-title {
 	font: 700 24px 'Segoe UI', sans-serif;
-    margin-bottom: 8px; /* Mengurangi margin bawah judul */
-    line-height: 1.3em;
+    margin-bottom: 8px; /* Reduce margin to bring snippet closer */
+    margin-left: 0; /* Remove previous large left margin */
 }
-
-h1.post-title { /* Mungkin untuk halaman single post, sesuaikan jika perlu */
+h1.post-title {
 	font-size: 30px;
 	margin-bottom: 12px;
 }
-
+h2.post-title {
+	margin-bottom: 12px;
+}
 h2.post-title a, h1.post-title a, h2.post-title, h1.post-title {
 	color: #1e1e2f;
 	line-height: 1.3em;
@@ -335,30 +268,29 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 
 .post-snippet {
-    /* margin-left: 275px; */ /* Hapus ini karena sudah pakai Flexbox */
-    margin-top: 5px; /* Jarak antara judul dan snippet */
-    font-size: 15px; /* Sedikit lebih kecil untuk snippet */
-    line-height: 1.5;
+    margin-top: 0; /* Remove top margin as it will be directly below the title */
+    margin-left: 0; /* Remove previous large left margin */
+    color: #5a5a5a; /* Example color for snippet for better contrast */
+    line-height: 1.5em; /* Adjust line height for readability */
 }
 
+/* Adjustments for existing info elements that might affect layout */
 .post-info {
 	color: #777777;
 	font: 400 14px 'Segoe UI', sans-serif;
-    margin-top: 10px; /* Jarak antara snippet dan info post */
 }
-/* Hapus info-1, info-2 karena sudah tidak relevan dengan layout flexbox */
-/* .info-1, .info-2, h2.post-title, .post-snippet {
-	margin-left: 275px;
+.info-1, .info-2 {
+	margin-left: 0; /* Remove previous large left margin */
+	margin-top: 5px; /* Small top margin for spacing between info and title/snippet if needed */
 }
 .info-1 {
-	margin-top: 12px;
+	margin-top: 12px; /* Keep original spacing for info-1 */
 }
 .info-2 {
-	margin-top: 12px;
-} */
-
+	margin-top: 12px; /* Keep original spacing for info-2 */
+}
 .info-3 {
-	margin-bottom: 1.6em; /* Ini mungkin masih relevan untuk info di bawah konten utama */
+	margin-bottom: 1.6em;
 }
 .post-info a {
 	display: inline-block;
@@ -375,6 +307,8 @@ h2.post-title a:hover, h1.post-title a:hover {
 	content: "-";
 	padding: 0 2px;
 }
+/* --- End of UX-friendly Post Layout Changes --- */
+
 
 /* SIDEBAR WIDGET */
 #sidebar-wrapper {
@@ -389,10 +323,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .sidebar h2, .sidebar-sticky h2, .latest-post-title h2, .above-post-widget h2, .comments h3, .breadcrumbs {
 	font: 700 16px 'Segoe UI', sans-serif;
-    margin-bottom: 15px;
+    margin-bottom: 15px;
 	padding: 0px 0px 5px;
-    color: #1e1e2f;
-    text-transform: uppercase;
+    color: #1e1e2f;
+    text-transform: uppercase;
 	display: inline-block;
 	border-bottom: 2px solid #cccccc;
 }
@@ -426,7 +360,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	border: none;
 	overflow: hidden;
 }
-
 /* Popular Posts */
 .PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
 	margin:0 0;
@@ -481,7 +414,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	margin-left: 34px;
 }
 .PopularPosts .item-title {
-    line-height: 1.6;
+    line-height: 1.6;
 	margin-right: 8px;
 }
 .PopularPosts .item-thumbnail {
@@ -489,17 +422,16 @@ h2.post-title a:hover, h1.post-title a:hover {
 	margin-right: 8px;
 }
 .PopularPosts .item-snippet {
-    line-height: 1.6em;
+    line-height: 1.6em;
 	font-size: 14px;
 	margin-top: 8px;
 }
-
 /* Featured Post */
 .FeaturedPost .post-summary {
 	background: #f7f7f7;
 	position: relative;
 	padding: 0;
-    min-height: 200px;
+    min-height: 200px;
 	max-height: 450px;
 	overflow: hidden;
 }
@@ -521,26 +453,26 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .FeaturedPost .post-summary h3 a {
 	color: #1e1e2f;
-    background: #fff;
-    padding: 2px 8px;
+    background: #fff;
+    padding: 2px 8px;
 	-webkit-box-decoration-break: clone;
-    -o-box-decoration-break: clone;
-    box-decoration-break: clone;
+    -o-box-decoration-break: clone;
+    box-decoration-break: clone;
 }
 .FeaturedPost .post-summary h3 a:hover {
 	color: #007acc;
 }
 .FeaturedPost .post-summary p {
 	position: absolute;
-    background: #ffffff;
-    color: #5a5a5a;
-    padding: 3px 8px;
-    bottom: 15px;
-    margin: 0 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 90%;
+    background: #ffffff;
+    color: #5a5a5a;
+    padding: 3px 8px;
+    bottom: 15px;
+    margin: 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 90%;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -552,27 +484,27 @@ h2.post-title a:hover, h1.post-title a:hover {
 /* Artikel Terbaru */
 .artikel-terbaru ul li {
 	border-bottom: 2px dotted #cccccc;
-    padding-bottom: 8px;
+    padding-bottom: 8px;
 	margin-bottom: 8px;
 	font-weight: 500;
 }
 .list-label-widget-content ul li, .LinkList ul li, .PageList ul li {
-    border-bottom: 2px dotted #cccccc;
-    padding-bottom: 5px;
+    border-bottom: 2px dotted #cccccc;
+    padding-bottom: 5px;
 }
 .artikel-terbaru ul li:before, .list-label-widget-content ul li:before, .LinkList ul li:before, .PageList ul li:before {
-    content: "\f14b";
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
+    content: "\f14b";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
 	margin-right: 6px;
 }
 .artikel-terbaru ul li:before {
-    content: "\f14b";
+    content: "\f14b";
 }
 .list-label-widget-content ul li:before {
-    content: "\f07b";
+    content: "\f07b";
 }
 .LinkList ul li:before {
 	content: "\f14c";
@@ -580,7 +512,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 .PageList ul li:before {
 	content: "\f249";
 }
-
 /* Back to top */
 #back-to-top {
 	background:#007acc;
@@ -592,10 +523,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .back-to-top {
 	position: fixed !important;
-    position: absolute;
-    bottom: 25px;
-    right: 20px;
-    z-index: 998;
+    position: absolute;
+    bottom: 25px;
+    right: 20px;
+    z-index: 998;
 }
 
 /* PAGE NAVIGATION */
@@ -615,10 +546,10 @@ h2.post-title a:hover, h1.post-title a:hover {
 .displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
 	font-size: 12px;
 	padding: 8px 12px;
-    margin: 2px 3px 2px 0px;
-    display: inline-block;
-    color: #007acc;
-    border: 1px solid #007acc;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #007acc;
+    border: 1px solid #007acc;
 }
 #blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
 	color: #005f99;
@@ -630,7 +561,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 #blog-pager .pages {
 	border: none;
 }
-
 /* FOOTER NAV MENU */
 #footer-navmenu {
 	background: #1e1e2f;
@@ -640,16 +570,16 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 #footer-navmenu-container {
 	max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
+    margin: 0 auto;
+    text-align: center;
 }
 #footer-navmenu ul {
-    list-style: none;
-    margin: 0;
+    list-style: none;
+    margin: 0;
 }
 #footer-navmenu ul li {
-    display: inline-block;
-    margin: 6px 0;
+    display: inline-block;
+    margin: 6px 0;
 }
 #footer-navmenu ul li:after {
 	content:"/";
@@ -665,7 +595,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 	color: #007acc;
 	border-bottom: 2px solid #007acc;
 }
-
 /* FOOTER WIDGET */
 #footer-widget-container {
 	background: #1e1e2f;
@@ -673,8 +602,8 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .footer-widget {
 	max-width: 1000px;
-    margin: 0 auto;
-    text-align: center;
+    margin: 0 auto;
+    text-align: center;
 }
 .footer-widget h2 {
 	display: none;
@@ -683,79 +612,79 @@ h2.post-title a:hover, h1.post-title a:hover {
 	margin-bottom: 0px !important;
 	padding: 20px 0px;
 }
-
 /* SEARCH FORM */
 .search-icon {
-    position: absolute;
-    top: 11px;
-    right: 0px;
+    position: absolute;
+    top: 11px;
+    right: 0px;
 	font-size: 19px;
 }
 .search-icon a {
 	color: #ffffff;
 }
 #searchfs {
-    position: fixed;
+    position: fixed;
 	z-index:9999;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    -webkit-transition: all 0.1s ease-in-out;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+   
+    -webkit-transition: all 0.1s ease-in-out;
 	-moz-transition: all 0.1s ease-in-out;
 	-o-transition: all 0.1s ease-in-out;
 	-ms-transition: all 0.1s ease-in-out;
 	transition: all 0.1s ease-in-out;
-    -webkit-transform: translate(0px, -100%) scale(0, 0);
+    -webkit-transform: translate(0px, -100%) scale(0, 0);
 	-moz-transform: translate(0px, -100%) scale(0, 0);
 	-o-transform: translate(0px, -100%) scale(0, 0);
 	-ms-transform: translate(0px, -100%) scale(0, 0);
 	transform: translate(0px, -100%) scale(0, 0);
-    opacity: 0;
+   
+    opacity: 0;
 }
 #searchfs.open {
-    -webkit-transform: translate(0px, 0px) scale(1, 1);
-    -moz-transform: translate(0px, 0px) scale(1, 1);
+    -webkit-transform: translate(0px, 0px) scale(1, 1);
+    -moz-transform: translate(0px, 0px) scale(1, 1);
 	-o-transform: translate(0px, 0px) scale(1, 1);
 	-ms-transform: translate(0px, 0px) scale(1, 1);
 	transform: translate(0px, 0px) scale(1, 1);
-    opacity: 1;
+    opacity: 1;
 	z-index: 9999;
 }
 #searchfs input[type="search"] {
 	position: absolute;
-    top: 50%;
-    left: 0;
-    margin-top: -51px;
-    width: 70%;
-    margin-left: 15%;
-    color: rgb(255, 255, 255);
-    background: transparent;
-    border-top: 1px solid rgba(255, 255, 255, .8);
-    border-bottom: 2px solid rgba(255, 255, 255, .5);
-    border-left: 0px solid transparent;
-    border-right: 0px solid transparent;
-    font-size: 40px;
-    text-align: center;
-    outline: none;
-    padding: 10px;
+    top: 50%;
+    left: 0;
+    margin-top: -51px;
+    width: 70%;
+    margin-left: 15%;
+    color: rgb(255, 255, 255);
+    background: transparent;
+    border-top: 1px solid rgba(255, 255, 255, .8);
+    border-bottom: 2px solid rgba(255, 255, 255, .5);
+    border-left: 0px solid transparent;
+    border-right: 0px solid transparent;
+    font-size: 40px;
+    text-align: center;
+    outline: none;
+    padding: 10px;
 }
 #searchfs .close {
-    position: fixed;
-    top: 20px;
-    right: 30px;
-    color: #fff;
-    background-color: transparent;
-    opacity: 0.8;
-    font-size: 40px;
-    border: none;
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    background-color: transparent;
+    opacity: 0.8;
+    font-size: 40px;
+    border: none;
 	outline: none;
 }
 #searchfs .close:hover {
 	cursor: pointer;
 }
-
 /* NAV MENU */
 #cssmenu, #cssmenu ul, #cssmenu ul li, #cssmenu ul li a, #cssmenu #head-mobile {
 	border: 0;
@@ -838,7 +767,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	left: -9999px;
 	z-index: 1;
 	-webkit-box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
-    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.15);
 }
 #cssmenu ul ul li {
 	height: 0;
@@ -859,17 +788,17 @@ h2.post-title a:hover, h1.post-title a:hover {
 	top: 0
 }
 #cssmenu ul ul li a {
-    border-bottom: 1px solid rgba(150,150,150,0.15);
-    padding: 10px 25px 10px 15px;
-    max-width: 100%;
+    border-bottom: 1px solid rgba(150,150,150,0.15);
+    padding: 10px 25px 10px 15px;
+    max-width: 100%;
 	min-width: 150px;
-    font-size: 12px;
-    text-decoration: none;
-    color: #888;
-    font-weight: 400;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-size: 12px;
+    text-decoration: none;
+    color: #888;
+    font-weight: 400;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 #cssmenu ul ul li:last-child > a,#cssmenu ul ul li.last-item > a {
 	border-bottom: 0
@@ -912,7 +841,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 		display: block !important;
 	}
 }
-
 @media screen and (max-width:800px){
 	#cssmenu {
 		float: none;
@@ -1077,7 +1005,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 		border-top: none
 	}
 }
-
 /* FOOTER */
 #footer-container {
 	background: #1e1e2f;
@@ -1097,7 +1024,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 #footer-wrapper a:hover {
 	color: #007acc;
 }
-
 /* RELATED POSTS */
 .related-post {
 	margin: 30px auto 0;
@@ -1105,21 +1031,20 @@ h2.post-title a:hover, h1.post-title a:hover {
 }
 .related-post h4 {
 	position:relative;
-    margin: 0;
-    display: inline-block;
-    font-weight: 500;
-    color: #afafaf;
-    text-transform: uppercase;
-    font-size: 16px;
-    z-index: 1;
-    background: #fff;
-    padding: 0 10px;
+    margin: 0;
+    display: inline-block;
+    font-weight: 500;
+    color: #afafaf;
+    text-transform: uppercase;
+    font-size: 16px;
+    z-index: 1;
+    background: #fff;
+    padding: 0 10px;
 }
 .related-post ul {
 	padding: 0 !important;
 	font-size: 14px;
 }
-
 /* Style 3 */
 .related-post-style-3,
 .related-post-style-3 li {
@@ -1130,7 +1055,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	overflow: hidden;
 }
 .related-post-style-3 .related-post-item {
-	float: left; /* Biarkan float untuk tata letak grid, atau ganti dengan flex/grid */
+	float: left;
 	width: 23.5%;
 	height: auto;
 	margin-right: 2%;
@@ -1143,19 +1068,34 @@ h2.post-title a:hover, h1.post-title a:hover {
 	opacity: 0.7;
 }
 .related-post-style-3 .related-post-item-thumbnail {
-    display: block;
-    max-height: none;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    max-width: 100%;
+    display: block;
+    max-height: none;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    max-width: 100%;
 }
 .related-post-style-3 .related-post-item-title {
 	color: #444;
 }
+.related-post-style-3 .related-post-item-tooltip {
+    padding: 10px 0;
+}
 .related-post-item-tooltip .related-post-item-title {
-    font-weight: 500;
-    display: block;
+    font-weight: 500;
+    display: block;
+}
+@media only screen and (max-width:480px){
+	.related-post-style-3 .related-post-item {
+		width: 48%;
+		margin-right: 4%;
+	}
+	.related-post-style-3 .related-post-item:nth-of-type(2n+0) {
+		margin-right: 0;
+	}
+	.related-post-style-3 .related-post-item:nth-of-type(2n+1) {
+		clear: both;
+	}
 }
 
 /* MEDIA QUERY */
@@ -1173,19 +1113,17 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.sticky-mobile {
 		margin-right: 30px;
 	}
-	/* Sesuaikan ukuran gambar dan jarak di bawah 1080px */
-	.img-thumbnail {
-		width: 220px; /* Sedikit lebih kecil */
-		height: 147px; /* Sesuaikan rasio */
+    /* Adjusted for new layout */
+	.img-thumbnail, .img-thumbnail img {
+		width: 240px;
+		height: 160px;
 	}
-	.img-thumbnail img {
-		width: 100%;
-		height: 100%;
+    .post-content-right { /* Ensure it adjusts correctly */
+        margin-left: 0; /* Important: remove previous static margins */
+    }
+	.info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 0; /* Important: remove previous static margins */
 	}
-	/* Hapus atau sesuaikan margin-left ini karena flexbox */
-	/* .info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 260px;
-	} */
 	.search-icon {
 		right: 30px;
 	}
@@ -1225,19 +1163,18 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.header img {
 		display: inline-block !important;
 	}
-	/* Sesuaikan ukuran gambar dan jarak di bawah 800px */
-	.img-thumbnail {
+    /* Adjusted for new layout */
+	.img-thumbnail, .img-thumbnail img {
 		width: 180px;
 		height: 120px;
+        margin-right: 15px; /* Adjust margin for smaller screens */
 	}
-	.img-thumbnail img {
-		width: 100%;
-		height: 100%;
+    .post-content-right {
+        margin-left: 0; /* Important: remove previous static margins */
+    }
+	.info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 0; /* Important: remove previous static margins */
 	}
-	/* Hapus atau sesuaikan margin-left ini karena flexbox */
-	/* .info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 195px;
-	} */
 	.search-icon {
 		right: 20px;
 	}
@@ -1252,30 +1189,7 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.post-container {
 		padding: 0 0 20px 0;
 	}
-	/* Di layar kecil, tata letak artikel bisa diubah menjadi vertikal */
-	.content-flex-container {
-		flex-direction: column; /* Ubah menjadi tumpukan vertikal */
-		align-items: center; /* Tengahkan item */
-		gap: 15px; /* Jarak antar gambar dan teks */
-	}
-	.img-thumbnail {
-		width: 100%; /* Gambar mengisi lebar penuh */
-		height: auto; /* Tinggi menyesuaikan rasio */
-		max-width: 300px; /* Batasi lebar gambar agar tidak terlalu besar */
-		margin-right: 0; /* Hapus margin kanan jika tumpukan */
-	}
-	.img-thumbnail img {
-		height: auto; /* Tinggi menyesuaikan */
-		max-height: 200px; /* Batasi tinggi gambar */
-	}
-	.post-text-content {
-		text-align: center; /* Tengahkan teks */
-	}
-	h2.post-title, .post-snippet {
-		text-align: center;
-	}
 }
-
 @media only screen and (max-width:640px){
 	#wrapper {
 		padding: 70px 15px 15px;
@@ -1290,15 +1204,19 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 15px;
 	}
-	/* Sudah ditangani di 768px, tapi bisa disempurnakan lagi */
-	/* .info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 190px;
-	} */
+	#post-wrapper, #sidebar-wrapper {
+		float:none;
+		width:100%;
+		max-width:100%
+	}
+    /* Adjusted for new layout */
+	.info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 0; /* Important: remove previous static margins */
+	}
 	.search-icon {
 		right: 15px;
 	}
 }
-
 @media only screen and (max-width:480px){
 	#wrapper {
 		padding: 70px 12px 12px;
@@ -1319,27 +1237,35 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 12px;
 	}
-	/* Revisi untuk mobile agar gambar dan teks tidak berbenturan */
+    /* Adjusted for new layout - stack vertically */
+    .post {
+        flex-direction: column; /* Stack items vertically on very small screens */
+        align-items: center; /* Center items when stacked */
+    }
+    .label-line {
+        text-align: center; /* Center the label line when stacked */
+    }
 	.img-thumbnail {
-		float: none; /* Hapus float */
-		width: 100%; /* Gambar mengisi lebar penuh */
-		height: auto; /* Tinggi menyesuaikan rasio */
-		margin: 0 0 15px 0; /* Jarak di bawah gambar */
-		max-width: 250px; /* Batasi lebar di tengah */
+		float: none; /* Remove float when stacked */
+		width: 100%; /* Allow thumbnail to take full width */
+		height: auto;
+        margin: 15px auto; /* Center the thumbnail */
 	}
 	.img-thumbnail img {
 		width: 100%;
 		height: auto;
-		max-height: 150px;
 	}
-	/* Hapus margin-left yang tidak perlu setelah flexbox */
-	/* .info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 0px;
-	} */
+    .post-content-right {
+        width: 100%; /* Take full width when stacked */
+        text-align: center; /* Center text content if desired */
+    }
+	.info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 0px; /* Crucial: remove all static left margins */
+	}
 	.post-snippet {
 		margin-top: 10px;
 	}
-	.post { /* Kelas .post sepertinya untuk single post, bukan item di indeks */
+	.post {
 		overflow: hidden;
 	}
 	h1{font-size:170%}
@@ -1350,7 +1276,8 @@ h2.post-title a:hover, h1.post-title a:hover {
 	h6{font-size:100%}
 	h2.post-title {
 		font-size: 18px;
-		/* display: inline; */ /* Ini bisa menyebabkan masalah tata letak, lebih baik block */
+		display: inline; /* Keep as inline for text flow */
+        text-align: center; /* Center title when stacked */
 	}
 	h1.post-title {
 		font-size: 24px;
@@ -1387,7 +1314,6 @@ h2.post-title a:hover, h1.post-title a:hover {
 		max-width: 100%;
 	}
 }
-
 @media screen and (max-width:320px){
 	#wrapper {
 		padding: 70px 10px 10px;
@@ -1402,15 +1328,14 @@ h2.post-title a:hover, h1.post-title a:hover {
 	.button {
 		margin-left: 10px;
 	}
-	/* sudah ditangani di 480px */
-	/* .info-1, .info-2, h2.post-title, .post-snippet {
-		margin-left: 0px;
-	} */
+    /* Adjusted for new layout */
+	.info-1, .info-2, h2.post-title, .post-snippet {
+		margin-left: 0px; /* Crucial: remove all static left margins */
+	}
 	.search-icon {
 		right: 10px;
 	}
 }
-
 /* Tombol Download */
 .buttonDownload {
 	border-radius: 3px;
