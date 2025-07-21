@@ -9,6 +9,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    # --- TAMBAHKAN BAGIAN INI ---
+    permissions:
+      contents: write # Diperlukan untuk checkout dan upload artifact
+      pages: write    # Diperlukan untuk deployment GitHub Pages
+      id-token: write # Diperlukan oleh actions/deploy-pages@v3 untuk OIDC
+    # --- AKHIR TAMBAHAN ---
 
     steps:
     - name: Checkout repository
