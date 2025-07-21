@@ -1,4 +1,4 @@
-# scripts/generate_site.py (Nama file Python yang diubah, contoh)
+# scripts/generate_site.py
 import requests
 import os
 import re
@@ -11,14 +11,10 @@ from html.parser import HTMLParser
 API_KEY = os.environ.get('BLOGGER_API_KEY')
 BLOG_ID = os.environ.get('BLOG_ID')
 
-# --- PERUBAHAN UTAMA DI SINI ---
-# Tentukan direktori output utama untuk semua file statis Anda
-# Ini akan menjadi root situs yang di-deploy ke GitHub Pages
-BUILD_OUTPUT_DIR = '_site' 
+BUILD_OUTPUT_DIR = '_site'
 
-# Jalur relatif ke dalam BUILD_OUTPUT_DIR
 DATA_DIR = os.path.join(BUILD_OUTPUT_DIR, 'data')
-POST_DIR = os.path.join(BUILD_OUTPUT_DIR, 'posts') # Ini adalah folder tempat artikel akan disimpan
+POST_DIR = os.path.join(BUILD_OUTPUT_DIR, 'posts')
 LABEL_DIR = os.path.join(BUILD_OUTPUT_DIR, 'labels')
 POSTS_JSON = os.path.join(DATA_DIR, 'posts.json')
 POSTS_PER_PAGE = 10
@@ -27,56 +23,322 @@ POSTS_PER_PAGE = 10
 os.makedirs(DATA_DIR, exist_ok=True)
 os.makedirs(POST_DIR, exist_ok=True)
 os.makedirs(LABEL_DIR, exist_ok=True)
-# os.makedirs(BUILD_OUTPUT_DIR, exist_ok=True) # Ini sudah dicover oleh os.makedirs(DATA_DIR, exist_ok=True) dll.
 
-# === Utilitas (Tidak perlu diubah) ===
-# ... kode utilitas Anda (ImageExtractor, strip_html, remove_anchor_tags, sanitize_filename, render_labels, load_template, render_template, paginate, generate_pagination_links) tetap sama ...
+
+# === Utilitas ===
+
+# --- PERBAIKAN DI SINI: safe_load dan load_template diposisikan dengan benar ---
+def load_template(path):
+    """Membaca konten file template."""
+    with open(path, 'r', encoding='utf-8') as f:
+        return f.read()
+
+def safe_load(path):
+    """Membaca konten file jika ada, jika tidak, mengembalikan string kosong."""
+    return load_template(path) if os.path.exists(path) else ""
+# --- AKHIR PERBAIKAN ---
+
+
+class ImageExtractor(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.thumbnail = None
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'img' and not self.thumbnail:
+            for attr in attrs:
+                if attr[0] == 'src':
+                    self.thumbnail = attr[1]
+
+def extract_thumbnail(html):
+    parser = ImageExtractor()
+    parser.feed(html)
+    return parser.thumbnail or 'https://placehold.co/100x56.25/E0E0E0/333333?text=No+Image'
+
+def strip_html(html):
+    return re.sub('<[^<]+?>', '', html)
+
+def remove_anchor_tags(html_content):
+    return re.sub(r'<a[^>]*>(.*?)<\/a>', r'\1', html_content)
+
+def sanitize_filename(title):
+    return re.sub(r'\W+', '-', title.lower()).strip('-')
+
+def render_labels(labels):
+    if not labels:
+        return ""
+    html = '<div class="labels">'
+    for label in labels:
+        filename = sanitize_filename(label)
+        html += f'<span class="label"><a href="/labels/{filename}-1.html">{label}</a></span> '
+    html += "</div>"
+    return html
+
+def render_template(template, **context):
+    for key, value in context.items():
+        template = template.replace(f'{{{{ {key} }}}}', str(value))
+    return template
+
+def paginate(total_items, per_page):
+    total_pages = (total_items + per_page - 1) // per_page
+    return total_pages
+
+def generate_pagination_links(base_url, current, total):
+    html = '<div id="blog-pager">'
+    if current > 1:
+        prev_page_suffix = "" if current - 1 == 1 and "index" in base_url else f"-{current - 1}"
+        prev_page_full_url = f"/{base_url}{prev_page_suffix}.html"
+        html += f'<div id="blog-pager-newer-link"><a href="{prev_page_full_url}">Newer Post</a></div>'
+
+    html += '<span class="pages">'
+    def page_link_html(page_num, is_current):
+        suffix = "" if page_num == 1 and "index" in base_url else f"-{page_num}"
+        full_url = f"/{base_url}{suffix}.html"
+        if is_current:
+            return f'<span class="pagecurrent"><a href="{full_url}">{page_num}</a></span>'
+        else:
+            return f'<span class="displaypageNum"><a href="{full_url}">{page_num}</a></span>'
+
+    if total <= 10:
+        for i in range(1, total + 1):
+            html += page_link_html(i, i == current)
+    else:
+        for i in range(1, min(total + 1, 4)):
+            html += page_link_html(i, i == current)
+        if current > 5 and total > 6:
+            html += '<span>...</span>'
+        start_middle = max(4, current - 1)
+        end_middle = min(total - 2, current + 1)
+        if current >= 4 and current <= total - 3:
+            for i in range(start_middle, end_middle + 1):
+                if i > 3 and i < total - 1:
+                    html += page_link_html(i, i == current)
+        if current < total - 4 and total > 6:
+            html += '<span>...</span>'
+        for i in range(max(total - 1, 4), total + 1):
+            if i > 3:
+                html += page_link_html(i, i == current)
+    html += '</span>'
+
+    if current < total:
+        next_page_suffix = f"-{current + 1}"
+        next_page_full_url = f"/{base_url}{next_page_suffix}.html"
+        html += f'<div id="blog-pager-older-link"><a href="{next_page_full_url}">Older Post</a></div>'
+    
+    html += '<div style="clear:both;"></div>'
+    html += '</div>'
+    return html
 
 # === Komponen Custom (Head, Header, Sidebar, Footer) ===
-# Path ke file template kustom Anda harus relatif dari root repositori,
-# BUKAN dari BUILD_OUTPUT_DIR, karena file-file ini ada di repo utama.
+
+CSS_FOR_RELATED_POSTS = """
+<style>
+/* Popular Posts */
+.PopularPosts .widget-content ul, .PopularPosts .widget-content ul li, .PopularPosts .widget-content ul li img, .PopularPosts .widget-content ul li a, .PopularPosts .widget-content ul li a img {
+    margin:0 0;
+    padding:0 0;
+    list-style:none;
+    border:none;
+    outline:none;
+}
+.PopularPosts .widget-content ul {
+    margin: 0;
+    list-style:none;
+}
+.PopularPosts .widget-content ul li img {
+    display: block;
+    width: 100px;
+    height: 56.25px;
+    float: left;
+    border-radius: 3px;
+}
+.PopularPosts .widget-content ul li img:hover { opacity: 0.8;
+transform: scale(1.05);
+}
+
+.PopularPosts .widget-content ul li {
+    margin: 10px 0px;
+    position: relative;
+    overflow: hidden; /* Untuk membersihkan float di dalam li */
+}
+.PopularPosts ul li:last-child {
+    margin-bottom: 5px;
+}
+.PopularPosts ul li .item-title a, .PopularPosts ul li a {
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 14px;
+}
+.PopularPosts ul li .item-title a:hover, .PopularPosts ul li a:hover {
+    color: #595959;
+}
+
+.PopularPosts .item-title, .PopularPosts .item-snippet {
+    margin-left: 110px; /* Jarak dari gambar thumbnail */
+}
+.PopularPosts .item-title {
+    line-height: 1.6;
+    margin-right: 8px;
+}
+.PopularPosts .item-thumbnail {
+    float: left;
+}
+</style>
+"""
+
+CSS_FOR_PAGE_NAVIGATION = """
+<style>
+/* PAGE NAVIGATION */
+#blog-pager {
+    clear:both !important;
+    padding:2px 0;
+    text-align: center;
+}
+#blog-pager-newer-link a {
+    float:left;
+    display:block;
+}
+#blog-pager-older-link a {
+    float:right;
+    display:block;
+}
+.displaypageNum a,.showpage a,.pagecurrent, #blog-pager-newer-link a, #blog-pager-older-link a {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 2px 3px 2px 0px;
+    display: inline-block;
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+    text-decoration: none; /* Ensure links are not underlined by default */
+    border-radius: 4px; /* Added for better aesthetics */
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+#blog-pager-older-link a:hover, #blog-pager-newer-link a:hover, a.home-link:hover, .displaypageNum a:hover,.showpage a:hover, .pagecurrent {
+    color: #ffffff; /* Example: White text on hover/active */
+    background: #1b699d; /* Example: Blue background on hover/active */
+}
+.showpageOf {
+    display: none !important;
+}
+#blog-pager .pages {
+    border: none;
+    display: inline-block; /* To center the page numbers */
+}
+#blog-pager .pages .pagecurrent a, #blog-pager .pages .displaypageNum a {
+    /* Ensure internal page links get the same base styling */
+    color: #1b699d;
+    background: rgba(195, 195, 195, 0.15);
+}
+#blog-pager .pages .pagecurrent {
+    /* Style for the current page container, overriding base link style if needed */
+    color: #ffffff;
+    background: #1b699d;
+    font-weight: bold;
+    border-radius: 4px;
+}
+</style>
+"""
+
 CUSTOM_HEAD_CONTENT = safe_load("custom_head.html")
 CUSTOM_JS = safe_load("custom_js.html")
 CUSTOM_HEADER = safe_load("custom_header.html")
 CUSTOM_SIDEBAR = safe_load("custom_sidebar.html")
 CUSTOM_FOOTER = safe_load("custom_footer.html")
 
-CSS_FOR_RELATED_POSTS = """
-# ... CSS Anda ...
-"""
-
-CSS_FOR_PAGE_NAVIGATION = """
-# ... CSS Anda ...
-"""
-
 CUSTOM_HEAD_FULL = CUSTOM_HEAD_CONTENT + CSS_FOR_RELATED_POSTS + CSS_FOR_PAGE_NAVIGATION + CUSTOM_JS
 
 # === Ambil semua postingan dari Blogger ===
-# ... fetch_posts() tetap sama ...
+
+def fetch_posts():
+    all_posts = []
+    page_token = ''
+
+    while True:
+        url = f"https://www.googleapis.com/blogger/v3/blogs/{BLOG_ID}/posts?key={API_KEY}&maxResults=50"
+        if page_token:
+            url += f"&pageToken={page_token}"
+
+        res = requests.get(url)
+        if res.status_code != 200:
+            raise Exception(f"Gagal fetch: {res.status_code} {res.text}")
+
+        data = res.json()
+        items = data.get("items", [])
+        all_posts.extend(items)
+        page_token = data.get("nextPageToken")
+        if not page_token:
+            break
+
+    # Simpan posts.json di dalam BUILD_OUTPUT_DIR/data
+    with open(POSTS_JSON, "w", encoding="utf-8") as f:
+        json.dump(all_posts, f, ensure_ascii=False, indent=2)
+
+    return all_posts
 
 # === Template ===
-# Path ke file template HTML harus relatif dari root repositori Anda.
+
 POST_TEMPLATE = load_template("post_template.html")
 INDEX_TEMPLATE = load_template("index_template.html")
 LABEL_TEMPLATE = load_template("label_template.html")
 
 # === Halaman per postingan ===
+
 def generate_post_page(post, all_posts):
-    # Nama file artikel yang akan disimpan di dalam folder POST_DIR ('_site/posts/')
     filename_without_path = f"{sanitize_filename(post['title'])}.html"
-    filepath = os.path.join(POST_DIR, filename_without_path) # Path lengkap untuk menyimpan file
+    filepath = os.path.join(POST_DIR, filename_without_path)
 
-    # Link absolut ke artikel tetap sama, karena relatif terhadap root situs yang di-deploy
-    # Contoh: /posts/judul-artikel-terkait.html
-    related_post_absolute_link_prefix = "/posts/" # Tetap "/posts/" untuk URL di browser
-    post_absolute_link = f"{related_post_absolute_link_prefix}{filename_without_path}"
+    eligible_related = [p for p in all_posts if p['id'] != post['id'] and 'content' in p]
+    related_sample = random.sample(eligible_related, min(5, len(eligible_related)))
 
-    # ... Sisa logika generate_post_page tetap sama, pastikan link absolut sudah benar ...
+    related_items_html = []
+    for p_related in related_sample:
+        related_post_absolute_link = f"/posts/{sanitize_filename(p_related['title'])}.html"
+        
+        related_post_content = p_related.get('content', '')
+        thumb = extract_thumbnail(related_post_content)
+        snippet = strip_html(related_post_content)
+        snippet = snippet[:100] + "..." if len(snippet) > 100 else snippet
 
-    # Mengembalikan hanya nama file untuk digunakan di tempat lain (misalnya index dan label pages)
+        related_items_html.append(f"""
+            <li>
+                <a href="{related_post_absolute_link}">
+                    <img class="item-thumbnail" src="{thumb}" alt="{p_related["title"]}">
+                </a>
+                <div class="item-title"><a href="{related_post_absolute_link}">{p_related["title"]}</a></div>
+                <div class="item-snippet">{snippet}</div>
+            </li>
+        """)
+    
+    related_html = f"""
+    <div class="PopularPosts">
+        <div class="widget-content">
+            <ul>
+                {"".join(related_items_html)}
+            </ul>
+        </div>
+    </div>
+    """
+
+    processed_content = remove_anchor_tags(post.get('content', ''))
+
+    html = render_template(POST_TEMPLATE,
+        title=post['title'],
+        content=processed_content,
+        labels=render_labels(post.get("labels", [])),
+        related=related_html,
+        custom_head=CUSTOM_HEAD_FULL,
+        custom_header=CUSTOM_HEADER,
+        custom_sidebar=CUSTOM_SIDEBAR,
+        custom_footer=CUSTOM_FOOTER
+    )
+
+    with open(filepath, 'w', encoding='utf-8') as f:
+        f.write(html)
+
     return filename_without_path
 
 # === Halaman index beranda ===
+
 def generate_index(posts):
     total_pages = paginate(len(posts), POSTS_PER_PAGE)
     for page in range(1, total_pages + 1):
@@ -85,10 +347,8 @@ def generate_index(posts):
         items = posts[start:end]
         items_html = ""
         for post in items:
-            # generate_post_page sekarang mengembalikan hanya nama file (tanpa path 'posts/')
-            # Kita perlu tambahkan '/posts/' di depannya untuk link di index
             post_filename = generate_post_page(post, posts)
-            post_absolute_link = f"/posts/{post_filename}" # Link absolut ke artikel
+            post_absolute_link = f"/posts/{post_filename}"
 
             snippet = strip_html(post.get('content', ''))[:100]
             thumb = extract_thumbnail(post.get('content', ''))
@@ -97,7 +357,6 @@ def generate_index(posts):
             if post.get('labels'):
                 label_name = post['labels'][0]
                 sanitized_label_name = sanitize_filename(label_name)
-                # Link label juga perlu absolut
                 first_label_html = f'<span class="label"><a href="/labels/{sanitized_label_name}-1.html">{label_name}</a></span>'
 
             items_html += f"""
@@ -120,13 +379,12 @@ def generate_index(posts):
                                custom_sidebar=CUSTOM_SIDEBAR,
                                custom_footer=CUSTOM_FOOTER
         )
-        # --- PERUBAHAN DI SINI ---
-        # Output file index juga harus masuk ke BUILD_OUTPUT_DIR
         output_file = os.path.join(BUILD_OUTPUT_DIR, f"index.html" if page == 1 else f"index-{page}.html")
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(html)
 
 # === Halaman per label ===
+
 def generate_label_pages(posts):
     label_map = {}
     for post in posts:
@@ -143,7 +401,7 @@ def generate_label_pages(posts):
             items_html = ""
             for post in items:
                 post_filename = generate_post_page(post, posts)
-                post_absolute_link = f"/posts/{post_filename}" # Link absolut ke artikel
+                post_absolute_link = f"/posts/{post_filename}"
 
                 snippet = strip_html(post.get('content', ''))[:150]
                 thumb = extract_thumbnail(post.get('content', ''))
@@ -168,25 +426,18 @@ def generate_label_pages(posts):
                                    custom_sidebar=CUSTOM_SIDEBAR,
                                    custom_footer=CUSTOM_FOOTER
             )
-            # --- PERUBAHAN DI SINI ---
-            # Output file label juga harus masuk ke BUILD_OUTPUT_DIR/labels/
             output_file = os.path.join(LABEL_DIR, f"{sanitize_filename(label)}-{page}.html")
             with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(html)
 
 # === Eksekusi ===
+
 if __name__ == '__main__':
-    # Pastikan direktori _site dibuat sebelum skrip mulai menulis file
-    os.makedirs(BUILD_OUTPUT_DIR, exist_ok=True) 
+    os.makedirs(BUILD_OUTPUT_DIR, exist_ok=True)
 
     print("📥 Mengambil artikel...")
     posts = fetch_posts()
     print(f"✅ Artikel diambil: {len(posts)}")
-    
-    # generate_post_page dipanggil di dalam generate_index dan generate_label_pages,
-    # jadi tidak perlu dipanggil di sini lagi secara eksplisit untuk setiap post.
-    # Namun, Anda perlu memindahkan `os.makedirs(POST_DIR, exist_ok=True)` ke atas
-    # di bagian konfigurasi agar folder `_site/posts` siap saat dibutuhkan.
     
     generate_index(posts)
     generate_label_pages(posts)
