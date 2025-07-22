@@ -1,122 +1,156 @@
-# main.py (Revisi untuk menambahkan fungsi thumbnail)
+# main.py (Revisi untuk Paginasi dan Pengambilan Semua Postingan)
 import os
 import re
+import math # Import math untuk perhitungan paginasi
 from utils import get_secret, get_blogger_posts
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 
+# --- Fungsi yang sudah ada ---
 def slugify(text):
-    """
-    Converts text to a URL-friendly slug.
-    """
     text = str(text).lower()
-    text = re.sub(r'[^a-z0-9\s-]', '', text) # Remove non-alphanumeric chars
-    text = re.sub(r'[\s_-]+', '-', text)    # Replace spaces/underscores with single dash
-    text = re.sub(r'^-+', '', text)         # Remove dashes from start
-    text = re.sub(r'-+$', '', text)         # Remove dashes from end
+    text = re.sub(r'[^a-z0-9\s-]', '', text)
+    text = re.sub(r'[\s_-]+', '-', text)
+    text = re.sub(r'^-+', '', text)
+    text = re.sub(r'-+$', '', text)
     return text
 
 def parse_html_content_preview(html_content, num_words=50):
-    """
-    Parses HTML content, extracts text for preview, and returns a truncated version.
-    """
     if not html_content:
         return ""
     
     soup = BeautifulSoup(html_content, 'html.parser')
-    
     for script in soup(["script", "style"]):
         script.extract()
-    
     text = soup.get_text()
-    
     words = text.split()
     truncated_words = words[:num_words]
-    
     preview_text = " ".join(truncated_words)
     if len(words) > num_words:
         preview_text += "..."
-        
     return preview_text
 
-# --- FUNGSI BARU UNTUK MENGAMBIL THUMBNAIL ---
 def get_first_image_url(html_content):
-    """
-    Ekstrak URL gambar pertama dari konten HTML.
-    """
     if not html_content:
         return None
     soup = BeautifulSoup(html_content, 'html.parser')
-    first_img = soup.find('img') # Cari tag <img> pertama
+    first_img = soup.find('img')
     if first_img and 'src' in first_img.attrs:
         return first_img['src']
-    return None # Jika tidak ada gambar ditemukan
-# --- AKHIR FUNGSI BARU ---
+    return None
+# --- Akhir Fungsi yang sudah ada ---
 
 def main():
     try:
         blogger_api_key = get_secret("BLOGGER_API_KEY")
         blog_id = get_secret("BLOG_ID")
 
-        print("Fetching Blogger posts...")
-        posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=10)
+        print("Fetching ALL Blogger posts...")
+        # Ambil semua postingan (tanpa batasan max_results di sini, atau setel ke nilai sangat besar jika API punya limit per request)
+        # Kita akan iterasi sampai tidak ada nextPageToken lagi
+        all_posts = []
+        next_page_token = None
+        while True:
+            posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token) # Max 500 per request
+            if posts_data and 'items' in posts_data:
+                for post_item in posts_data['items']:
+                    # Pastikan post_item memiliki 'content' sebelum diproses
+                    if 'content' in post_item:
+                        all_posts.append(post_item)
+                next_page_token = posts_data.get('nextPageToken')
+                if not next_page_token:
+                    break
+            else:
+                break
+        
+        if all_posts:
+            # Tentukan direktori output langsung ke direktori kerja saat ini di runner GitHub Actions
+            output_dir = os.getcwd() 
+            os.makedirs(output_dir, exist_ok=True) 
+            print(f"Output directory created/ensured: {output_dir}")
 
-        if posts_data:
-            # Output semua file HTML ke direktori kerja saat ini di runner GitHub Actions
-            # Ini adalah direktori tempat 'main.py' berada setelah checkout
-            # Menggunakan os.getcwd() agar sesuai dengan path di actions/upload-artifact@v4
-            output_dir = os.path.join(os.getcwd(), 'dist') # <--- Pastikan ini mengarah ke 'dist'
-            
-            os.makedirs(output_dir, exist_ok=True) # Buat direktori jika belum ada
-            print(f"Output directory created/ensured: {output_dir}") # Log untuk debugging
+            # Buat folder 'pages' di dalam output_dir
+            pages_output_dir = os.path.join(output_dir, 'pages')
+            os.makedirs(pages_output_dir, exist_ok=True)
+            print(f"Pages directory created/ensured: {pages_output_dir}")
 
-            # Path ke folder 'templates' relatif terhadap 'main.py'
+
             template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-            
             if not os.path.isdir(template_dir):
                 raise FileNotFoundError(f"Template directory not found: {template_dir}")
             
             template_loader = FileSystemLoader(template_dir)
             env = Environment(loader=template_loader)
             
-            index_template = env.get_template('index_template.html')
+            # Kita bisa pakai index_template yang sama untuk halaman paginasi
+            list_posts_template = env.get_template('index_template.html') 
             single_post_template = env.get_template('single_post_template.html')
 
-            processed_posts = []
-            for post in posts_data.get('items', []):
+            processed_posts_for_template = []
+            for post in all_posts:
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
                 
-                # Path relatif untuk tautan di index.html
-                # Harus relatif ke root GH Pages, jadi dimulai dengan '/'
-                post['detail_url'] = f"/{post_filename}" # <-- Ini penting untuk GitHub Pages
+                # URL detail tetap sama
+                post['detail_url'] = f"/{post_filename}" 
 
                 raw_html_content = post.get('content')
-                
-                # --- PANGGIL FUNGSI THUMBNAIL DI SINI ---
-                post['thumbnail_url'] = get_first_image_url(raw_html_content) # <--- BARIS INI DITAMBAHKAN!
-                # --- AKHIR PANGGILAN FUNGSI THUMBNAIL ---
-
+                post['thumbnail_url'] = get_first_image_url(raw_html_content)
                 post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=50)
                 
-                processed_posts.append(post)
+                # Tambahkan postingan yang sudah diproses ke list
+                processed_posts_for_template.append(post)
 
-                # --- Generasi Halaman Detail Postingan ---
+                # --- Generasi Halaman Detail Postingan (Tetap Sama) ---
                 single_post_html = single_post_template.render(post=post)
-                
-                single_post_file_path = os.path.join(output_dir, post_filename) # <-- Menyimpan di output_dir
+                single_post_file_path = os.path.join(output_dir, post_filename)
                 with open(single_post_file_path, "w", encoding="utf-8") as f:
                     f.write(single_post_html)
                 print(f"Generated: {single_post_file_path}")
+            
+            # --- PAGINASI BARU ---
+            posts_per_page = 5
+            total_posts = len(processed_posts_for_template)
+            total_pages = math.ceil(total_posts / posts_per_page)
 
-            # --- Generasi Halaman Index ---
-            index_html = index_template.render(posts=processed_posts)
+            print(f"Total posts: {total_posts}, Posts per page: {posts_per_page}, Total pages: {total_pages}")
 
-            index_file_path = os.path.join(output_dir, 'index.html') # <-- Menyimpan di output_dir
-            with open(index_file_path, "w", encoding="utf-8") as f:
-                f.write(index_html)
-            print(f"Generated: {index_file_path}")
+            for page_num in range(1, total_pages + 1):
+                start_index = (page_num - 1) * posts_per_page
+                end_index = start_index + posts_per_page
+                current_page_posts = processed_posts_for_template[start_index:end_index]
 
+                # Konteks untuk Jinja2
+                template_context = {
+                    'posts': current_page_posts,
+                    'current_page': page_num,
+                    'total_pages': total_pages
+                }
+
+                # Tentukan URL Previous dan Next
+                if page_num > 1:
+                    template_context['prev_page_url'] = '/' if page_num == 2 else f'/pages/{page_num - 1}.html'
+                else:
+                    template_context['prev_page_url'] = None
+
+                if page_num < total_pages:
+                    template_context['next_page_url'] = f'/pages/{page_num + 1}.html'
+                else:
+                    template_context['next_page_url'] = None
+
+                # Generasi Halaman Index (Page 1) atau Halaman Paginasi (Page 2, 3, dst.)
+                if page_num == 1:
+                    index_file_path = os.path.join(output_dir, 'index.html')
+                    with open(index_file_path, "w", encoding="utf-8") as f:
+                        f.write(list_posts_template.render(template_context))
+                    print(f"Generated: {index_file_path} (Page 1)")
+                else:
+                    page_filename = f"{page_num}.html"
+                    page_file_path = os.path.join(pages_output_dir, page_filename)
+                    with open(page_file_path, "w", encoding="utf-8") as f:
+                        f.write(list_posts_template.render(template_context))
+                    print(f"Generated: {page_file_path} (Page {page_num})")
+            
         else:
             print("No posts found or an error occurred. No HTML files generated.")
 
