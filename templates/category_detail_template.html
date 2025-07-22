@@ -45,54 +45,42 @@ By admin
         </article>
         {% endfor %}
     
-        {# --- BAGIAN NAVIGASI PAGINASI --- #}
-        <div class="pagination">
-    {# Menampilkan "Page X of Y" seperti yang ada di JS Blogger #}
+        {# --- BAGIAN NAVIGASI PAGINASI (di category_detail_template.html) --- #}
+<div class="pagination">
     <span class='showpageOf'>Page {{ current_page }} of {{ total_pages }}</span>
 
     {# Tombol "First" #}
-    {# Logika: Tampilkan jika bukan halaman pertama #}
     {% if current_page > 1 %}
-        <span class="displaypageNum firstpage"><a href="/">First</a></span>
+        <span class="displaypageNum firstpage"><a href="/kategori/{{ label_slug }}.html">First</a></span>
     {% endif %}
 
     {# Tombol "Prev" #}
-    {# Logika: Tampilkan jika bukan halaman pertama. Jika halaman 2, link ke root, selain itu ke pages/prev.html #}
     {% if prev_page_url %}
-        {% if current_page == 2 %}
-            <span class="displaypageNum"><a href="/">Prev</a></span>
-        {% else %}
-            <span class="displaypageNum"><a href="{{ prev_page_url }}">Prev</a></span>
-        {% endif %}
+        <span class="displaypageNum"><a href="{{ prev_page_url }}">Prev</a></span>
     {% endif %}
 
     {# Angka Halaman #}
     {% for p in range(1, total_pages + 1) %}
         {% if p == current_page %}
-            {# Halaman saat ini menggunakan kelas pagecurrent #}
             <span class="pagecurrent">{{ p }}</span>
         {% elif p == 1 %}
-            {# Halaman 1 selalu ke root, dengan kelas displaypageNum #}
-            <span class="displaypageNum"><a href="/">1</a></span>
+            <span class="displaypageNum"><a href="/kategori/{{ label_slug }}.html">1</a></span>
         {% else %}
-            {# Halaman lainnya dengan kelas displaypageNum dan link ke pages/p.html #}
-            <span class="displaypageNum"><a href="/pages/{{ p }}.html">{{ p }}</a></span>
+            <span class="displaypageNum"><a href="/kategori/{{ label_slug }}/page/{{ p }}.html">{{ p }}</a></span>
         {% endif %}
     {% endfor %}
 
     {# Tombol "Next" #}
-    {# Logika: Tampilkan jika bukan halaman terakhir #}
     {% if next_page_url %}
         <span class="displaypageNum"><a href="{{ next_page_url }}">Next</a></span>
     {% endif %}
 
     {# Tombol "Last" #}
-    {# Logika: Tampilkan jika bukan halaman terakhir #}
     {% if current_page < total_pages %}
-        <span class="displaypageNum lastpage"><a href="/pages/{{ total_pages }}.html">Last</a></span>
+        <span class="displaypageNum lastpage"><a href="/kategori/{{ label_slug }}/page/{{ total_pages }}.html">Last</a></span>
     {% endif %}
 </div>
-        {# --- AKHIR BAGIAN NAVIGASI PAGINASI --- #}
+{# --- AKHIR BAGIAN NAVIGASI PAGINASI --- #}
     {% else %}
         <p>Tidak ada postingan yang ditemukan dalam kategori ini.</p>
     {% endif %}
