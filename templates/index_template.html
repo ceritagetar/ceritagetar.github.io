@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postingan Blog Saya</title>
+    <title>Postingan Blog Saya {% if current_page > 1 %}- Halaman {{ current_page }}{% endif %}</title>
     <style>
         body { font-family: sans-serif; margin: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333;}
         .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         h1 { color: #333; text-align: center; margin-bottom: 20px; }
-        .post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; display: flex; align-items: flex-start;} /* Menggunakan flexbox untuk layout thumbnail */
+        .post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; display: flex; align-items: flex-start;}
         .post:last-child { border-bottom: none; }
-        .post-thumbnail { margin-right: 15px; flex-shrink: 0; } /* Thumbnail tidak menyusut */
-        .post-thumbnail img { max-width: 150px; height: auto; border-radius: 5px; } /* Ukuran thumbnail */
-        .post-content-wrapper { flex-grow: 1; } /* Konten akan mengisi ruang yang tersisa */
+        .post-thumbnail { margin-right: 15px; flex-shrink: 0; }
+        .post-thumbnail img { max-width: 150px; height: auto; border-radius: 5px; }
+        .post-content-wrapper { flex-grow: 1; }
         .post h2 { margin-top: 0; color: #0056b3; font-size: 1.8em; margin-bottom: 5px; }
         .post-meta { font-size: 0.9em; color: #666; margin-bottom: 10px; }
         .post-excerpt { margin-top: 10px; font-size: 1.0em; }
         a { text-decoration: none; color: #007bff; }
         a:hover { text-decoration: underline; }
+        .pagination { text-align: center; margin-top: 30px; }
+        .pagination a { display: inline-block; padding: 10px 15px; margin: 0 5px; border: 1px solid #007bff; border-radius: 5px; background-color: #e6f3ff; color: #007bff; }
+        .pagination a:hover { background-color: #007bff; color: #fff; }
+        .pagination span { display: inline-block; padding: 10px 15px; margin: 0 5px; color: #666; cursor: not-allowed; }
     </style>
 </head>
 <body>
@@ -38,13 +42,39 @@
                         Dipublikasikan: {{ post.published }}
                     </div>
                     <div class="post-excerpt">
-                        {# Menggunakan konten yang sudah diparsing oleh Python #}
                         {{ post.parsed_content | safe }}
                     </div>
                     <p><a href="{{ post.detail_url }}">Baca Selengkapnya</a></p>
                 </div>
             </div>
             {% endfor %}
+
+            {# --- BAGIAN NAVIGASI PAGINASI --- #}
+            <div class="pagination">
+                {% if prev_page_url %}
+                    <a href="{{ prev_page_url }}">Previous</a>
+                {% else %}
+                    <span>Previous</span>
+                {% endif %}
+
+                {% for p in range(1, total_pages + 1) %}
+                    {% if p == current_page %}
+                        <span>{{ p }}</span>
+                    {% elif p == 1 %}
+                        <a href="/">1</a> {# Halaman 1 selalu ke root #}
+                    {% else %}
+                        <a href="/pages/{{ p }}.html">{{ p }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if next_page_url %}
+                    <a href="{{ next_page_url }}">Next</a>
+                {% else %}
+                    <span>Next</span>
+                {% endif %}
+            </div>
+            {# --- AKHIR BAGIAN NAVIGASI PAGINASI --- #}
+
         {% else %}
             <p>Tidak ada postingan yang ditemukan.</p>
         {% endif %}
