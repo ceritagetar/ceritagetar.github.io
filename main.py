@@ -103,7 +103,7 @@ def main():
             # --- BARIS YANG DIUBAH UNTUK FILTER TANGGAL ---
             # Menggunakan datetime.fromisoformat() untuk parsing string ISO 8601
             # dan mengganti 'Z' (jika ada) menjadi '+00:00' agar kompatibel.
-            env.filters['date_format'] = lambda value, fmt="%Y %b %d": datetime.fromisoformat(value.replace('Z', '+00:00')).strftime(fmt)
+            env.filters['date_format'] = lambda value, fmt="%d %b %Y": datetime.fromisoformat(value.replace('Z', '+00:00')).strftime(fmt)
             
             # Opsi alternatif jika fromisoformat() menimbulkan masalah atau kamu butuh parsing yang lebih 'fuzzy':
             # Pastikan kamu sudah `pip install python-dateutil`
