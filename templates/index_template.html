@@ -14,6 +14,15 @@
         {% for post in posts %}
         
             <article class='post'>
+              {% if post.labels %}
+    <div class="label-line">
+        <span class="label-info-th">
+        {% for label in post.labels %}
+            <a href="/kategori/{{ label|slugify }}.html">{{ label }}</a>
+        {% endfor %}
+        </span>
+    </div>
+    {% endif %}  
             {% if post.thumbnail_url %}
             <div class='img-thumbnail-wrap'>
 <div class='img-thumbnail'>
