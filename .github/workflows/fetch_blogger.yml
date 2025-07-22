@@ -3,13 +3,14 @@ name: Sync Blogger to GitHub Pages
 on:
   push:
     branches: [main]
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repo
+      - name: Checkout repo utama
         uses: actions/checkout@v3
 
       - name: Setup Python
@@ -20,22 +21,16 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Fetch & Generate Blog
+      - name: Jalankan fetch_blogger.py
         env:
           BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
           BLOG_ID: ${{ secrets.BLOG_ID }}
         run: python fetch_blogger.py
 
-      - name: Commit & Push changes
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add .
-          if git diff --cached --quiet; then
-            echo "✅ Tidak ada perubahan"
-          else
-            git commit -m "🔄 Update artikel otomatis dari Blogger"
-            git push https://x-access-token:${TOKEN}@github.com/${{ github.repository }} HEAD:main
-          fi
+      - name: Deploy isi dist/ ke GitHub Pages (gh-pages)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
