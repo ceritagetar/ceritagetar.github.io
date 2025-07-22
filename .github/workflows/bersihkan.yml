@@ -1,0 +1,46 @@
+# .github/workflows/clean_repo.yml
+name: Clean Main Branch (EXTREME CAUTION!)
+
+on:
+  workflow_dispatch: # Ini memungkinkan Anda menjalankan workflow secara manual dari tab Actions
+  # push:
+  #   branches:
+  #     - main # JANGAN GUNAKAN INI TANPA ALASAN SANGAT JELAS DAN PENGUJIAN KETAT!
+              # Mengaktifkan ini akan menghapus repo Anda setiap kali ada push.
+
+jobs:
+  clean_main_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code (with fetch-depth 0 for full history)
+      # fetch-depth: 0 diperlukan untuk mengubah riwayat branch
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Configure Git
+      run: |
+        git config user.name "GitHub Actions Bot"
+        git config user.email "actions@github.com"
+
+    - name: Delete all files except .git
+      # Ini akan menghapus semua file dan folder di direktori kerja
+      # KECUALI folder .git itu sendiri.
+      run: |
+        echo "Menghapus semua file di branch 'main'..."
+        ls -A | grep -v '.git' | xargs rm -rf
+        echo "Penghapusan selesai."
+
+    - name: Commit changes
+      # Buat commit kosong setelah penghapusan
+      run: |
+        git add -A # Menambahkan semua perubahan (termasuk penghapusan)
+        git commit -m "Cleaned repository (automated action)" || echo "Tidak ada perubahan untuk di-commit." # Allow no changes
+
+    - name: Force push to main branch
+      # Ini akan menimpa riwayat branch 'main' dengan commit kosong ini.
+      # HATI-HATI: Ini menghapus riwayat lama!
+      run: |
+        git push origin main --force
+        echo "Branch 'main' telah dibersihkan dan riwayat ditimpa."
