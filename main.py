@@ -97,7 +97,7 @@ def main():
             env = Environment(loader=template_loader)
             
             env.filters['slugify'] = slugify
-            env.filters['date'] = lambda value, format="%Y": datetime.strptime(value, '%Y-%m-%dT%H:%M:%S%z').strftime(format) 
+            env.filters['date'] = lambda value, format="%Y": datetime.strptime(value, '%Y-%m-%d').strftime(format) 
 
             list_posts_template = env.get_template('index_template.html') 
             single_post_template = env.get_template('single_post_template.html')
