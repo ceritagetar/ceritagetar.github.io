@@ -1,0 +1,81 @@
+/* style.css */
+body { font-family: sans-serif; margin: 0; line-height: 1.6; background-color: #f4f4f4; color: #333;}
+.container { max-width: 960px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: flex; flex-wrap: wrap; }
+.main-content { flex: 3; padding-right: 20px; box-sizing: border-box; } /* Main content area */
+.sidebar { flex: 1; min-width: 200px; padding-left: 20px; border-left: 1px solid #eee; box-sizing: border-box; } /* Sidebar area */
+
+h1 { color: #333; text-align: center; margin-bottom: 20px; }
+.post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; display: flex; align-items: flex-start;}
+.post:last-child { border-bottom: none; }
+.post-thumbnail { margin-right: 15px; flex-shrink: 0; }
+.post-thumbnail img { max-width: 150px; height: auto; border-radius: 5px; }
+.post-content-wrapper { flex-grow: 1; }
+.post h2 { margin-top: 0; color: #0056b3; font-size: 1.8em; margin-bottom: 5px; }
+.post-meta { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+.post-excerpt { margin-top: 10px; font-size: 1.0em; }
+a { text-decoration: none; color: #007bff; }
+a:hover { text-decoration: underline; }
+.pagination { text-align: center; margin-top: 30px; }
+.pagination a { display: inline-block; padding: 10px 15px; margin: 0 5px; border: 1px solid #007bff; border-radius: 5px; background-color: #e6f3ff; color: #007bff; }
+.pagination a:hover { background-color: #007bff; color: #fff; }
+.pagination span { display: inline-block; padding: 10px 15px; margin: 0 5px; color: #666; cursor: not-allowed; }
+
+.post-labels { margin-top: 15px; font-size: 0.9em; border-top: 1px solid #eee; padding-top: 15px; }
+.post-labels strong { display: block; margin-bottom: 5px; color: #555; }
+.post-labels a {
+    display: inline-block;
+    background-color: #e6f3ff;
+    color: #007bff;
+    padding: 5px 10px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    text-decoration: none;
+    border: 1px solid #007bff;
+}
+.post-labels a:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.site-header, .site-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    text-align: center;
+    margin-bottom: 20px; /* Untuk header */
+    margin-top: 20px; /* Untuk footer */
+    border-radius: 8px;
+}
+.site-header a, .site-footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+.site-header a:hover, .site-footer a:hover {
+    text-decoration: underline;
+}
+.site-footer {
+    font-size: 0.9em;
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    color: #555;
+}
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar li {
+    margin-bottom: 5px;
+}
+.sidebar a {
+    color: #007bff;
+}
+
+@media (max-width: 768px) {
+    .container { flex-direction: column; }
+    .main-content { padding-right: 0; }
+    .sidebar { border-left: none; padding-left: 0; margin-top: 20px; }
+}
