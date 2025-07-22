@@ -1,17 +1,20 @@
 # .github/workflows/blogger_api.yml
-name: Fetch Blogger Posts and Deploy to GitHub Pages
+name: Fetch Blogger Posts and Upload HTML Artifacts
 
 on:
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch: # Memungkinkan trigger manual
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
+    - cron: '0 0 * * *' # Berjalan setiap hari pada tengah malam UTC
   push:
     branches:
-      - main # Jalankan juga saat ada push ke branch main
+      - main # Jalankan workflow saat ada push ke branch main
 
 jobs:
-  build_and_deploy:
+  build_and_upload_artifacts:
     runs-on: ubuntu-latest
+    # Tidak perlu izin 'write' ke 'contents' atau 'pages' lagi
+    # permissions:
+    #   contents: read # Cukup 'read' karena tidak menulis ke repo
 
     steps:
     - name: Checkout code
@@ -26,19 +29,19 @@ jobs:
       run: |
         pip install requests Jinja2 beautifulsoup4
 
-    - name: Run Blogger API script to generate index.html
+    - name: Run Blogger API script to generate HTML files
       env:
         BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
         BLOG_ID: ${{ secrets.BLOG_ID }}
       run: |
         python main.py
 
-    # --- Bagian PENTING untuk GitHub Pages ---
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3 # Gunakan action untuk deploy
-      if: github.ref == 'refs/heads/main' # Pastikan hanya jalan di branch main
+    # --- Bagian PENTING: Upload Semua File HTML sebagai Artifact ---
+    - name: Upload generated HTML files as artifact
+      uses: actions/upload-artifact@v4
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }} # Token otomatis dari GitHub
-        publish_dir: ./ # Direktori yang akan di-deploy (tempat index.html berada)
-        # opsional: publish_branch: gh-pages # Jika Anda ingin deploy ke branch 'gh-pages'
-                                          # Jika tidak pakai, akan deploy ke branch yang dikonfigurasi di GitHub Pages
+        name: generated-html-files # Nama artifact
+        path: |
+          *.html # Mengunggah semua file .html di direktori root
+        # path: ./ # Alternatif: mengunggah seluruh direktori kerja jika ada file lain
+        retention-days: 7 # Opsional: Berapa lama artifact akan disimpan (default 90 hari)
