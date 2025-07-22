@@ -4,7 +4,6 @@
 
 {% block head_extra %}
     <meta name="description" content="{{ post.parsed_content }}">
-    {# Tambahan meta tag spesifik untuk post ini #}
 {% endblock %}
 
 {% block content %}
@@ -25,7 +24,26 @@
     </div>
     {% endif %}
 
-    <div class="back-link">
+    {# --- BAGIAN RELATED POSTS --- #}
+    {% if post.related_posts %}
+    <div class="related-posts" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+        <h2>Artikel Terkait</h2>
+        <ul>
+            {% for related_p in post.related_posts %}
+            <li style="margin-bottom: 10px;">
+                <a href="{{ related_p.detail_url }}" style="font-weight: bold;">{{ related_p.title }}</a>
+                {% if related_p.thumbnail_url %}
+                    <br><img src="{{ related_p.thumbnail_url }}" alt="{{ related_p.title }} thumbnail" style="max-width: 100px; height: auto; margin-top: 5px; border-radius: 3px;">
+                {% endif %}
+                <p style="font-size: 0.9em; color: #555;">{{ related_p.parsed_content }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    {# --- AKHIR BAGIAN RELATED POSTS --- #}
+
+    <div class="back-link" style="margin-top: 20px;">
         <a href="/">Kembali ke Beranda</a>
     </div>
 {% endblock %}
