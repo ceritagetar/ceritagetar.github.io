@@ -4,11 +4,10 @@ import math
 from utils import get_secret, get_blogger_posts
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
-from datetime import datetime # Import datetime dengan benar
+from datetime import datetime
 
-# --- Fungsi Pembantu ---
+# --- Fungsi Pembantu (Sama seperti sebelumnya) ---
 def slugify(text):
-    """Mengubah teks menjadi slug yang valid untuk URL."""
     text = str(text).lower()
     text = re.sub(r'[^a-z0-9\s-]', '', text)
     text = re.sub(r'[\s_-]+', '-', text)
@@ -16,11 +15,9 @@ def slugify(text):
     text = re.sub(r'-+$', '', text)
     return text
 
-def parse_html_content_preview(html_content, num_words=30): # Default 30 kata untuk pratinjau
-    """Mengambil beberapa kata pertama dari konten HTML sebagai pratinjau teks."""
+def parse_html_content_preview(html_content, num_words=30):
     if not html_content:
         return ""
-    
     soup = BeautifulSoup(html_content, 'html.parser')
     for script in soup(["script", "style"]):
         script.extract()
@@ -33,46 +30,27 @@ def parse_html_content_preview(html_content, num_words=30): # Default 30 kata un
     return preview_text
 
 def get_first_image_url(html_content, size='s320'):
-    """
-    Mengambil URL gambar pertama dari konten HTML dan mengoptimalkan ukurannya
-    menggunakan parameter URL Blogger/Google Photos.
-    Parameter 'size' bisa berupa 's<angka>' (lebar maks) atau 'w<lebar>-h<tinggi>'.
-    """
     if not html_content:
         return None
     soup = BeautifulSoup(html_content, 'html.parser')
     first_img = soup.find('img')
     if first_img and 'src' in first_img.attrs:
         img_url = first_img['src']
-        # Mengganti bagian ukuran di URL Blogger (misal: /s1600/ menjadi /s320/)
-        # Pola regex mencari /s<angka>/ atau /w<angka>-h<angka>/
         optimized_url = re.sub(r'/(s\d+|w\d+-h\d+)/', f'/{size}/', img_url)
         return optimized_url
     return None
 
 def optimize_blogger_images_in_content(html_content, default_size='s800'):
-    """
-    Memproses semua tag <img> dalam konten HTML:
-    1. Mengubah ukuran gambar menggunakan parameter URL Blogger.
-    2. Menambahkan atribut loading="lazy" untuk lazy loading.
-    3. Menambahkan atribut alt jika belum ada.
-    """
     if not html_content:
         return ""
     soup = BeautifulSoup(html_content, 'html.parser')
     for img_tag in soup.find_all('img'):
         if 'src' in img_tag.attrs:
             img_url = img_tag['src']
-            # Mengganti bagian ukuran di URL Blogger
             optimized_url = re.sub(r'/(s\d+|w\d+-h\d+)/', f'/{default_size}/', img_url)
             img_tag['src'] = optimized_url
-            
-            # Tambahkan atribut loading="lazy"
             img_tag['loading'] = 'lazy' 
-            
-            # Tambahkan atribut alt jika belum ada atau kosong
             if not img_tag.get('alt', '').strip():
-                # Bisa disesuaikan, misalnya mengambil bagian dari judul post
                 img_tag['alt'] = 'Gambar Postingan' 
     return str(soup)
 
@@ -86,7 +64,6 @@ def main():
         all_posts = []
         next_page_token = None
         while True:
-            # Mengambil 500 postingan per request untuk mempercepat proses
             posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token) 
             if posts_data and 'items' in posts_data:
                 for post_item in posts_data['items']:
@@ -119,11 +96,14 @@ def main():
             env = Environment(loader=template_loader)
             
             env.filters['slugify'] = slugify
-            # Filter date untuk menampilkan tahun di footer (digunakan di custom_footer.html)
             env.filters['date'] = lambda value, format="%Y": datetime.strptime(value, '%Y-%m-%dT%H:%M:%S%z').strftime(format) 
 
-            base_template = env.get_template('base_template.html')
-            
+            # Muat semua template yang akan digunakan
+            # base_template = env.get_template('base_template.html') # Tidak perlu dimuat langsung
+            list_posts_template = env.get_template('index_template.html') 
+            single_post_template = env.get_template('single_post_template.html')
+            category_detail_template = env.get_template('category_detail_template.html')
+
             processed_posts_for_template = []
             all_labels = set() 
             posts_by_label = {} 
@@ -157,22 +137,16 @@ def main():
                         posts_by_label[label_slug]['posts'].append(post)
 
                 # --- Render Halaman Detail Postingan ---
-                post_context = {
-                    'post': post,
-                    'all_labels': sorted(list(all_labels)) # Untuk sidebar di halaman detail
-                }
-                single_post_content = env.get_template('single_post_template.html').render(post_context)
-                
-                final_html = base_template.render(
-                    content=single_post_content, 
-                    title=post.get('title', 'Detail Postingan'), 
-                    head_extra=f'<meta name="description" content="{post.get("parsed_content", "")}">', # Contoh meta description
-                    all_labels=sorted(list(all_labels)) # Kirim ke base_template untuk sidebar
+                # Langsung render single_post_template, Jinja2 akan otomatis extend base_template
+                single_post_html = single_post_template.render(
+                    post=post,
+                    all_labels=sorted(list(all_labels)), # Untuk sidebar
+                    current_year=datetime.now().year # Untuk footer
                 )
-
+                
                 single_post_file_path = os.path.join(output_dir, post_filename)
                 with open(single_post_file_path, "w", encoding="utf-8") as f:
-                    f.write(final_html)
+                    f.write(single_post_html)
                 print(f"Generated: {single_post_file_path}")
             
             # --- PAGINASI (Untuk index.html dan pages/*.html) ---
@@ -191,7 +165,8 @@ def main():
                     'posts': current_page_posts,
                     'current_page': page_num,
                     'total_pages': total_pages,
-                    'all_labels': sorted(list(all_labels)) # Untuk sidebar
+                    'all_labels': sorted(list(all_labels)), # Untuk sidebar
+                    'current_year': datetime.now().year # Untuk footer
                 }
 
                 if page_num > 1:
@@ -204,28 +179,19 @@ def main():
                 else:
                     page_context['next_page_url'] = None
                 
-                list_posts_content = env.get_template('index_template.html').render(page_context)
+                # Langsung render index_template, Jinja2 akan otomatis extend base_template
+                rendered_page_html = list_posts_template.render(page_context)
                 
-                page_title = 'Postingan Blog Saya'
-                if page_num > 1:
-                    page_title += f' - Halaman {page_num}'
-
-                final_html = base_template.render(
-                    content=list_posts_content,
-                    title=page_title,
-                    all_labels=sorted(list(all_labels)) # Kirim ke base_template untuk sidebar
-                )
-
                 if page_num == 1:
                     index_file_path = os.path.join(output_dir, 'index.html')
                     with open(index_file_path, "w", encoding="utf-8") as f:
-                        f.write(final_html)
+                        f.write(rendered_page_html)
                     print(f"Generated: {index_file_path} (Page 1)")
                 else:
                     page_filename = f"{page_num}.html"
                     page_file_path = os.path.join(pages_output_dir, page_filename)
                     with open(page_file_path, "w", encoding="utf-8") as f:
-                        f.write(final_html)
+                        f.write(rendered_page_html)
                     print(f"Generated: {page_file_path} (Page {page_num})")
             
             # --- GENERASI HALAMAN DETAIL KATEGORI ---
@@ -233,20 +199,16 @@ def main():
                 category_detail_context = {
                     'label_name': label_info['name'],
                     'posts': label_info['posts'],
-                    'all_labels': sorted(list(all_labels)) # Untuk sidebar
+                    'all_labels': sorted(list(all_labels)), # Untuk sidebar
+                    'current_year': datetime.now().year # Untuk footer
                 }
                 
-                category_detail_content = env.get_template('category_detail_template.html').render(category_detail_context)
+                # Langsung render category_detail_template, Jinja2 akan otomatis extend base_template
+                category_detail_html = category_detail_template.render(category_detail_context)
                 
-                final_html = base_template.render(
-                    content=category_detail_content,
-                    title=f"Kategori: {label_info['name']}",
-                    all_labels=sorted(list(all_labels)) # Kirim ke base_template untuk sidebar
-                )
-
                 category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
                 with open(category_file_path, "w", encoding="utf-8") as f:
-                    f.write(final_html)
+                    f.write(category_detail_html)
                 print(f"Generated: {category_file_path}")
 
         else:
