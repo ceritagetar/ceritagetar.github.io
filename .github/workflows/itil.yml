@@ -1,19 +1,21 @@
 # .github/workflows/blogger_api.yml
-name: Fetch Blogger Posts and Upload Dist Folder as Artifact
+name: Fetch Blogger Posts and Deploy to GitHub Pages
 
 on:
-  workflow_dispatch: # Memungkinkan trigger manual
+  workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # Berjalan setiap hari pada tengah malam UTC
+    - cron: '0 0 * * *'
   push:
     branches:
       - main # Jalankan workflow saat ada push ke branch main
 
 jobs:
-  build_and_upload_artifacts:
+  build_and_deploy: # Nama job untuk deployment
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Cukup izin baca karena tidak menulis ke repo
+      contents: write # Penting! Berikan izin tulis ke repositori
+      pages: write    # Penting! Berikan izin untuk mengelola GitHub Pages
+      id-token: write # Penting! Digunakan untuk autentikasi OIDC
 
     steps:
     - name: Checkout code
@@ -28,17 +30,19 @@ jobs:
       run: |
         pip install requests Jinja2 beautifulsoup4
 
-    - name: Run Blogger API script to generate HTML files into 'dist'
+    - name: Run Blogger API script to generate HTML files
       env:
         BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
         BLOG_ID: ${{ secrets.BLOG_ID }}
       run: |
         python main.py
 
-    # --- Bagian PENTING: Upload Folder 'dist' sebagai Artifact ---
-    - name: Upload 'dist' folder as artifact
-      uses: actions/upload-artifact@v4
+    # --- Bagian PENTING untuk Deployment ke GitHub Pages ---
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main' # Pastikan hanya berjalan di branch main
       with:
-        name: website-dist-folder # Nama artifact
-        path: dist/             # <-- Ini poin utamanya! Upload folder 'dist'
-        retention-days: 7       # Opsional: Berapa lama artifact akan disimpan
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./ # Direktori yang akan di-deploy (semua file di root runner)
+        publish_branch: gh-pages # <-- Kembali ke gh-pages karena ini yang berhasil Anda setel
+        # Clean: true adalah default, akan menghapus semua file lama di branch target sebelum deploy
