@@ -1,4 +1,4 @@
-# main.py (Revisi fokus pada output_dir dan post_filename)
+# main.py (Revisi untuk menambahkan fungsi thumbnail)
 import os
 import re
 from utils import get_secret, get_blogger_posts
@@ -39,6 +39,20 @@ def parse_html_content_preview(html_content, num_words=50):
         
     return preview_text
 
+# --- FUNGSI BARU UNTUK MENGAMBIL THUMBNAIL ---
+def get_first_image_url(html_content):
+    """
+    Ekstrak URL gambar pertama dari konten HTML.
+    """
+    if not html_content:
+        return None
+    soup = BeautifulSoup(html_content, 'html.parser')
+    first_img = soup.find('img') # Cari tag <img> pertama
+    if first_img and 'src' in first_img.attrs:
+        return first_img['src']
+    return None # Jika tidak ada gambar ditemukan
+# --- AKHIR FUNGSI BARU ---
+
 def main():
     try:
         blogger_api_key = get_secret("BLOGGER_API_KEY")
@@ -50,12 +64,11 @@ def main():
         if posts_data:
             # Output semua file HTML ke direktori kerja saat ini di runner GitHub Actions
             # Ini adalah direktori tempat 'main.py' berada setelah checkout
-            output_dir = os.path.dirname(os.path.abspath(__file__)) # <-- Pastikan ini
-            # Atau bisa juga pakai: output_dir = os.getcwd() 
-            # Keduanya harus bekerja di konteks GitHub Actions default,
-            # tapi os.path.dirname(os.path.abspath(__file__)) lebih eksplisit untuk file Python itu sendiri.
+            # Menggunakan os.getcwd() agar sesuai dengan path di actions/upload-artifact@v4
+            output_dir = os.path.join(os.getcwd(), 'dist') # <--- Pastikan ini mengarah ke 'dist'
             
             os.makedirs(output_dir, exist_ok=True) # Buat direktori jika belum ada
+            print(f"Output directory created/ensured: {output_dir}") # Log untuk debugging
 
             # Path ke folder 'templates' relatif terhadap 'main.py'
             template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
@@ -79,6 +92,11 @@ def main():
                 post['detail_url'] = f"/{post_filename}" # <-- Ini penting untuk GitHub Pages
 
                 raw_html_content = post.get('content')
+                
+                # --- PANGGIL FUNGSI THUMBNAIL DI SINI ---
+                post['thumbnail_url'] = get_first_image_url(raw_html_content) # <--- BARIS INI DITAMBAHKAN!
+                # --- AKHIR PANGGILAN FUNGSI THUMBNAIL ---
+
                 post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=50)
                 
                 processed_posts.append(post)
