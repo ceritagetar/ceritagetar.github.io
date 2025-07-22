@@ -10,6 +10,9 @@
     {% if posts %}
         {% for post in posts %}
         <div class="post-container">
+            <div class='latest-post-title'>
+<h2>Postingan Terbaru</h2>
+</div>
             {% if post.thumbnail_url %}
             <div class="post-thumbnail">
                 <img src="{{ post.thumbnail_url }}" alt="{{ post.title }} thumbnail">
