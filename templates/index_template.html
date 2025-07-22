@@ -5,14 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Postingan Blog Saya</title>
     <style>
-        body { font-family: sans-serif; margin: 20px; line-height: 1.6; }
+        body { font-family: sans-serif; margin: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333;}
         .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; text-align: center; }
-        .post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        h1 { color: #333; text-align: center; margin-bottom: 20px; }
+        .post { border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 15px; display: flex; align-items: flex-start;} /* Menggunakan flexbox untuk layout thumbnail */
         .post:last-child { border-bottom: none; }
-        .post h2 { margin-top: 0; color: #0056b3; }
-        .post-meta { font-size: 0.9em; color: #666; margin-bottom: 5px; }
-        .post-content { margin-top: 10px; }
+        .post-thumbnail { margin-right: 15px; flex-shrink: 0; } /* Thumbnail tidak menyusut */
+        .post-thumbnail img { max-width: 150px; height: auto; border-radius: 5px; } /* Ukuran thumbnail */
+        .post-content-wrapper { flex-grow: 1; } /* Konten akan mengisi ruang yang tersisa */
+        .post h2 { margin-top: 0; color: #0056b3; font-size: 1.8em; margin-bottom: 5px; }
+        .post-meta { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+        .post-excerpt { margin-top: 10px; font-size: 1.0em; }
         a { text-decoration: none; color: #007bff; }
         a:hover { text-decoration: underline; }
     </style>
@@ -24,15 +27,22 @@
         {% if posts %}
             {% for post in posts %}
             <div class="post">
-                <h2><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
-                <div class="post-meta">
-                    Dipublikasikan: {{ post.published }}
+                {% if post.thumbnail_url %}
+                <div class="post-thumbnail">
+                    <img src="{{ post.thumbnail_url }}" alt="{{ post.title }} thumbnail">
                 </div>
-                <div class="post-content">
-                    {# Menggunakan konten yang sudah diparsing oleh Python #}
-                    {{ post.parsed_content | safe }}
+                {% endif %}
+                <div class="post-content-wrapper">
+                    <h2><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
+                    <div class="post-meta">
+                        Dipublikasikan: {{ post.published }}
+                    </div>
+                    <div class="post-excerpt">
+                        {# Menggunakan konten yang sudah diparsing oleh Python #}
+                        {{ post.parsed_content | safe }}
+                    </div>
+                    <p><a href="{{ post.detail_url }}">Baca Selengkapnya</a></p>
                 </div>
-                <p><a href="{{ post.detail_url }}">Baca Selengkapnya</a></p>
             </div>
             {% endfor %}
         {% else %}
