@@ -1,4 +1,4 @@
-# main.py (Revisi untuk Kategori/Label)
+# main.py (Revisi: Menghilangkan Generasi categories.html)
 import os
 import re
 import math
@@ -49,7 +49,6 @@ def main():
         all_posts = []
         next_page_token = None
         while True:
-            # Mengambil 500 postingan per request untuk mempercepat proses
             posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token) 
             if posts_data and 'items' in posts_data:
                 for post_item in posts_data['items']:
@@ -66,12 +65,10 @@ def main():
             os.makedirs(output_dir, exist_ok=True) 
             print(f"Output directory created/ensured: {output_dir}")
 
-            # Buat folder 'pages' untuk paginasi
             pages_output_dir = os.path.join(output_dir, 'pages')
             os.makedirs(pages_output_dir, exist_ok=True)
             print(f"Pages directory created/ensured: {pages_output_dir}")
 
-            # Buat folder 'kategori' untuk halaman label
             categories_output_dir = os.path.join(output_dir, 'kategori')
             os.makedirs(categories_output_dir, exist_ok=True)
             print(f"Categories directory created/ensured: {categories_output_dir}")
@@ -86,13 +83,13 @@ def main():
             
             list_posts_template = env.get_template('index_template.html') 
             single_post_template = env.get_template('single_post_template.html')
-            # --- Template Baru untuk Halaman Kategori ---
-            categories_index_template = env.get_template('categories_index_template.html')
-            category_detail_template = env.get_template('category_detail_template.html')
-            # --- Akhir Template Baru ---
+            # --- HAPUS: categories_index_template tidak lagi dimuat ---
+            # categories_index_template = env.get_template('categories_index_template.html')
+            category_detail_template = env.get_template('category_detail_template.html') # Ini tetap ada
+            # --- Akhir HAPUS ---
 
             processed_posts_for_template = []
-            all_labels = set() # Untuk menyimpan semua label unik
+            all_labels = set() # Untuk menyimpan semua label unik (masih berguna untuk daftar di footer/sidebar)
             posts_by_label = {} # Untuk mengelompokkan postingan berdasarkan label
 
             for post in all_posts:
@@ -107,22 +104,19 @@ def main():
                 
                 processed_posts_for_template.append(post)
 
-                # --- Ekstraksi dan Pengelompokan Label ---
-                labels = post.get('labels', []) # Ambil list label dari post
+                labels = post.get('labels', [])
                 if labels:
                     for label in labels:
-                        all_labels.add(label) # Tambahkan ke set label unik
+                        all_labels.add(label)
                         label_slug = slugify(label)
                         if label_slug not in posts_by_label:
                             posts_by_label[label_slug] = {
-                                'name': label, # Simpan nama asli label
+                                'name': label,
                                 'slug': label_slug,
                                 'posts': []
                             }
-                        posts_by_label[label_slug]['posts'].append(post) # Tambahkan postingan ke label yang sesuai
-                # --- Akhir Ekstraksi Label ---
+                        posts_by_label[label_slug]['posts'].append(post)
 
-                # --- Generasi Halaman Detail Postingan (Tetap Sama) ---
                 single_post_html = single_post_template.render(post=post)
                 single_post_file_path = os.path.join(output_dir, post_filename)
                 with open(single_post_file_path, "w", encoding="utf-8") as f:
@@ -145,7 +139,7 @@ def main():
                     'posts': current_page_posts,
                     'current_page': page_num,
                     'total_pages': total_pages,
-                    'all_labels': sorted(list(all_labels)) # Untuk navigasi di footer/sidebar
+                    'all_labels': sorted(list(all_labels)) # Masih berguna untuk daftar di footer/sidebar
                 }
 
                 if page_num > 1:
@@ -170,21 +164,21 @@ def main():
                         f.write(list_posts_template.render(template_context))
                     print(f"Generated: {page_file_path} (Page {page_num})")
             
-            # --- GENERASI HALAMAN KATEGORI/LABEL ---
-            # 1. Halaman Indeks Kategori (categories.html)
-            sorted_labels_info = sorted([info for slug, info in posts_by_label.items()], key=lambda x: x['name'].lower())
-            categories_index_html = categories_index_template.render(labels=sorted_labels_info)
-            categories_index_file_path = os.path.join(output_dir, 'categories.html') # Di root
-            with open(categories_index_file_path, "w", encoding="utf-8") as f:
-                f.write(categories_index_html)
-            print(f"Generated: {categories_index_file_path}")
+            # --- GENERASI HALAMAN KATEGORI/LABEL (HANYA DETAIL, INDEKS DIHILANGKAN) ---
+            # HAPUS: 1. Halaman Indeks Kategori (categories.html) tidak lagi digenerate
+            # sorted_labels_info = sorted([info for slug, info in posts_by_label.items()], key=lambda x: x['name'].lower())
+            # categories_index_html = categories_index_template.render(labels=sorted_labels_info)
+            # categories_index_file_path = os.path.join(output_dir, 'categories.html')
+            # with open(categories_index_file_path, "w", encoding="utf-8") as f:
+            #     f.write(categories_index_html)
+            # print(f"Generated: {categories_index_file_path}")
 
-            # 2. Halaman Detail untuk Setiap Kategori
+            # 2. Halaman Detail untuk Setiap Kategori (INI TETAP ADA)
             for label_slug, label_info in posts_by_label.items():
                 category_detail_html = category_detail_template.render(
                     label_name=label_info['name'],
                     posts=label_info['posts'],
-                    all_labels=sorted(list(all_labels)) # Untuk navigasi
+                    all_labels=sorted(list(all_labels)) # Untuk navigasi di footer/sidebar jika diperlukan
                 )
                 category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
                 with open(category_file_path, "w", encoding="utf-8") as f:
