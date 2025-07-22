@@ -10,8 +10,8 @@ ASSETS_SOURCE_DIR = "src/assets" # Lokasi aset statis seperti CSS
 
 # --- Mengambil API Key dan Blog ID dari Variabel Lingkungan ---
 # GitHub Actions akan menyetel variabel lingkungan ini dari GitHub Secrets Anda.
-BLOGGER_API_KEY = os.getenv('BLOGGER_API_KEY')
-BLOG_ID = os.getenv('BLOG_ID')
+BLOGGER_API_KEY = os.getenv('AIzaSyBglonTK3lbLZwqYKSuI3Vj64HUbdPWq6s')
+BLOG_ID = os.getenv('8601707668889540603')
 
 # --- Pengecekan Awal: Memastikan Kunci dan ID Tersedia ---
 if not BLOGGER_API_KEY or not BLOG_ID:
