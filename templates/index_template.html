@@ -15,10 +15,14 @@
         
             <article class='post'>
             {% if post.thumbnail_url %}
-            <div class="post-thumbnail">
+            <div class='img-thumbnail-wrap'>
+<div class='img-thumbnail'>
                 <img src="{{ post.thumbnail_url }}" alt="{{ post.title }} thumbnail">
             </div>
+            </div>
+                
             {% endif %}
+                
             <div class="post-content-wrapper">
                 <h2><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
                 <div class="post-meta">
