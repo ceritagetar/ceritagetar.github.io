@@ -1,5 +1,5 @@
 # .github/workflows/blogger_api.yml
-name: Fetch Blogger Posts
+name: Fetch Blogger Posts and Generate Index
 
 on:
   workflow_dispatch: # Allows manual triggering
@@ -20,12 +20,17 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests
+        pip install requests Jinja2 beautifulsoup4 # Pastikan Jinja2 dan beautifulsoup4 terinstal
 
     - name: Run Blogger API script
       env:
-        # BLOGGER_API_KEY and BLOG_ID are stored as repository secrets
         BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
         BLOG_ID: ${{ secrets.BLOG_ID }}
       run: |
         python main.py
+
+    - name: Upload index.html as an artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: generated-index-html
+        path: index.html
