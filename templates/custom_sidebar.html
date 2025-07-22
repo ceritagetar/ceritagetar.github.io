@@ -1,0 +1,20 @@
+<aside class="sidebar">
+    <h3>Cari Artikel</h3>
+    <form action="/search.html" method="get"> {# Contoh form pencarian #}
+        <input type="text" name="q" placeholder="Cari...">
+        <button type="submit">Cari</button>
+    </form>
+
+    <h3>Kategori Populer</h3>
+    <ul>
+        {% for label in all_labels %} {# all_labels dikirim dari main.py #}
+            <li><a href="/kategori/{{ label|slugify }}.html">{{ label }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h3>Arsip</h3>
+    <ul>
+        <li><a href="#">Januari 2025</a></li> {# Contoh #}
+        <li><a href="#">Desember 2024</a></li>
+    </ul>
+</aside>
