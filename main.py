@@ -5,6 +5,8 @@ from utils import get_secret, get_blogger_posts
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 from datetime import datetime
+# Import dateutil jika kamu memilih opsi parser.parse
+# from dateutil import parser # <-- Hapus komentar ini jika ingin pakai dateutil
 
 # --- Fungsi Pembantu (Sama seperti sebelumnya) ---
 def slugify(text):
@@ -50,9 +52,9 @@ def optimize_blogger_images_in_content(html_content, default_size='s800'):
             img_url = img_tag['src']
             optimized_url = re.sub(r'/(s\d+|w\d+-h\d+)/', f'/{default_size}/', img_url)
             img_tag['src'] = optimized_url
-            img_tag['loading'] = 'lazy' 
+            img_tag['loading'] = 'lazy'  
             if not img_tag.get('alt', '').strip():
-                img_tag['alt'] = 'Gambar Postingan' 
+                img_tag['alt'] = 'Gambar Postingan'  
     return str(soup)
 
 # --- Fungsi Utama ---
@@ -65,7 +67,7 @@ def main():
         all_posts_raw = [] # Mengubah nama variabel agar lebih jelas
         next_page_token = None
         while True:
-            posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token) 
+            posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token)  
             if posts_data and 'items' in posts_data:
                 for post_item in posts_data['items']:
                     if 'content' in post_item:
@@ -77,8 +79,8 @@ def main():
                 break
         
         if all_posts_raw: # Menggunakan all_posts_raw
-            output_dir = os.getcwd() 
-            os.makedirs(output_dir, exist_ok=True) 
+            output_dir = os.getcwd()  
+            os.makedirs(output_dir, exist_ok=True)  
             print(f"Output directory created/ensured: {output_dir}")
 
             pages_output_dir = os.path.join(output_dir, 'pages')
@@ -97,15 +99,25 @@ def main():
             env = Environment(loader=template_loader)
             
             env.filters['slugify'] = slugify
-            env.filters['date'] = lambda value, format="%Y": datetime.strptime(value, '%Y-%m-%d').strftime(format) 
+            
+            # --- BARIS YANG DIUBAH UNTUK FILTER TANGGAL ---
+            # Menggunakan datetime.fromisoformat() untuk parsing string ISO 8601
+            # dan mengganti 'Z' (jika ada) menjadi '+00:00' agar kompatibel.
+            env.filters['date_format'] = lambda value, fmt="%Y %b %d": datetime.fromisoformat(value.replace('Z', '+00:00')).strftime(fmt)
+            
+            # Opsi alternatif jika fromisoformat() menimbulkan masalah atau kamu butuh parsing yang lebih 'fuzzy':
+            # Pastikan kamu sudah `pip install python-dateutil`
+            # from dateutil import parser
+            # env.filters['date_format'] = lambda value, fmt="%Y %b %d": parser.parse(value).strftime(fmt)
 
-            list_posts_template = env.get_template('index_template.html') 
+
+            list_posts_template = env.get_template('index_template.html')  
             single_post_template = env.get_template('single_post_template.html')
             category_detail_template = env.get_template('category_detail_template.html')
 
             processed_posts_for_template = [] # Daftar postingan yang sudah diproses untuk paginasi dan kategori
-            all_labels = set() 
-            posts_by_label = {} 
+            all_labels = set()  
+            posts_by_label = {}  
 
             # --- PRE-PROCESS SEMUA POSTINGAN UNTUK MEMBANGUN DATA YANG DIBUTUHKAN ---
             # Kita perlu memproses semua postingan terlebih dahulu untuk mendapatkan
@@ -117,12 +129,12 @@ def main():
 
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
-                post['detail_url'] = f"/{post_filename}" 
+                post['detail_url'] = f"/{post_filename}"  
                 
                 raw_html_content = post.get('content', '')
                 post['thumbnail_url'] = get_first_image_url(raw_html_content, size='s320')
-                post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=13) 
-                post['optimized_content'] = optimize_blogger_images_in_content(raw_html_content, default_size='s800') 
+                post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=13)  
+                post['optimized_content'] = optimize_blogger_images_in_content(raw_html_content, default_size='s800')  
                 
                 fully_processed_posts.append(post)
 
@@ -166,8 +178,8 @@ def main():
                 # --- Render Halaman Detail Postingan ---
                 single_post_html = single_post_template.render(
                     post=post,
-                    all_labels=sorted(list(all_labels)), 
-                    current_year=datetime.now().year 
+                    all_labels=sorted(list(all_labels)),  
+                    current_year=datetime.now().year  
                 )
                 
                 single_post_file_path = os.path.join(output_dir, post_filename)
@@ -192,8 +204,8 @@ def main():
                     'posts': current_page_posts,
                     'current_page': page_num,
                     'total_pages': total_pages,
-                    'all_labels': sorted(list(all_labels)), 
-                    'current_year': datetime.now().year 
+                    'all_labels': sorted(list(all_labels)),  
+                    'current_year': datetime.now().year  
                 }
 
                 if page_num > 1:
@@ -225,8 +237,8 @@ def main():
                 category_detail_context = {
                     'label_name': label_info['name'],
                     'posts': label_info['posts'], # Ini sudah berisi postingan yang diproses dari loop pertama
-                    'all_labels': sorted(list(all_labels)), 
-                    'current_year': datetime.now().year 
+                    'all_labels': sorted(list(all_labels)),  
+                    'current_year': datetime.now().year  
                 }
                 
                 category_detail_html = category_detail_template.render(category_detail_context)
