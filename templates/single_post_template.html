@@ -1,65 +1,31 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
-    <style>
-        body { font-family: sans-serif; margin: 20px; line-height: 1.6; background-color: #f4f4f4; color: #333;}
-        .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        h1 { color: #333; text-align: center; margin-bottom: 20px; }
-        .post-meta { font-size: 0.9em; color: #666; margin-bottom: 20px; text-align: center; }
-        .post-content { margin-top: 20px; }
-        .post-content img { max-width: 100%; height: auto; display: block; margin: 15px auto; border-radius: 5px; } /* Untuk gambar di dalam konten */
-        a { text-decoration: none; color: #007bff; }
-        a:hover { text-decoration: underline; }
-        .back-link { display: block; text-align: center; margin-top: 30px; }
+{% extends "base_template.html" %}
 
-        /* --- CSS untuk Label (di halaman detail postingan) --- */
-        .post-labels { margin-top: 15px; font-size: 0.9em; border-top: 1px solid #eee; padding-top: 15px; }
-        .post-labels strong { display: block; margin-bottom: 5px; color: #555; }
-        .post-labels a {
-            display: inline-block;
-            background-color: #e6f3ff;
-            color: #007bff;
-            padding: 5px 10px;
-            margin-right: 8px;
-            margin-bottom: 8px;
-            border-radius: 5px;
-            text-decoration: none;
-            border: 1px solid #007bff;
-        }
-        .post-labels a:hover {
-            background-color: #007bff;
-            color: #fff;
-        }
-        /* --- Akhir CSS --- */
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>{{ post.title }}</h1>
-        <div class="post-meta">
-            Dipublikasikan: {{ post.published }}
-        </div>
-        <div class="post-content">
-            {{ post.content | safe }} {# Menggunakan post.content asli untuk halaman detail #}
-        </div>
+{% block title %}{{ post.title }}{% endblock %}
 
-        {# --- BAGIAN UNTUK MENAMPILKAN KATEGORI (LABEL) HANYA DI SINI --- #}
-        {% if post.labels %}
-        <div class="post-labels">
-            <strong>Kategori:</strong>
-            {% for label in post.labels %}
-                <a href="/kategori/{{ label|slugify }}.html">{{ label }}</a>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {# --- AKHIR BAGIAN UNTUK MENAMPILKAN KATEGORI --- #}
+{% block head_extra %}
+    <meta name="description" content="{{ post.parsed_content }}">
+    {# Tambahan meta tag spesifik untuk post ini #}
+{% endblock %}
 
-        <div class="back-link">
-            <a href="/">Kembali ke Beranda</a>
-        </div>
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <div class="post-meta">
+        Dipublikasikan: {{ post.published }}
     </div>
-</body>
-</html>
+    <div class="post-content">
+        {{ post.optimized_content | safe }}
+    </div>
+
+    {% if post.labels %}
+    <div class="post-labels">
+        <strong>Kategori:</strong>
+        {% for label in post.labels %}
+            <a href="/kategori/{{ label|slugify }}.html">{{ label }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="back-link">
+        <a href="/">Kembali ke Beranda</a>
+    </div>
+{% endblock %}
