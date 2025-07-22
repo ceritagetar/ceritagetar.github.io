@@ -1,4 +1,3 @@
-# main.py (Revisi: Mendaftarkan Filter Slugify)
 import os
 import re
 import math
@@ -6,8 +5,9 @@ from utils import get_secret, get_blogger_posts
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 
-# --- Fungsi yang sudah ada ---
+# --- Fungsi Pembantu ---
 def slugify(text):
+    """Mengubah teks menjadi slug yang valid untuk URL."""
     text = str(text).lower()
     text = re.sub(r'[^a-z0-9\s-]', '', text)
     text = re.sub(r'[\s_-]+', '-', text)
@@ -16,6 +16,7 @@ def slugify(text):
     return text
 
 def parse_html_content_preview(html_content, num_words=50):
+    """Mengambil beberapa kata pertama dari konten HTML sebagai pratinjau teks."""
     if not html_content:
         return ""
     
@@ -30,16 +31,51 @@ def parse_html_content_preview(html_content, num_words=50):
         preview_text += "..."
     return preview_text
 
-def get_first_image_url(html_content):
+def get_first_image_url(html_content, size='s320'):
+    """
+    Mengambil URL gambar pertama dari konten HTML dan mengoptimalkan ukurannya
+    menggunakan parameter URL Blogger/Google Photos.
+    Parameter 'size' bisa berupa 's<angka>' (lebar maks) atau 'w<lebar>-h<tinggi>'.
+    """
     if not html_content:
         return None
     soup = BeautifulSoup(html_content, 'html.parser')
     first_img = soup.find('img')
     if first_img and 'src' in first_img.attrs:
-        return first_img['src']
+        img_url = first_img['src']
+        # Mengganti bagian ukuran di URL Blogger (misal: /s1600/ menjadi /s320/)
+        # Pola regex mencari /s<angka>/ atau /w<angka>-h<angka>/
+        optimized_url = re.sub(r'/(s\d+|w\d+-h\d+)/', f'/{size}/', img_url)
+        return optimized_url
     return None
-# --- Akhir Fungsi yang sudah ada ---
 
+def optimize_blogger_images_in_content(html_content, default_size='s800'):
+    """
+    Memproses semua tag <img> dalam konten HTML:
+    1. Mengubah ukuran gambar menggunakan parameter URL Blogger.
+    2. Menambahkan atribut loading="lazy" untuk lazy loading.
+    3. Menambahkan atribut alt jika belum ada.
+    """
+    if not html_content:
+        return ""
+    soup = BeautifulSoup(html_content, 'html.parser')
+    for img_tag in soup.find_all('img'):
+        if 'src' in img_tag.attrs:
+            img_url = img_tag['src']
+            # Mengganti bagian ukuran di URL Blogger
+            optimized_url = re.sub(r'/(s\d+|w\d+-h\d+)/', f'/{default_size}/', img_url)
+            img_tag['src'] = optimized_url
+            
+            # Tambahkan atribut loading="lazy"
+            img_tag['loading'] = 'lazy' 
+            
+            # Tambahkan atribut alt jika belum ada atau kosong
+            if not img_tag.get('alt', '').strip():
+                # Bisa disesuaikan, misalnya mengambil bagian dari judul post
+                img_tag['alt'] = 'Gambar Postingan' 
+    return str(soup)
+
+# --- Fungsi Utama ---
 def main():
     try:
         blogger_api_key = get_secret("BLOGGER_API_KEY")
@@ -49,6 +85,7 @@ def main():
         all_posts = []
         next_page_token = None
         while True:
+            # Mengambil 500 postingan per request untuk mempercepat proses
             posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=500, page_token=next_page_token) 
             if posts_data and 'items' in posts_data:
                 for post_item in posts_data['items']:
@@ -65,14 +102,15 @@ def main():
             os.makedirs(output_dir, exist_ok=True) 
             print(f"Output directory created/ensured: {output_dir}")
 
+            # Buat folder 'pages' untuk paginasi
             pages_output_dir = os.path.join(output_dir, 'pages')
             os.makedirs(pages_output_dir, exist_ok=True)
             print(f"Pages directory created/ensured: {pages_output_dir}")
 
+            # Buat folder 'kategori' untuk halaman label
             categories_output_dir = os.path.join(output_dir, 'kategori')
             os.makedirs(categories_output_dir, exist_ok=True)
             print(f"Categories directory created/ensured: {categories_output_dir}")
-
 
             template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
             if not os.path.isdir(template_dir):
@@ -81,17 +119,16 @@ def main():
             template_loader = FileSystemLoader(template_dir)
             env = Environment(loader=template_loader)
             
-            # --- TAMBAHAN PENTING: DAFTARKAN FILTER SLUGIFY ---
+            # PENTING: Daftarkan filter slugify agar bisa digunakan di template
             env.filters['slugify'] = slugify
-            # --- AKHIR TAMBAHAN PENTING ---
 
             list_posts_template = env.get_template('index_template.html') 
             single_post_template = env.get_template('single_post_template.html')
             category_detail_template = env.get_template('category_detail_template.html')
 
             processed_posts_for_template = []
-            all_labels = set()
-            posts_by_label = {}
+            all_labels = set() # Untuk menyimpan semua label unik (berguna untuk navigasi opsional)
+            posts_by_label = {} # Untuk mengelompokkan postingan berdasarkan label
 
             for post in all_posts:
                 post_slug = slugify(post.get('title', 'untitled-post'))
@@ -100,11 +137,17 @@ def main():
                 post['detail_url'] = f"/{post_filename}" 
 
                 raw_html_content = post.get('content')
-                post['thumbnail_url'] = get_first_image_url(raw_html_content)
+                
+                # Mengambil URL thumbnail yang sudah dioptimalkan untuk daftar postingan
+                post['thumbnail_url'] = get_first_image_url(raw_html_content, size='s320') # Ukuran kecil (misal: max lebar 320px)
                 post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=50)
+                
+                # Mengoptimalkan semua gambar di konten untuk halaman detail postingan
+                post['optimized_content'] = optimize_blogger_images_in_content(raw_html_content, default_size='s800') # Ukuran lebih besar (misal: max lebar 800px)
                 
                 processed_posts_for_template.append(post)
 
+                # --- Ekstraksi dan Pengelompokan Label ---
                 labels = post.get('labels', [])
                 if labels:
                     for label in labels:
@@ -117,14 +160,17 @@ def main():
                                 'posts': []
                             }
                         posts_by_label[label_slug]['posts'].append(post)
+                # --- Akhir Ekstraksi Label ---
 
-                single_post_html = single_post_template.render(post=post)
+                # --- Generasi Halaman Detail Postingan ---
+                # Menggunakan 'optimized_content' untuk konten gambar yang sudah dioptimalkan
+                single_post_html = single_post_template.render(post=post) 
                 single_post_file_path = os.path.join(output_dir, post_filename)
                 with open(single_post_file_path, "w", encoding="utf-8") as f:
                     f.write(single_post_html)
                 print(f"Generated: {single_post_file_path}")
             
-            # --- PAGINASI (Kode ini tetap sama) ---
+            # --- PAGINASI (Untuk index.html dan pages/*.html) ---
             posts_per_page = 5
             total_posts = len(processed_posts_for_template)
             total_pages = math.ceil(total_posts / posts_per_page)
@@ -140,7 +186,7 @@ def main():
                     'posts': current_page_posts,
                     'current_page': page_num,
                     'total_pages': total_pages,
-                    'all_labels': sorted(list(all_labels))
+                    'all_labels': sorted(list(all_labels)) # Untuk navigasi/footer jika diperlukan
                 }
 
                 if page_num > 1:
@@ -165,12 +211,12 @@ def main():
                         f.write(list_posts_template.render(template_context))
                     print(f"Generated: {page_file_path} (Page {page_num})")
             
-            # --- GENERASI HALAMAN KATEGORI/LABEL ---
+            # --- GENERASI HALAMAN DETAIL KATEGORI (Hanya category/*.html, tanpa categories.html) ---
             for label_slug, label_info in posts_by_label.items():
                 category_detail_html = category_detail_template.render(
                     label_name=label_info['name'],
                     posts=label_info['posts'],
-                    all_labels=sorted(list(all_labels))
+                    all_labels=sorted(list(all_labels)) # Untuk navigasi jika diperlukan
                 )
                 category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
                 with open(category_file_path, "w", encoding="utf-8") as f:
