@@ -100,32 +100,19 @@ def main():
             
             env.filters['slugify'] = slugify
             
-            # --- BARIS YANG DIUBAH UNTUK FILTER TANGGAL ---
-            # Menggunakan datetime.fromisoformat() untuk parsing string ISO 8601
-            # dan mengganti 'Z' (jika ada) menjadi '+00:00' agar kompatibel.
             env.filters['date_format'] = lambda value, fmt="%d %b %Y": datetime.fromisoformat(value.replace('Z', '+00:00')).strftime(fmt)
             
-            # Opsi alternatif jika fromisoformat() menimbulkan masalah atau kamu butuh parsing yang lebih 'fuzzy':
-            # Pastikan kamu sudah `pip install python-dateutil`
-            # from dateutil import parser
-            # env.filters['date_format'] = lambda value, fmt="%Y %b %d": parser.parse(value).strftime(fmt)
-
-
             list_posts_template = env.get_template('index_template.html')  
             single_post_template = env.get_template('single_post_template.html')
             category_detail_template = env.get_template('category_detail_template.html')
 
-            processed_posts_for_template = [] # Daftar postingan yang sudah diproses untuk paginasi dan kategori
+            # --- PRE-PROCESS SEMUA POSTINGAN UNTUK MEMBANGUN DATA YANG DIBUTUHKAN ---
+            fully_processed_posts = []
             all_labels = set()  
             posts_by_label = {}  
 
-            # --- PRE-PROCESS SEMUA POSTINGAN UNTUK MEMBANGUN DATA YANG DIBUTUHKAN ---
-            # Kita perlu memproses semua postingan terlebih dahulu untuk mendapatkan
-            # slug, URL, thumbnail, konten, dan labels yang sudah lengkap
-            # agar bisa digunakan untuk mencari related posts secara efisien.
-            fully_processed_posts = []
             for post_item in all_posts_raw:
-                post = post_item.copy() # Salin agar tidak mengubah data asli
+                post = post_item.copy() 
 
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
@@ -138,7 +125,6 @@ def main():
                 
                 fully_processed_posts.append(post)
 
-                # Untuk mengumpulkan semua label dan mengelompokkan postingan
                 labels = post.get('labels', [])
                 if labels:
                     for label in labels:
@@ -153,29 +139,24 @@ def main():
                         posts_by_label[label_slug]['posts'].append(post)
 
             # --- GENERASI HALAMAN INDIVIDUAL POSTINGAN & MENCARI RELATED POSTS ---
-            for post in fully_processed_posts: # Sekarang iterate melalui postingan yang sudah diproses penuh
+            for post in fully_processed_posts: 
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
 
-                # --- Mencari Related Posts ---
                 related_posts = []
                 current_post_labels = set(post.get('labels', []))
                 
-                if current_post_labels: # Hanya cari related jika postingan punya label
+                if current_post_labels: 
                     for other_post in fully_processed_posts:
-                        # Pastikan bukan postingan yang sama dan ada label yang tumpang tindih
                         if other_post['id'] != post['id'] and \
                            len(set(other_post.get('labels', [])) & current_post_labels) > 0:
                             related_posts.append(other_post)
-                        
-                        # Batasi jumlah related posts, misalnya 5
-                        if len(related_posts) >= 5: # Anda bisa mengubah angka ini
+                            
+                        if len(related_posts) >= 5: 
                             break
-                
+                    
                 post['related_posts'] = related_posts
-                # --- Akhir Mencari Related Posts ---
 
-                # --- Render Halaman Detail Postingan ---
                 single_post_html = single_post_template.render(
                     post=post,
                     all_labels=sorted(list(all_labels)),  
@@ -187,18 +168,17 @@ def main():
                     f.write(single_post_html)
                 print(f"Generated: {single_post_file_path}")
             
-            # --- PAGINASI (Untuk index.html dan pages/*.html) ---
-            # Gunakan fully_processed_posts untuk paginasi juga
-            posts_per_page = 5
+            # --- PAGINASI UNTUK HALAMAN UTAMA (index.html dan pages/*.html) ---
+            posts_per_page = 5 # Jumlah postingan per halaman INDEX utama
             total_posts = len(fully_processed_posts)
             total_pages = math.ceil(total_posts / posts_per_page)
 
-            print(f"Total posts: {total_posts}, Posts per page: {posts_per_page}, Total pages: {total_pages}")
+            print(f"Total posts: {total_posts}, Posts per page (Index): {posts_per_page}, Total pages (Index): {total_pages}")
 
             for page_num in range(1, total_pages + 1):
                 start_index = (page_num - 1) * posts_per_page
                 end_index = start_index + posts_per_page
-                current_page_posts = fully_processed_posts[start_index:end_index] # Menggunakan fully_processed_posts
+                current_page_posts = fully_processed_posts[start_index:end_index]
 
                 page_context = {
                     'posts': current_page_posts,
@@ -232,21 +212,68 @@ def main():
                         f.write(rendered_page_html)
                     print(f"Generated: {page_file_path} (Page {page_num})")
             
-            # --- GENERASI HALAMAN DETAIL KATEGORI ---
+            # --- GENERASI HALAMAN DETAIL KATEGORI (DENGAN PAGINASI UNTUK TIAP KATEGORI) ---
+            posts_per_category_page = 5 # Jumlah postingan per halaman KATEGORI
+
             for label_slug, label_info in posts_by_label.items():
-                category_detail_context = {
-                    'label_name': label_info['name'],
-                    'posts': label_info['posts'], # Ini sudah berisi postingan yang diproses dari loop pertama
-                    'all_labels': sorted(list(all_labels)),  
-                    'current_year': datetime.now().year  
-                }
-                
-                category_detail_html = category_detail_template.render(category_detail_context)
-                
-                category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
-                with open(category_file_path, "w", encoding="utf-8") as f:
-                    f.write(category_detail_html)
-                print(f"Generated: {category_file_path}")
+                category_posts = label_info['posts'] # Postingan hanya untuk kategori ini
+                total_category_posts = len(category_posts)
+                total_category_pages = math.ceil(total_category_posts / posts_per_category_page)
+
+                print(f"Generating pages for category '{label_info['name']}': Total posts {total_category_posts}, Total pages {total_category_pages}")
+
+                # Buat folder untuk sub-paginasi kategori jika diperlukan (misal: kategori/nama-slug/page/)
+                category_slug_dir = os.path.join(categories_output_dir, label_slug)
+                os.makedirs(category_slug_dir, exist_ok=True)
+
+
+                for page_num in range(1, total_category_pages + 1):
+                    start_index = (page_num - 1) * posts_per_category_page
+                    end_index = start_index + posts_per_category_page
+                    current_category_page_posts = category_posts[start_index:end_index]
+
+                    # Konteks untuk template kategori
+                    category_detail_context = {
+                        'label_name': label_info['name'],
+                        'label_slug': label_slug, # Tambahkan label_slug ke konteks agar bisa dipakai di template
+                        'posts': current_category_page_posts,
+                        'current_page': page_num,
+                        'total_pages': total_category_pages,
+                        'all_labels': sorted(list(all_labels)),
+                        'current_year': datetime.now().year
+                    }
+
+                    # Atur URL paginasi untuk kategori
+                    if page_num > 1:
+                        # Link "Prev" akan mengarah ke root kategori jika ini halaman 2 (misal: /kategori/teknologi.html)
+                        # atau ke subfolder 'page/X.html' jika halaman > 2 (misal: /kategori/teknologi/page/2.html)
+                        category_detail_context['prev_page_url'] = \
+                            f'/kategori/{label_slug}.html' if page_num == 2 else f'/kategori/{label_slug}/page/{page_num - 1}.html'
+                    else:
+                        category_detail_context['prev_page_url'] = None
+
+                    if page_num < total_category_pages:
+                        category_detail_context['next_page_url'] = f'/kategori/{label_slug}/page/{page_num + 1}.html'
+                    else:
+                        category_detail_context['next_page_url'] = None
+                    
+                    # Render HTML kategori
+                    category_detail_html = category_detail_template.render(category_detail_context)
+                    
+                    # Tentukan path file output
+                    if page_num == 1:
+                        # Halaman pertama kategori akan disimpan di kategori/nama-slug.html
+                        category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
+                    else:
+                        # Halaman paginasi kategori akan disimpan di kategori/nama-slug/page/X.html
+                        # Pastikan folder 'page' dibuat jika belum ada
+                        category_page_dir = os.path.join(category_slug_dir, 'page')
+                        os.makedirs(category_page_dir, exist_ok=True)
+                        category_file_path = os.path.join(category_page_dir, f"{page_num}.html")
+                    
+                    with open(category_file_path, "w", encoding="utf-8") as f:
+                        f.write(category_detail_html)
+                    print(f"Generated: {category_file_path} (Category '{label_info['name']}' Page {page_num})")
 
         else:
             print("No posts found or an error occurred. No HTML files generated.")
