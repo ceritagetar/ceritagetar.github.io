@@ -1,14 +1,18 @@
 # .github/workflows/blogger_api.yml
-name: Fetch Blogger Posts and Generate Index
+name: Fetch Blogger Posts and Deploy to GitHub Pages
 
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight UTC
+  push:
+    branches:
+      - main # Jalankan juga saat ada push ke branch main
 
 jobs:
-  fetch_posts:
+  build_and_deploy:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -20,17 +24,21 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install requests Jinja2 beautifulsoup4 # Pastikan Jinja2 dan beautifulsoup4 terinstal
+        pip install requests Jinja2 beautifulsoup4
 
-    - name: Run Blogger API script
+    - name: Run Blogger API script to generate index.html
       env:
         BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
         BLOG_ID: ${{ secrets.BLOG_ID }}
       run: |
         python main.py
 
-    - name: Upload index.html as an artifact
-      uses: actions/upload-artifact@v4
+    # --- Bagian PENTING untuk GitHub Pages ---
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3 # Gunakan action untuk deploy
+      if: github.ref == 'refs/heads/main' # Pastikan hanya jalan di branch main
       with:
-        name: generated-index-html
-        path: index.html
+        github_token: ${{ secrets.GITHUB_TOKEN }} # Token otomatis dari GitHub
+        publish_dir: ./ # Direktori yang akan di-deploy (tempat index.html berada)
+        # opsional: publish_branch: gh-pages # Jika Anda ingin deploy ke branch 'gh-pages'
+                                          # Jika tidak pakai, akan deploy ke branch yang dikonfigurasi di GitHub Pages
