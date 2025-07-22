@@ -121,7 +121,7 @@ def main():
                 
                 raw_html_content = post.get('content', '')
                 post['thumbnail_url'] = get_first_image_url(raw_html_content, size='s320')
-                post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=30) 
+                post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=13) 
                 post['optimized_content'] = optimize_blogger_images_in_content(raw_html_content, default_size='s800') 
                 
                 fully_processed_posts.append(post)
