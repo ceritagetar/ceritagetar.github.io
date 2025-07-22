@@ -1,0 +1,31 @@
+# .github/workflows/blogger_api.yml
+name: Fetch Blogger Posts
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+
+jobs:
+  fetch_posts:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install requests
+
+    - name: Run Blogger API script
+      env:
+        # BLOGGER_API_KEY and BLOG_ID are stored as repository secrets
+        BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
+        BLOG_ID: ${{ secrets.BLOG_ID }}
+      run: |
+        python main.py
