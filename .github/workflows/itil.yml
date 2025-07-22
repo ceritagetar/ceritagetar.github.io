@@ -1,5 +1,5 @@
 # .github/workflows/blogger_api.yml
-name: Fetch Blogger Posts and Upload HTML Artifacts
+name: Fetch Blogger Posts and Upload Dist Folder as Artifact
 
 on:
   workflow_dispatch: # Memungkinkan trigger manual
@@ -12,9 +12,8 @@ on:
 jobs:
   build_and_upload_artifacts:
     runs-on: ubuntu-latest
-    # Tidak perlu izin 'write' ke 'contents' atau 'pages' lagi
-    # permissions:
-    #   contents: read # Cukup 'read' karena tidak menulis ke repo
+    permissions:
+      contents: read # Cukup izin baca karena tidak menulis ke repo
 
     steps:
     - name: Checkout code
@@ -29,19 +28,17 @@ jobs:
       run: |
         pip install requests Jinja2 beautifulsoup4
 
-    - name: Run Blogger API script to generate HTML files
+    - name: Run Blogger API script to generate HTML files into 'dist'
       env:
         BLOGGER_API_KEY: ${{ secrets.BLOGGER_API_KEY }}
         BLOG_ID: ${{ secrets.BLOG_ID }}
       run: |
         python main.py
 
-    # --- Bagian PENTING: Upload Semua File HTML sebagai Artifact ---
-    - name: Upload generated HTML files as artifact
+    # --- Bagian PENTING: Upload Folder 'dist' sebagai Artifact ---
+    - name: Upload 'dist' folder as artifact
       uses: actions/upload-artifact@v4
       with:
-        name: generated-html-files # Nama artifact
-        path: |
-          *.html # Mengunggah semua file .html di direktori root
-        # path: ./ # Alternatif: mengunggah seluruh direktori kerja jika ada file lain
-        retention-days: 7 # Opsional: Berapa lama artifact akan disimpan (default 90 hari)
+        name: website-dist-folder # Nama artifact
+        path: dist/             # <-- Ini poin utamanya! Upload folder 'dist'
+        retention-days: 7       # Opsional: Berapa lama artifact akan disimpan
