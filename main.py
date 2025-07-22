@@ -1,4 +1,4 @@
-# main.py (Revisi untuk output ke folder 'dist')
+# main.py (Revisi fokus pada output_dir dan post_filename)
 import os
 import re
 from utils import get_secret, get_blogger_posts
@@ -10,10 +10,10 @@ def slugify(text):
     Converts text to a URL-friendly slug.
     """
     text = str(text).lower()
-    text = re.sub(r'[^a-z0-9\s-]', '', text)
-    text = re.sub(r'[\s_-]+', '-', text)
-    text = re.sub(r'^-+', '', text)
-    text = re.sub(r'-+$', '', text)
+    text = re.sub(r'[^a-z0-9\s-]', '', text) # Remove non-alphanumeric chars
+    text = re.sub(r'[\s_-]+', '-', text)    # Replace spaces/underscores with single dash
+    text = re.sub(r'^-+', '', text)         # Remove dashes from start
+    text = re.sub(r'-+$', '', text)         # Remove dashes from end
     return text
 
 def parse_html_content_preview(html_content, num_words=50):
@@ -48,13 +48,14 @@ def main():
         posts_data = get_blogger_posts(blog_id, blogger_api_key, max_results=10)
 
         if posts_data:
-            # Tentukan direktori output sebagai subfolder 'dist' di direktori kerja saat ini
-            # os.getcwd() akan mengembalikan direktori tempat workflow dijalankan
-            output_dir = os.path.join(os.getcwd(), 'dist') # <-- Ini poin utamanya!
+            # Output semua file HTML ke direktori kerja saat ini di runner GitHub Actions
+            # Ini adalah direktori tempat 'main.py' berada setelah checkout
+            output_dir = os.path.dirname(os.path.abspath(__file__)) # <-- Pastikan ini
+            # Atau bisa juga pakai: output_dir = os.getcwd() 
+            # Keduanya harus bekerja di konteks GitHub Actions default,
+            # tapi os.path.dirname(os.path.abspath(__file__)) lebih eksplisit untuk file Python itu sendiri.
             
-            # Pastikan folder 'dist' dibuat jika belum ada
-            os.makedirs(output_dir, exist_ok=True) 
-            print(f"Output directory created/ensured: {output_dir}")
+            os.makedirs(output_dir, exist_ok=True) # Buat direktori jika belum ada
 
             # Path ke folder 'templates' relatif terhadap 'main.py'
             template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
@@ -73,9 +74,9 @@ def main():
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
                 
-                # Tautan di index.html harus tetap relatif ke root situs (/)
-                # agar saat diakses dari ceritagetat.github.io/index.html bisa ke ceritagetat.github.io/post-name.html
-                post['detail_url'] = f"/{post_filename}" 
+                # Path relatif untuk tautan di index.html
+                # Harus relatif ke root GH Pages, jadi dimulai dengan '/'
+                post['detail_url'] = f"/{post_filename}" # <-- Ini penting untuk GitHub Pages
 
                 raw_html_content = post.get('content')
                 post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=50)
@@ -85,7 +86,7 @@ def main():
                 # --- Generasi Halaman Detail Postingan ---
                 single_post_html = single_post_template.render(post=post)
                 
-                single_post_file_path = os.path.join(output_dir, post_filename) # Menyimpan ke dalam 'dist'
+                single_post_file_path = os.path.join(output_dir, post_filename) # <-- Menyimpan di output_dir
                 with open(single_post_file_path, "w", encoding="utf-8") as f:
                     f.write(single_post_html)
                 print(f"Generated: {single_post_file_path}")
@@ -93,7 +94,7 @@ def main():
             # --- Generasi Halaman Index ---
             index_html = index_template.render(posts=processed_posts)
 
-            index_file_path = os.path.join(output_dir, 'index.html') # Menyimpan ke dalam 'dist'
+            index_file_path = os.path.join(output_dir, 'index.html') # <-- Menyimpan di output_dir
             with open(index_file_path, "w", encoding="utf-8") as f:
                 f.write(index_html)
             print(f"Generated: {index_file_path}")
