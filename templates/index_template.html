@@ -24,15 +24,16 @@
             {% endif %}
                 
             <div class="post-content-wrapper">
-                <h2><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
-                <div class="post-meta">
-                    Dipublikasikan: {{ post.published }}
-                </div>
-                <div class="post-excerpt">
+                <h2 class='post-title entry-title'><a href="{{ post.detail_url }}">{{ post.title }}</a></h2>
+                
+                <div class="post-snippet">
                     {{ post.parsed_content | safe }}
                 </div>
                 <p><a href="{{ post.detail_url }}">Baca Selengkapnya</a></p>
             </div>
+                <div class="post-meta">
+                    Dipublikasikan: {{ post.published }}
+                </div>
         </article>
         {% endfor %}
     </div>
