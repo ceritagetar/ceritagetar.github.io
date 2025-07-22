@@ -3,7 +3,7 @@
 {% block title %}Kategori: {{ label_name }}{% endblock %}
 
 {% block content %}
-    <h1>Postingan dalam Kategori: "{{ label_name }}"</h1>
+    <div class="latest-post-title"><h1 style="font-size:16px;">{{ label_name }}</h1></div>
 
     {% if posts %}
         {% for post in posts %}
