@@ -1,4 +1,4 @@
-# main.py (Revisi: Menghilangkan Generasi categories.html)
+# main.py (Revisi: Mendaftarkan Filter Slugify)
 import os
 import re
 import math
@@ -81,16 +81,17 @@ def main():
             template_loader = FileSystemLoader(template_dir)
             env = Environment(loader=template_loader)
             
+            # --- TAMBAHAN PENTING: DAFTARKAN FILTER SLUGIFY ---
+            env.filters['slugify'] = slugify
+            # --- AKHIR TAMBAHAN PENTING ---
+
             list_posts_template = env.get_template('index_template.html') 
             single_post_template = env.get_template('single_post_template.html')
-            # --- HAPUS: categories_index_template tidak lagi dimuat ---
-            # categories_index_template = env.get_template('categories_index_template.html')
-            category_detail_template = env.get_template('category_detail_template.html') # Ini tetap ada
-            # --- Akhir HAPUS ---
+            category_detail_template = env.get_template('category_detail_template.html')
 
             processed_posts_for_template = []
-            all_labels = set() # Untuk menyimpan semua label unik (masih berguna untuk daftar di footer/sidebar)
-            posts_by_label = {} # Untuk mengelompokkan postingan berdasarkan label
+            all_labels = set()
+            posts_by_label = {}
 
             for post in all_posts:
                 post_slug = slugify(post.get('title', 'untitled-post'))
@@ -139,7 +140,7 @@ def main():
                     'posts': current_page_posts,
                     'current_page': page_num,
                     'total_pages': total_pages,
-                    'all_labels': sorted(list(all_labels)) # Masih berguna untuk daftar di footer/sidebar
+                    'all_labels': sorted(list(all_labels))
                 }
 
                 if page_num > 1:
@@ -164,27 +165,17 @@ def main():
                         f.write(list_posts_template.render(template_context))
                     print(f"Generated: {page_file_path} (Page {page_num})")
             
-            # --- GENERASI HALAMAN KATEGORI/LABEL (HANYA DETAIL, INDEKS DIHILANGKAN) ---
-            # HAPUS: 1. Halaman Indeks Kategori (categories.html) tidak lagi digenerate
-            # sorted_labels_info = sorted([info for slug, info in posts_by_label.items()], key=lambda x: x['name'].lower())
-            # categories_index_html = categories_index_template.render(labels=sorted_labels_info)
-            # categories_index_file_path = os.path.join(output_dir, 'categories.html')
-            # with open(categories_index_file_path, "w", encoding="utf-8") as f:
-            #     f.write(categories_index_html)
-            # print(f"Generated: {categories_index_file_path}")
-
-            # 2. Halaman Detail untuk Setiap Kategori (INI TETAP ADA)
+            # --- GENERASI HALAMAN KATEGORI/LABEL ---
             for label_slug, label_info in posts_by_label.items():
                 category_detail_html = category_detail_template.render(
                     label_name=label_info['name'],
                     posts=label_info['posts'],
-                    all_labels=sorted(list(all_labels)) # Untuk navigasi di footer/sidebar jika diperlukan
+                    all_labels=sorted(list(all_labels))
                 )
                 category_file_path = os.path.join(categories_output_dir, f"{label_slug}.html")
                 with open(category_file_path, "w", encoding="utf-8") as f:
                     f.write(category_detail_html)
                 print(f"Generated: {category_file_path}")
-            # --- AKHIR GENERASI HALAMAN KATEGORI ---
 
         else:
             print("No posts found or an error occurred. No HTML files generated.")
