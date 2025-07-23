@@ -4,6 +4,8 @@
 
 {% block head_extra %}
     <meta name="description" content="{{ post.parsed_content }}">
+<link rel="canonical" href="{{ post.absolute_url }}">
+
 {% endblock %}
 
 {% block content %}
