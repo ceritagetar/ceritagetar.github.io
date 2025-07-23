@@ -34,26 +34,30 @@
         {{ post.optimized_content | safe }}
     </div>
 
-    
-
     {# --- BAGIAN RELATED POSTS --- #}
-    {% if post.related_posts %}
-    <div class="related-posts" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
-        <h2>Artikel Terkait</h2>
-        <ul>
-            {% for related_p in post.related_posts %}
-            <li style="margin-bottom: 10px;">
-                <a href="{{ related_p.detail_url }}" style="font-weight: bold;">{{ related_p.title }}</a>
-                {% if related_p.thumbnail_url %}
-                    <br><img src="{{ related_p.thumbnail_url }}" alt="{{ related_p.title }} thumbnail" style="max-width: 100px; height: auto; margin-top: 5px; border-radius: 3px;">
-                {% endif %}
-                <p style="font-size: 0.9em; color: #555;">{{ related_p.parsed_content }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+{% if post.related_posts %}
+<div class="ms-related-post" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+    <div class="related-title">
+        <p class="ms-title">Artikel Terkait</p>
     </div>
-    {% endif %}
-    {# --- AKHIR BAGIAN RELATED POSTS --- #}
+    <ul class="ms-related-hasthumb"> {# Assuming you generally want thumbnails. If not, use ms-related-nothumb and remove the thumbnail div. #}
+        {% for related_p in post.related_posts %}
+        <li>
+            <a title="{{ related_p.title }}" href="{{ related_p.detail_url }}">
+                <div class="related-thumb-outer">
+                    {# Use a placeholder if thumbnail_url is missing, similar to JS's relatedPostsNoThumbImg #}
+                    {% set thumbnail_src = related_p.thumbnail_url if related_p.thumbnail_url else '//1.bp.blogspot.com/-sLMytth04W8/XtoBMx9lUjI/AAAAAAAAHmM/zK-toM5XTacePvBHnpIO_tfzjg63BD3ZgCK4BGAsYHg/w192-h108-n-k-no-nu-rw/nomage%2B%25281%2529.png' %}
+                    <img alt="{{ related_p.title }}" class="related-thumb" src="{{ thumbnail_src }}" width="192" height="108">
+                </div>
+                <div class="related-title-outer">{{ related_p.title }}</div>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{# --- AKHIR BAGIAN RELATED POSTS --- #}
 
+    
     
 {% endblock %}
