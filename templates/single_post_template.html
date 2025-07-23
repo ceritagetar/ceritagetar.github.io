@@ -7,22 +7,34 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
+{% if post.labels %}
+<div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
+  <span itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href="/">
+        <span itemprop="name">Home</span></a>
+    <meta itemprop="position" content="1" />
+  </span>
+ {% for label in post.labels %}
+<span itemprop="itemListElement" itemscope
+      itemtype="https://schema.org/ListItem">
+    <a itemprop="item" href="/kategori/{{ label|slugify }}.html">
+        <span itemprop="name">{{ label }}</span></a>
+    <meta itemprop="position" content="2" />
+  </span>
+{% endfor %}
+  </div>
+    {% endif %}
+
+    <h1 class="post-title">{{ post.title }}</h1>
     <div class="post-meta">
-        Dipublikasikan: {{ post.published }}
+        Dipublikasikan {{ post.published }}
     </div>
     <div class="post-content">
         {{ post.optimized_content | safe }}
     </div>
 
-    {% if post.labels %}
-    <div class="post-labels">
-        <strong>Kategori:</strong>
-        {% for label in post.labels %}
-            <a href="/kategori/{{ label|slugify }}.html">{{ label }}</a>
-        {% endfor %}
-    </div>
-    {% endif %}
+    
 
     {# --- BAGIAN RELATED POSTS --- #}
     {% if post.related_posts %}
@@ -43,7 +55,5 @@
     {% endif %}
     {# --- AKHIR BAGIAN RELATED POSTS --- #}
 
-    <div class="back-link" style="margin-top: 20px;">
-        <a href="/">Kembali ke Beranda</a>
-    </div>
+    
 {% endblock %}
