@@ -100,6 +100,8 @@ def main():
             
             env.filters['slugify'] = slugify
             
+            # Filter baru untuk mengonversi tanggal, asumsikan 'published' format ISO 8601
+            # Contoh: "2023-10-27T10:00:00Z"
             env.filters['date_format'] = lambda value, fmt="%d %b %Y": datetime.fromisoformat(value.replace('Z', '+00:00')).strftime(fmt)
             
             list_posts_template = env.get_template('index_template.html')  
@@ -112,18 +114,22 @@ def main():
             posts_by_label = {}  
 
             for post_item in all_posts_raw:
-                post = post_item.copy() 
+                post = post_item.copy()  
 
                 post_slug = slugify(post.get('title', 'untitled-post'))
-                post_filename = f"{post_slug}.html"
-                post['detail_url'] = f"/{post_filename}"  
+                # Gunakan 'id' atau 'url' dari Blogger jika ada untuk detail_url yang lebih stabil
+                # Atau tetap pakai slug jika Anda ingin URL statis
+                # post['detail_url'] = post.get('url') # Jika ingin pakai URL asli Blogger
+                post['detail_url'] = f"/{post_slug}.html" # Jika ingin pakai slug sebagai URL file lokal
                 
                 raw_html_content = post.get('content', '')
                 post['thumbnail_url'] = get_first_image_url(raw_html_content, size='s320')
                 post['parsed_content'] = parse_html_content_preview(raw_html_content, num_words=13)  
                 post['optimized_content'] = optimize_blogger_images_in_content(raw_html_content, default_size='s800')  
                 
-                fully_processed_posts.append(post)
+                # Pastikan tanggal 'published' ada dan valid untuk sorting
+                if 'published' in post:
+                    fully_processed_posts.append(post)
 
                 labels = post.get('labels', [])
                 if labels:
@@ -138,21 +144,33 @@ def main():
                             }
                         posts_by_label[label_slug]['posts'].append(post)
 
+            # --- BARIS BARU UNTUK MENGURUTKAN DAN MENGAMBIL POSTINGAN TERBARU ---
+            # Urutkan semua postingan berdasarkan tanggal publikasi (terbaru dulu)
+            # Pastikan 'published' ada di setiap post sebelum sorting
+            fully_processed_posts.sort(key=lambda p: datetime.fromisoformat(p['published'].replace('Z', '+00:00')), reverse=True)
+            
+            # Ambil 5 postingan terbaru (Anda bisa ubah angka ini)
+            num_recent_posts_widget = 5
+            recent_posts_for_widget = fully_processed_posts[:num_recent_posts_widget]
+            print(f"Collected {len(recent_posts_for_widget)} recent posts for the widget.")
+            # --- AKHIR BARIS BARU ---
+
+
             # --- GENERASI HALAMAN INDIVIDUAL POSTINGAN & MENCARI RELATED POSTS ---
-            for post in fully_processed_posts: 
+            for post in fully_processed_posts:  # Gunakan fully_processed_posts yang sudah diurutkan
                 post_slug = slugify(post.get('title', 'untitled-post'))
                 post_filename = f"{post_slug}.html"
 
                 related_posts = []
                 current_post_labels = set(post.get('labels', []))
                 
-                if current_post_labels: 
+                if current_post_labels:  
                     for other_post in fully_processed_posts:
                         if other_post['id'] != post['id'] and \
                            len(set(other_post.get('labels', [])) & current_post_labels) > 0:
                             related_posts.append(other_post)
                             
-                        if len(related_posts) >= 5: 
+                        if len(related_posts) >= 5:  
                             break
                     
                 post['related_posts'] = related_posts
@@ -160,7 +178,9 @@ def main():
                 single_post_html = single_post_template.render(
                     post=post,
                     all_labels=sorted(list(all_labels)),  
-                    current_year=datetime.now().year  
+                    current_year=datetime.now().year,
+                    # --- TERUSKAN RECENT_POSTS KE SINGLE_POST_TEMPLATE JUGA ---
+                    recent_posts=recent_posts_for_widget 
                 )
                 
                 single_post_file_path = os.path.join(output_dir, post_filename)
@@ -185,7 +205,9 @@ def main():
                     'current_page': page_num,
                     'total_pages': total_pages,
                     'all_labels': sorted(list(all_labels)),  
-                    'current_year': datetime.now().year  
+                    'current_year': datetime.now().year,
+                    # --- TERUSKAN RECENT_POSTS KE INDEX_TEMPLATE (dan pages/*.html) ---
+                    'recent_posts': recent_posts_for_widget 
                 }
 
                 if page_num > 1:
@@ -216,7 +238,8 @@ def main():
             posts_per_category_page = 5 # Jumlah postingan per halaman KATEGORI
 
             for label_slug, label_info in posts_by_label.items():
-                category_posts = label_info['posts'] # Postingan hanya untuk kategori ini
+                # Pastikan postingan di kategori juga diurutkan berdasarkan tanggal terbaru
+                category_posts = sorted(label_info['posts'], key=lambda p: datetime.fromisoformat(p['published'].replace('Z', '+00:00')), reverse=True)
                 total_category_posts = len(category_posts)
                 total_category_pages = math.ceil(total_category_posts / posts_per_category_page)
 
@@ -240,7 +263,9 @@ def main():
                         'current_page': page_num,
                         'total_pages': total_category_pages,
                         'all_labels': sorted(list(all_labels)),
-                        'current_year': datetime.now().year
+                        'current_year': datetime.now().year,
+                        # --- TERUSKAN RECENT_POSTS KE CATEGORY_DETAIL_TEMPLATE JUGA ---
+                        'recent_posts': recent_posts_for_widget 
                     }
 
                     # Atur URL paginasi untuk kategori
