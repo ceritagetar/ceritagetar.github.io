@@ -1,9 +1,15 @@
 <aside id="sidebar-wrapper">
-    <h2 class="title">Cari Artikel</h2>
-    <form action="/search.html" method="get"> {# Contoh form pencarian #}
-        <input type="text" name="q" placeholder="Cari...">
-        <button type="submit">Cari</button>
-    </form>
+    <h2 class="title">Artikel Terbaru</h2>
+    <ul>
+        {# Pastikan 'recent_posts' tersedia di konteks template #}
+        {% if recent_posts %}
+            {% for post in recent_posts %}
+                <li><a href="{{ post.detail_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        {% else %}
+            <li>Tidak ada artikel terbaru.</li>
+        {% endif %}
+    </ul>
 
     <h2 class="title">Kategori Populer</h2>
     <ul>
