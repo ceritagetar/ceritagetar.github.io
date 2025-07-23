@@ -5,8 +5,6 @@ from utils import get_secret, get_blogger_posts
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 from datetime import datetime
-# Import dateutil jika kamu memilih opsi parser.parse
-# from dateutil import parser # <-- Hapus komentar ini jika ingin pakai dateutil
 
 # --- Fungsi Pembantu (Sama seperti sebelumnya) ---
 def slugify(text):
@@ -56,6 +54,120 @@ def optimize_blogger_images_in_content(html_content, default_size='s800'):
             if not img_tag.get('alt', '').strip():
                 img_tag['alt'] = 'Gambar Postingan'  
     return str(soup)
+
+# --- Fungsi untuk Generate Sitemap ---
+def generate_sitemap(processed_posts, all_labels, total_main_pages, posts_per_main_page, posts_by_label, base_url="https://www.yourdomain.com"):
+    """
+    Menghasilkan sitemap.xml yang valid untuk Google Search Console dari postingan dan halaman yang diproses.
+
+    Args:
+        processed_posts (list): Daftar dictionary, di mana setiap dictionary mewakili postingan yang telah diproses sepenuhnya.
+        all_labels (set): Set semua label/kategori unik.
+        total_main_pages (int): Total jumlah halaman indeks utama yang dipaginasi.
+        posts_per_main_page (int): Jumlah postingan per halaman indeks utama.
+        posts_by_label (dict): Dictionary yang memetakan slug label ke informasi dan postingannya.
+        base_url (str): URL dasar situs web Anda (misalnya, "https://www.yourdomain.com").
+                        Penting untuk URL absolut dalam sitemap.
+    """
+    print("Menghasilkan sitemap.xml...")
+    sitemap_entries = []
+
+    # 1. Tambahkan URL postingan individual
+    for post in processed_posts:
+        loc = f"{base_url}/{slugify(post.get('title', 'untitled-post'))}.html"
+        lastmod = post.get('updated', post.get('published'))
+        if lastmod:
+            try:
+                # Periksa apakah lastmod adalah string sebelum mencoba memformat
+                if isinstance(lastmod, str):
+                    lastmod = datetime.fromisoformat(lastmod.replace('Z', '+00:00')).strftime('%Y-%m-%d')
+                else:
+                    lastmod = None # Tangani jika bukan string atau format tidak dikenal
+            except ValueError:
+                lastmod = None
+
+        sitemap_entries.append({
+            'loc': loc,
+            'lastmod': lastmod,
+            'changefreq': 'weekly', # Sesuaikan sesuai kebutuhan (misalnya, daily, weekly, monthly)
+            'priority': '0.8' # Sesuaikan prioritas (0.0 hingga 1.0)
+        })
+
+    # 2. Tambahkan indeks utama dan halaman berpaginasi
+    for page_num in range(1, total_main_pages + 1):
+        if page_num == 1:
+            loc = base_url + "/"
+        else:
+            loc = f"{base_url}/pages/{page_num}.html"
+
+        # Gunakan tanggal terbit postingan terbaru sebagai lastmod untuk halaman indeks/paginasi utama
+        last_modified_main_page = None
+        if processed_posts: # Pastikan ada postingan yang diproses
+            last_modified_main_page = datetime.fromisoformat(processed_posts[0]['published'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+
+        sitemap_entries.append({
+            'loc': loc,
+            'lastmod': last_modified_main_page or datetime.now().strftime('%Y-%m-%d'),
+            'changefreq': 'daily',
+            'priority': '1.0' if page_num == 1 else '0.7'
+        })
+
+    # 3. Tambahkan halaman kategori (utama dan berpaginasi)
+    posts_per_category_page = 5 # Sama seperti yang digunakan dalam logika pembuatan halaman
+
+    for label_slug, label_info in posts_by_label.items():
+        category_posts = sorted(label_info['posts'], key=lambda p: datetime.fromisoformat(p['published'].replace('Z', '+00:00')), reverse=True)
+        total_category_posts = len(category_posts)
+        total_category_pages = math.ceil(total_category_posts / posts_per_category_page)
+
+        for page_num in range(1, total_category_pages + 1):
+            if page_num == 1:
+                loc = f"{base_url}/kategori/{label_slug}.html"
+            else:
+                loc = f"{base_url}/kategori/{label_slug}/page/{page_num}.html"
+
+            # Gunakan tanggal terbit postingan terbaru dalam kategori itu untuk lastmod
+            last_modified_category_page = None
+            if category_posts:
+                last_modified_category_page = datetime.fromisoformat(category_posts[0]['published'].replace('Z', '+00:00')).strftime('%Y-%m-%d')
+
+            sitemap_entries.append({
+                'loc': loc,
+                'lastmod': last_modified_category_page or datetime.now().strftime('%Y-%m-%d'),
+                'changefreq': 'weekly',
+                'priority': '0.7' if page_num == 1 else '0.5'
+            })
+
+    # Struktur XML untuk sitemap
+    sitemap_xml_template = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{urls}
+</urlset>"""
+
+    url_entry_template = """    <url>
+        <loc>{loc}</loc>
+        {lastmod_tag}
+        <changefreq>{changefreq}</changefreq>
+        <priority>{priority}</priority>
+    </url>"""
+
+    url_entries_str = []
+    for entry in sitemap_entries:
+        lastmod_tag = f"<lastmod>{entry['lastmod']}</lastmod>" if entry['lastmod'] else ""
+        url_entries_str.append(url_entry_template.format(
+            loc=entry['loc'],
+            lastmod_tag=lastmod_tag,
+            changefreq=entry['changefreq'],
+            priority=entry['priority']
+        ))
+
+    final_sitemap_xml = sitemap_xml_template.format(urls="\n".join(url_entries_str))
+
+    # Simpan sitemap.xml ke direktori output root
+    sitemap_file_path = os.path.join(os.getcwd(), 'sitemap.xml')
+    with open(sitemap_file_path, "w", encoding="utf-8") as f:
+        f.write(final_sitemap_xml)
+    print(f"Sitemap berhasil dibuat di: {sitemap_file_path}")
 
 # --- Fungsi Utama ---
 def main():
@@ -180,7 +292,7 @@ def main():
                     all_labels=sorted(list(all_labels)),  
                     current_year=datetime.now().year,
                     # --- TERUSKAN RECENT_POSTS KE SINGLE_POST_TEMPLATE JUGA ---
-                    recent_posts=recent_posts_for_widget 
+                    recent_posts=recent_posts_for_widget  
                 )
                 
                 single_post_file_path = os.path.join(output_dir, post_filename)
@@ -207,7 +319,7 @@ def main():
                     'all_labels': sorted(list(all_labels)),  
                     'current_year': datetime.now().year,
                     # --- TERUSKAN RECENT_POSTS KE INDEX_TEMPLATE (dan pages/*.html) ---
-                    'recent_posts': recent_posts_for_widget 
+                    'recent_posts': recent_posts_for_widget  
                 }
 
                 if page_num > 1:
@@ -265,7 +377,7 @@ def main():
                         'all_labels': sorted(list(all_labels)),
                         'current_year': datetime.now().year,
                         # --- TERUSKAN RECENT_POSTS KE CATEGORY_DETAIL_TEMPLATE JUGA ---
-                        'recent_posts': recent_posts_for_widget 
+                        'recent_posts': recent_posts_for_widget  
                     }
 
                     # Atur URL paginasi untuk kategori
@@ -299,6 +411,21 @@ def main():
                     with open(category_file_path, "w", encoding="utf-8") as f:
                         f.write(category_detail_html)
                     print(f"Generated: {category_file_path} (Category '{label_info['name']}' Page {page_num})")
+            
+            # --- GENERATE SITEMAP ---
+            # PENTING: GANTI INI DENGAN DOMAIN SITUS ANDA!
+            # Contoh untuk GitHub Pages: "https://ceritagetar.github.io"
+            # Jika menggunakan custom domain, gunakan custom domain Anda: "https://www.yourdomain.com"
+            your_website_base_url = "https://ceritagetar.github.io" # <--- GANTI INI!
+            
+            generate_sitemap(
+                processed_posts=fully_processed_posts,
+                all_labels=all_labels,
+                total_main_pages=total_pages, # total_pages dari paginasi halaman utama
+                posts_per_main_page=posts_per_page, # posts_per_page dari paginasi halaman utama
+                posts_by_label=posts_by_label,
+                base_url=your_website_base_url
+            )
 
         else:
             print("No posts found or an error occurred. No HTML files generated.")
