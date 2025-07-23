@@ -7,9 +7,8 @@
 {% endblock %}
 
 {% block content %}
-<div id="post-wrapper">
-    <div class="post-container">
-        <article class="post">
+    
+        
 {% if post.labels %}
 <div class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
   <span itemprop="itemListElement" itemscope
@@ -36,20 +35,19 @@
     <div class="post-content">
         {{ post.optimized_content | safe }}
     </div>
-        </article>
+        
 
     {# --- BAGIAN RELATED POSTS --- #}
 {% if post.related_posts %}
-<div class="ms-related-post" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+<div id="ms-related-post">
     <div class="related-title">
         <p class="ms-title">Artikel Terkait</p>
     </div>
-    <ul class="ms-related-hasthumb"> {# Assuming you generally want thumbnails. If not, use ms-related-nothumb and remove the thumbnail div. #}
+    <ul class="ms-related-hasthumb">
         {% for related_p in post.related_posts %}
         <li>
             <a title="{{ related_p.title }}" href="{{ related_p.detail_url }}">
                 <div class="related-thumb-outer">
-                    {# Use a placeholder if thumbnail_url is missing, similar to JS's relatedPostsNoThumbImg #}
                     {% set thumbnail_src = related_p.thumbnail_url if related_p.thumbnail_url else '//1.bp.blogspot.com/-sLMytth04W8/XtoBMx9lUjI/AAAAAAAAHmM/zK-toM5XTacePvBHnpIO_tfzjg63BD3ZgCK4BGAsYHg/w192-h108-n-k-no-nu-rw/nomage%2B%25281%2529.png' %}
                     <img alt="{{ related_p.title }}" class="related-thumb" src="{{ thumbnail_src }}" width="192" height="108">
                 </div>
@@ -61,8 +59,6 @@
 </div>
 {% endif %}
 {# --- AKHIR BAGIAN RELATED POSTS --- #}
-
-    </div>
-</div>
+    
     
 {% endblock %}
