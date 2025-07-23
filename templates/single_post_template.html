@@ -29,9 +29,14 @@
     {% endif %}
 
     <h1 class="post-title">{{ post.title }}</h1>
-    <div class="post-meta">
-        Dipublikasikan {{ post.published }}
-    </div>
+    <div class='post-info info-1'>
+<span class='author-info'>
+By admin
+</span>
+<span class='time-info'>
+                    on {{ post.published | date_format }}
+</span>
+                </div>
     <div class="post-content">
         {{ post.optimized_content | safe }}
     </div>
